@@ -6,6 +6,8 @@
 
   :plugins [[lein-codox "0.10.7"]]
 
+  :codox {:metadata {:doc "Just common Clojure code that I use across projects."}}
+
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [prismatic/schema "1.1.11"]]
 

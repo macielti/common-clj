@@ -1,3 +1,3 @@
 # Introduction to common-clj
 
-TODO: write [great documentation](http://jacobian.org/writing/what-to-write/)
+Just common Clojure code that I use across projects.
