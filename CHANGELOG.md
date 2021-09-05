@@ -9,7 +9,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Fixed
 
-- Properly update the change log doc
+- Properly update the change log doc.
 
 ## 0.1.0 - 2021-09-05
 
