@@ -6,7 +6,9 @@ Just common Clojure code that I use across projects
 
 ## Usage
 
-FIXME
+To install, add the following dependency to your project or build file:
+
+`[net.clojars.macielti/common-clj "0.1.0"]`
 
 ## License
 
