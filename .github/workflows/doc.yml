@@ -15,7 +15,7 @@ jobs:
         run: lein codox
 
       - name: Commit Generated Docs
-      - uses: EndBug/add-and-commit@v7
+        uses: EndBug/add-and-commit@v7
         with:
           message: Generate docs
           committer_name: GitHub Actions
