@@ -1,6 +1,6 @@
 name: Clojure CI - Documentation Generation
 
-on: [ push, pull_request ]
+on: [ pull_request ]
 
 jobs:
 
@@ -17,6 +17,6 @@ jobs:
       - name: Commit Generated Docs
         uses: EndBug/add-and-commit@v7
         with:
-          message: Generate docs
+          message: generate docs
           author_name: GitHub Actions
           author_email: actions@github.com
