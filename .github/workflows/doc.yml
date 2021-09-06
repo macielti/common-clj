@@ -1,0 +1,22 @@
+name: Clojure CI - Documentation Generation
+
+on: [ pull_request ]
+
+jobs:
+
+  gen-docs:
+    name: Generate Documentation
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Generate Docs
+        run: lein codox
+
+      - name: Commit Generated Docs
+        uses: EndBug/add-and-commit@v7
+        with:
+          message: generate docs
+          author_name: GitHub Actions
+          author_email: actions@github.com
