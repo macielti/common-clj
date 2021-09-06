@@ -1,0 +1,14 @@
+name: Clojure CI - Documentation
+
+on: [ push, pull_request ]
+
+jobs:
+
+  gen-docs:
+    name: Generate Documentations
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate Docs
+        run: lein codox
