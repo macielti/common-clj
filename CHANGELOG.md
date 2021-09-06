@@ -5,6 +5,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Applying `loose-schema` function to a schema with inner schemas, algo make them loose.
+
 ## [0.1.1] - 2021-09-05
 
 ### Fixed
