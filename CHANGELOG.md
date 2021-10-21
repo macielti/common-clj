@@ -7,7 +7,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Added
 
-- Added `str->local-date` fucntion were you can use to convert strings to `LocalDate`.
+- Added `str->local-date` function were you can use to convert `String` to `LocalDate`.
+
+- Added `local-date->str` function were you can use to convert `LocalDate` to `String`.
 
 ## [0.2.1] - 2021-09-06
 
