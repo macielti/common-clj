@@ -5,6 +5,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Added `str->local-date` fucntion were you can use to convert strings to `LocalDate`.
+
 ## [0.2.1] - 2021-09-06
 
 ### Added
