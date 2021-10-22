@@ -13,4 +13,6 @@
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [prismatic/schema "1.1.11"]]
 
+  :test-paths ["test/unit" "test/integration" "test/helpers"]
+
   :repl-options {:init-ns common-clj.schema.core})
