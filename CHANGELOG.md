@@ -5,6 +5,15 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [0.5.1] - 2021-10-23
+
+### Added
+
+- Added `str->keyword-kebab-case` that we can use to convert json encoded camelCased keys to clojure kebab case.
+
+- Added a config component that we can use to load settings on our system map. Compatible with Component framework by
+  Stuart Sierra.
+
 ## [0.4.1] - 2021-10-23
 
 ### Added
@@ -38,6 +47,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/0.1.1...HEAD
+
+[0.5.1]: https://github.com/macielti/common-clj/compare/0.5.1...0.4.1
 
 [0.4.1]: https://github.com/macielti/common-clj/compare/0.4.1...0.3.1
 
