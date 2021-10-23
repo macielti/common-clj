@@ -1,3 +1,8 @@
 {
-  "datomicURI": "datomic:mem://example"
+  "test": {
+    "datomicURI": "datomic:mem://example-test"
+  },
+  "prod": {
+    "datomicURI": "datomic:mem://example-prod"
+  }
 }
