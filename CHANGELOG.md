@@ -5,6 +5,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Added `str->keyword-kebab-case` where you can use to convert json encoded camelCased keys to clojure kebab case.
+
 ## [0.4.1] - 2021-10-23
 
 ### Added

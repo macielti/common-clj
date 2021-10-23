@@ -5,7 +5,7 @@
 
 (use-fixtures :once s/validate-schemas)
 
-(s/deftest str->keyword-kebabed-case-test
+(s/deftest str->keyword-kebab-case-test
   (testing "that loweCamelCase strings can be converted to kebab case"
     (is (= :datomic-uri
            (keyword.core/str->keyword-kebab-case "datomicUri")))))
