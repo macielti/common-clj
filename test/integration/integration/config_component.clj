@@ -11,4 +11,4 @@
   (testing "that we can get config content from config component"
     (let [{{:keys [datomic-uri]} :config} (component/start system)]
       (is (= "datomic:mem://example"
-             datomic-uri)))))¬
+             datomic-uri)))))
