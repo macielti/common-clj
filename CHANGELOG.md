@@ -5,6 +5,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Added `->cents` function were you can use to convert money amounts to cents.
+
 ## [0.3.1] - 2021-10-22
 
 ### Added

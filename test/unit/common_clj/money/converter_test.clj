@@ -11,4 +11,6 @@
     (is (= 200N
            (money.converter/->cents 2)))
     (is (= 200N
-           (money.converter/->cents 2.0)))))
+           (money.converter/->cents 2.0)))
+    (is (= 215N
+           (money.converter/->cents 2.15)))))
