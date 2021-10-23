@@ -8,10 +8,10 @@
   (start [this]
     (let [config (json/parse-string (slurp path)
                                     keyword.core/str->keyword-kebab-case)]
-      (assoc this :config config)))
+      (merge this config)))
 
   (stop [this]
     (assoc this :config nil)))
 
 (defn new-config [path]
-  (->Config {:path path}))
+  (map->Config {:path path}))
