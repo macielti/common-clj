@@ -5,6 +5,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Added support to multiples environments on config component.
+
 ## [0.5.1] - 2021-10-23
 
 ### Added
