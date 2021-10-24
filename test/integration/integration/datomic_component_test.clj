@@ -8,7 +8,8 @@
             [schema-refined.core :as r]
             [datomic.api :as d]
             [schema.core :as s]
-            [schema-generators.generators :as g]))
+            [schema-generators.generators :as g]
+            [common-clj.component.helper.core :as component.helper]))
 
 (def ^:private user-skeleton
   [{:db/ident       :user/id
@@ -53,10 +54,10 @@
 
 (deftest datomic-component-test
   (let [system     (component/start system-test)
-        connection (get-in system [:datomic :connection])]
+        connection (:connection (component.helper/get-component-content :datomic system))]
 
     (testing "that we can start the datomic component completely"
-      (is (true? (boolean (get-in system [:datomic :connection]))))
+      (is (true? (boolean connection)))
 
       (testing "that the schemas were transacted"
         @(insert-an-user! user-test connection)
@@ -71,7 +72,7 @@
 
         (testing "that the stopped component exists"
           (is (true? (-> (get-in system-after-stop [:datomic])
-                         (contains? :connection)))))
+                         (contains? :datomic)))))
 
         (testing "that the component was stopped"
-          (is (false? (boolean (get-in system-after-stop [:datomic :connection])))))))))
+          (is (false? (boolean (component.helper/get-component-content :datomic system-after-stop)))))))))

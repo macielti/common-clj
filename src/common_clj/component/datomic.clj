@@ -6,15 +6,15 @@
 (defrecord Datomic [config schemas]
   component/Lifecycle
   (start [component]
-    (d/create-database (:datomic-uri config))
-    (let [datomic-uri (:datomic-uri config)
-          connection  (d/connect datomic-uri)]
+    (let [datomic-uri (-> config :config :datomic-uri)
+          connection  (do (d/create-database datomic-uri)
+                          (d/connect datomic-uri))]
       @(d/transact connection (flatten schemas))
-      (merge component {:connection connection})))
+      (assoc component :datomic {:connection connection})))
 
-  (stop [{:keys [connection] :as component}]
+  (stop [{{:keys [connection]} :datomic :as component}]
     (d/release connection)
-    (assoc component :connection nil)))
+    (assoc component :datomic nil)))
 
 (defn new-datomic [schemas]
   (map->Datomic {:schemas schemas}))

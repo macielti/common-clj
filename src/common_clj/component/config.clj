@@ -9,7 +9,7 @@
     (let [config (-> (json/parse-string (slurp path)
                                         keyword.core/str->keyword-kebab-case)
                      env)]
-      (merge component config)))
+      (merge component {:config config})))
 
   (stop [component]
     (assoc component :config nil)))
