@@ -9,8 +9,15 @@
             [integration.aux.http :as aux.http]))
 
 (def routes-example [["/test" :get (fn [{{{:keys [datomic-uri]} :config} :components}]
-                                     {:status 200 :body {:test "ok" :datomic-uri datomic-uri}}) :route-name :test]
-                     ["/test-2" :get (fn [_] {:status 200 :body {:test-2 "ok"}}) :route-name :test-2]])
+                                     {:status 200 :body {:test "ok" :datomic-uri datomic-uri}})
+                      :route-name :test]
+                     ["/test-2" :get (fn [_] {:status 200 :body {:test-2 "ok"}}) :route-name :test-2]
+                     ["/throw-info-exception" :get (fn [_] (throw (ex-info "Intentional error"
+                                                                           {:status 42
+                                                                            :cause  :nothing-really})))
+                      :route-name :intentional-info-exception]
+                     ["/throw-simple-exception" :get (fn [_] (throw (throw (Exception. "my exception message"))))
+                      :route-name :intentional-simple-exception]])
 
 (def ^:private system-test
   (component/system-map
@@ -26,11 +33,18 @@
                        :io.pedestal.http/service-fn)]
     (testing "that we can request the defined endpoints"
       (is (= {:status 200
-              :body {:test-2 "ok"}}
+              :body   {:test-2 "ok"}}
              (aux.http/request-test-endpoints "/test-2" service-fn))))
     (testing "that we can access components content from request func handlers if we need to"
       (is (= {:status 200
-              :body {:datomic-uri "datomic:mem://example-test"
-                     :test        "ok"}}
+              :body   {:datomic-uri "datomic:mem://example-test"
+                       :test        "ok"}}
              (aux.http/request-test-endpoints "/test" service-fn))))
+    (testing "that we can catch and present friendly error messages using the error interceptor"
+      (is (= {:body   {:cause "nothing-really"}
+              :status 42}
+             (aux.http/request-test-endpoints "/throw-info-exception" service-fn)))
+      (is (= {:body   {:cause "Internal Server Error"}
+              :status 500}
+             (aux.http/request-test-endpoints "/throw-simple-exception" service-fn))))
     (component/stop-system system)))

@@ -11,7 +11,6 @@
           :output-path "docs"}
 
   :dependencies [[com.attendify/schema-refined "0.3.0-alpha4"]
-                 [ch.qos.logback/logback-classic "1.2.3"]
                  [io.pedestal/pedestal.service "0.5.7"]
                  [prismatic/schema-generators "0.1.3"]
                  [com.datomic/datomic-free "0.9.5697"]

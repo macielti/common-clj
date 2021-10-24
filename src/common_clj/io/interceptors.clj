@@ -15,7 +15,7 @@
 
                         :else
                         (do (log/error ex)
-                            (assoc ctx :response {:status 500 :body nil}))))
+                            (assoc ctx :response {:status 500 :body {:cause "Internal Server Error"}}))))
 
 (defn components-interceptor [system-components]
   (pedestal.interceptor/interceptor {:name  ::components-interceptor
