@@ -5,9 +5,18 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.5.1] - 2021-10-24
+
 ### Added
 
 - Added support to multiples environments on config component.
+
+- Added a datomic component that we can use to transact on datomic databases. Compatible with Component framework by
+  Stuart Sierra.
+
+- Added `get-component-content` a component helper function used to get component core content. To be able to use this
+  function you must follow some conventions, like assoc in the component map with the core content using the same
+  component name as key. Compatible with Component framework by Stuart Sierra.
 
 ## [0.5.1] - 2021-10-23
 
@@ -51,6 +60,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/0.1.1...HEAD
+
+[1.5.1]: https://github.com/macielti/common-clj/compare/1.5.1...0.5.1
 
 [0.5.1]: https://github.com/macielti/common-clj/compare/0.5.1...0.4.1
 

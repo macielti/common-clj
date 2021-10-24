@@ -5,14 +5,14 @@
 
 (defrecord Config [path env]
   component/Lifecycle
-  (start [this]
+  (start [component]
     (let [config (-> (json/parse-string (slurp path)
                                         keyword.core/str->keyword-kebab-case)
                      env)]
-      (merge this config)))
+      (merge component {:config config})))
 
-  (stop [this]
-    (assoc this :config nil)))
+  (stop [component]
+    (assoc component :config nil)))
 
 (defn new-config [path env]
   (map->Config {:path path :env env}))
