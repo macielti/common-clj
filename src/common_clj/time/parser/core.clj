@@ -15,5 +15,4 @@
   [out-format :- s/Str
    date :- LocalDate]
   (let [formatter (DateTimeFormatter/ofPattern out-format)]
-    (doto date
-      (.format formatter))))
+    (.format date formatter)))

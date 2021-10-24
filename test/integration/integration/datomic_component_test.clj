@@ -75,4 +75,7 @@
                          (contains? :datomic)))))
 
         (testing "that the component was stopped"
-          (is (false? (boolean (component.helper/get-component-content :datomic system-after-stop)))))))))
+          (is (false? (boolean (component.helper/get-component-content :datomic system-after-stop)))))
+
+        (testing "that we can't transact using a stopped datomic component"
+          (is (thrown? Exception  (query-user-by-id (:user/id user-test) connection))))))))
