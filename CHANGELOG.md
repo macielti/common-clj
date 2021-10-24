@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.6.2] - 2021-10-24
+
+### Added
+
+- Added `routes` and `service` components.
+
 ### Fixed
 
 - `local-date->str` function was not returning the date in the chosen string format.
@@ -64,6 +70,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/0.1.1...HEAD
+
+[1.6.2]: https://github.com/macielti/common-clj/compare/1.6.2...1.5.1
 
 [1.5.1]: https://github.com/macielti/common-clj/compare/1.5.1...0.5.1
 
