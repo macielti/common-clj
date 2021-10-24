@@ -5,6 +5,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `local-date->str` function was not returning the date in the chosen string format.
+
 ## [1.5.1] - 2021-10-24
 
 ### Added
