@@ -11,9 +11,13 @@
           :output-path "docs"}
 
   :dependencies [[com.attendify/schema-refined "0.3.0-alpha4"]
+                 [io.pedestal/pedestal.service "0.5.7"]
                  [prismatic/schema-generators "0.1.3"]
                  [com.datomic/datomic-free "0.9.5697"]
+                 [io.pedestal/pedestal.jetty "0.5.7"]
+                 [io.pedestal/pedestal.route "0.5.7"]
                  [com.stuartsierra/component "1.0.0"]
+                 [org.clojure/tools.logging "1.1.0"]
                  [org.clojure/clojure "1.10.1"]
                  [camel-snake-kebab "0.4.2"]
                  [prismatic/schema "1.1.11"]

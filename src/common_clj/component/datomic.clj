@@ -1,5 +1,4 @@
 (ns common-clj.component.datomic
-  (:use [clojure pprint])
   (:require [com.stuartsierra.component :as component]
             [datomic.api :as d]))
 

@@ -1,5 +1,4 @@
 (ns integration.get-component-core-content-test
-  (:use [clojure pprint])
   (:require [com.stuartsierra.component :as component]
             [clojure.test :refer :all]
             [common-clj.component.helper.core :as component.helper]))

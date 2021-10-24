@@ -1,5 +1,4 @@
 (ns integration.datomic-component-test
-  (:use [clojure pprint])
   (:require [clojure.test :refer :all]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
