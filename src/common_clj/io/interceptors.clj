@@ -1,6 +1,8 @@
 (ns common-clj.io.interceptors
+  (:use [clojure pprint])
   (:require [io.pedestal.http.body-params :as body-params]
             [io.pedestal.interceptor.error :as error]
+            [io.pedestal.interceptor :as pedestal.interceptor]
             [clojure.tools.logging :as log]
             [io.pedestal.http :as http]))
 
@@ -15,6 +17,13 @@
                         (do (log/error ex)
                             (assoc ctx :response {:status 500 :body nil}))))
 
-(def common-interceptors [(body-params/body-params)
-                          http/json-body
-                          error-handler-interceptor])
+(defn components-interceptor [system-components]
+  (pedestal.interceptor/interceptor {:name  ::components-interceptor
+                                     :enter (fn [context]
+                                              (assoc-in context [:request :components] system-components))}))
+
+(defn common-interceptors [components]
+  [(body-params/body-params)
+   (components-interceptor components)
+   http/json-body
+   error-handler-interceptor])
