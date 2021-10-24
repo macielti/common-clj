@@ -1,5 +1,4 @@
 (ns integration.config-component-test
-  (:use [clojure pprint])
   (:require [clojure.test :refer :all]
             [common-clj.component.helper.core :as component.helper]
             [common-clj.component.config :as component.config]

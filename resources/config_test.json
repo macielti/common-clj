@@ -1,8 +1,16 @@
 {
   "test": {
-    "datomicURI": "datomic:mem://example-test"
+    "datomicURI": "datomic:mem://example-test",
+    "service": {
+      "host": "0.0.0.0",
+      "port": 8080
+    }
   },
   "prod": {
-    "datomicURI": "datomic:mem://example-prod"
+    "datomicURI": "datomic:mem://example-prod",
+    "service": {
+      "host": "0.0.0.0",
+      "port": 80
+    }
   }
 }
