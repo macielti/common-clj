@@ -8,7 +8,7 @@
             [common-clj.component.helper.core :as component.helper]
             [integration.aux.http :as aux.http]))
 
-(def routes-example [["/test" :get (fn [{{{:keys [datomic-uri]} :config} :components}]
+(def ^:private routes-example [["/test" :get (fn [{{{:keys [datomic-uri]} :config} :components}]
                                      {:status 200 :body {:test "ok" :datomic-uri datomic-uri}})
                       :route-name :test]
                      ["/test-2" :get (fn [_] {:status 200 :body {:test-2 "ok"}}) :route-name :test-2]
