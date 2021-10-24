@@ -12,6 +12,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Added a datomic component that we can use to transact on datomic databases. Compatible with Component framework by
   Stuart Sierra.
 
+- Added `get-component-content` a component helper function used to get component core content. To be able to use this
+  function you must follow some conventions, like assoc in the component map with the core content using the same
+  component name as key. Compatible with Component framework by Stuart Sierra.
+
 ## [0.5.1] - 2021-10-23
 
 ### Added
