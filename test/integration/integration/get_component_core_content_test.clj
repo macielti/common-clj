@@ -26,5 +26,3 @@
     (let [started-system (component/start system-example)]
       (is (= core-content
              (component.helper/get-component-content :example-component started-system))))))
-
-
