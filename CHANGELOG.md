@@ -5,6 +5,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.5.1] - 2021-10-24
+
 ### Added
 
 - Added support to multiples environments on config component.
@@ -58,6 +60,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/0.1.1...HEAD
+
+[1.5.1]: https://github.com/macielti/common-clj/compare/1.5.1...0.5.1
 
 [0.5.1]: https://github.com/macielti/common-clj/compare/0.5.1...0.4.1
 
