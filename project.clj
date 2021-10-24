@@ -10,7 +10,10 @@
   :codox {:metadata    {:doc "Just common Clojure code that I use across projects."}
           :output-path "docs"}
 
-  :dependencies [[com.stuartsierra/component "1.0.0"]
+  :dependencies [[com.attendify/schema-refined "0.3.0-alpha4"]
+                 [prismatic/schema-generators "0.1.3"]
+                 [com.datomic/datomic-free "0.9.5697"]
+                 [com.stuartsierra/component "1.0.0"]
                  [org.clojure/clojure "1.10.1"]
                  [camel-snake-kebab "0.4.2"]
                  [prismatic/schema "1.1.11"]

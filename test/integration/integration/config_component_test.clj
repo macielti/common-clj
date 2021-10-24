@@ -1,4 +1,4 @@
-(ns integration.config-component
+(ns integration.config-component-test
   (:require [clojure.test :refer :all]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]))
@@ -13,9 +13,11 @@
 
 (deftest config-component-test
   (testing "that we can get config content from config component"
-    (let [{{:keys [datomic-uri]} :config} (component/start system-test)]
+    (let [{{:keys [datomic-uri]} :config :as system} (component/start system-test)]
       (is (= "datomic:mem://example-test"
-             datomic-uri)))
-    (let [{{:keys [datomic-uri]} :config} (component/start system-prod)]
+             datomic-uri))
+      (component/stop-system system))
+    (let [{{:keys [datomic-uri]} :config :as system} (component/start system-prod)]
       (is (= "datomic:mem://example-prod"
-             datomic-uri)))))
+             datomic-uri))
+      (component/stop-system system))))

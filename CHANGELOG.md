@@ -9,6 +9,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Added support to multiples environments on config component.
 
+- Added a datomic component that we can use to transact on datomic databases. Compatible with Component framework by
+  Stuart Sierra.
+
 ## [0.5.1] - 2021-10-23
 
 ### Added
