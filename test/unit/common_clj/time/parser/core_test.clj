@@ -3,6 +3,7 @@
             [common-clj.time.parser.core :as time.parser.core])
   (:import (java.time LocalDate)))
 
+(def date (LocalDate/of 1998 12 26))
 (def today (LocalDate/now))
 (def yesterday (doto (LocalDate/now)
                  (.minusDays 1)))
@@ -15,5 +16,14 @@
     (is (= yesterday
            (time.parser.core/str->local-date "" "Ontem choveu"))))
   (testing "that we can parse date strings that contain a specific format to a LocalDate"
-    (is (= (LocalDate/of 1998 12 26)
+    (is (= date
            (time.parser.core/str->local-date "dd-MM-yyyy" "26-12-1998")))))
+
+(deftest local-date->str-test
+  (testing "that we can parse LocalDate to formatted date string"
+    (is (= "26-12-1998"
+           (time.parser.core/local-date->str "dd-MM-yyyy" date)))
+    (is (= "1998"
+           (time.parser.core/local-date->str "yyyy" date)))
+    (is (= "26/12/1998"
+           (time.parser.core/local-date->str "dd/MM/yyyy" date)))))
