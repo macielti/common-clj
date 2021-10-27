@@ -5,6 +5,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Added `uuid` test helper function to generate random Uuids on tests. 
+
 ## [1.6.2] - 2021-10-24
 
 ### Added
