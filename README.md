@@ -2,13 +2,15 @@
 
 # common-clj
 
-Just common Clojure code that I use across projects
+Just common Clojure codes that I use across projects.
 
-## Usage
+# Installation
 
 To install, add the following dependency to your project or build file:
 
-`[net.clojars.macielti/common-clj "0.1.0"]`
+`[net.clojars.macielti/common-clj "x.y.z"]`
+
+You can check what is the last available version on [Clojars page](https://clojars.org/net.clojars.macielti/common-clj/).
 
 ## License
 
