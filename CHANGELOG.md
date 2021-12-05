@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.7.2] - 2021-12-04
+
+### Added
+
+- Added `uuid` test helper function to generate random Uuids to be use for mocked values in tests.
+
 ## [1.6.2] - 2021-10-24
 
 ### Added
@@ -70,6 +76,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/0.1.1...HEAD
+
+[1.7.2]: https://github.com/macielti/common-clj/compare/1.7.2...1.6.2
 
 [1.6.2]: https://github.com/macielti/common-clj/compare/1.6.2...1.5.1
 
