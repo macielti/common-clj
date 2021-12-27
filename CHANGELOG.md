@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [2.8.2] - 2021-12-27
+
+### Changed
+
+- More flexibility for telegram bot consumer command functions definitions.
+- Use interceptor when handling telegram bot command messages.
+
 ## [1.8.2] - 2021-12-27
 
 ### Added
@@ -82,6 +89,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/0.1.1...HEAD
+
+[2.8.2]: https://github.com/macielti/common-clj/compare/2.8.2...1.8.2
 
 [1.8.2]: https://github.com/macielti/common-clj/compare/1.8.2...1.7.2
 
