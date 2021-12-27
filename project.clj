@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "1.7.2"
+(defproject net.clojars.macielti/common-clj "1.8.2"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -11,7 +11,10 @@
           :output-path "docs"}
 
   :dependencies [[com.attendify/schema-refined "0.3.0-alpha4"]
+                 [de.ubercode.clostache/clostache "1.4.0"]
+                 [medley "1.3.0"]
                  [telegrambot-lib "1.2.0"]
+                 [overtone/at-at "1.2.0"]
                  [io.pedestal/pedestal.service "0.5.9"]
                  [prismatic/schema-generators "0.1.3"]
                  [nubank/matcher-combinators "3.3.1"]
