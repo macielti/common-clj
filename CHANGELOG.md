@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [1.8.2] - 2021-12-27
+
+### Added
+
+- Added Telegram Bot component. Compatible with Component framework by Stuart Sierra.
+
 ## [1.7.2] - 2021-12-04
 
 ### Added
@@ -76,6 +82,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/0.1.1...HEAD
+
+[1.8.2]: https://github.com/macielti/common-clj/compare/1.8.2...1.7.2
 
 [1.7.2]: https://github.com/macielti/common-clj/compare/1.7.2...1.6.2
 

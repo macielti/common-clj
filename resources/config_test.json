@@ -1,16 +1,19 @@
 {
-  "test": {
-    "datomicURI": "datomic:mem://example-test",
-    "service": {
-      "host": "0.0.0.0",
-      "port": 8080
-    }
-  },
   "prod": {
     "datomicURI": "datomic:mem://example-prod",
     "service": {
       "host": "0.0.0.0",
       "port": 80
+    }
+  },
+  "test": {
+    "datomicURI": "datomic:mem://example-test",
+    "service": {
+      "host": "0.0.0.0",
+      "port": 8080
+    },
+    "telegram": {
+      "token": "123456789:kB5U6ePls4ADc9EOBqtBoa0PlirVmhVl"
     }
   }
 }
