@@ -1,11 +1,16 @@
 (ns common-clj.component.telegram.core
   (:require [schema.core :as s]
             [com.stuartsierra.component :as component]
+            [io.pedestal.interceptor.chain :as chain]
             [telegrambot-lib.core :as telegram-bot]
             [clostache.parser :as parser]
             [medley.core :as medley]
             [overtone.at-at :as at-at]
-            [common-clj.component.telegram.adapters.message :as telegram.adapters.message]))
+            [common-clj.component.telegram.adapters.message :as telegram.adapters.message]
+            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
+            [taoensso.timbre :as timbre]
+            [io.pedestal.interceptor :as interceptor])
+  (:import (io.pedestal.interceptor Interceptor)))
 
 (s/defn send-message!
   [message :- s/Str
@@ -17,15 +22,27 @@
    telegram]
   (telegram-bot/get-updates telegram {:offset (+ offset 1)}))
 
+(s/defn interceptors-by-consumer :- [Interceptor]
+  [consumer :- component.telegram.models.consumer/Consumer
+   consumers :- component.telegram.models.consumer/Consumers]
+  (let [interceptor-groups (group-by :name (:interceptors consumers))]
+    (map #(-> (get interceptor-groups %) first) (:consumer/interceptors consumer))))
+
 (s/defn consume-update!
   [update
-   consumers
+   consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram] :as components}]
-  (let [{:consumer/keys [handler error-handler]} (telegram.adapters.message/message->handler (-> update :message :text) consumers)
+  (let [{:consumer/keys [handler error-handler] :as consumer} (telegram.adapters.message/message->handler (-> update :message :text) consumers)
         message   (:message update)
-        update-id (-> update :update_id)]
+        update-id (-> update :update_id)
+        context   {:message    message
+                   :components components}]
     (when (and handler message update-id)
       (try
+        (chain/execute context
+                       (concat (interceptors-by-consumer consumer consumers)
+                               [(interceptor/interceptor {:name  :handler-interceptor
+                                                          :enter handler})]))
         (handler message components)
         (catch Exception e
           (if error-handler

@@ -5,7 +5,7 @@
             [telegrambot-lib.core :as telegram-bot]
             [common-clj.component.telegram.core :as component.telegram.core]
             [cheshire.core :as json]
-            [taoensso.timbre :as timbre]))
+            [io.pedestal.interceptor :as interceptor]))
 
 (def test-state (atom nil))
 
@@ -31,15 +31,15 @@
                                                :text "/default-error-handler"}})
 
 (def consumers
-  {:test                           {:consumer/handler       (fn [message components]
+  {:test                           {:consumer/handler       (fn [{:keys [message]}]
                                                               (reset! test-state (:text message)))
-                                    :consumer/error-handler (fn [exception components])}
-   :with-exception-in-main-handler {:consumer/handler       (fn [message components]
+                                    :consumer/error-handler (fn [_ _])}
+   :with-exception-in-main-handler {:consumer/handler       (fn [_]
                                                               (throw (ex-info "Random exception"
                                                                               {:cause :nothing})))
-                                    :consumer/error-handler (fn [exception components]
+                                    :consumer/error-handler (fn [exception _]
                                                               (reset! test-state (ex-data exception)))}
-   :default-error-handler          {:consumer/handler (fn [message components]
+   :default-error-handler          {:consumer/handler (fn [_]
                                                         (throw (ex-info "Random exception"
                                                                         {:cause :nothing})))}})
 
@@ -51,12 +51,12 @@
     (reset! test-state nil))
   (testing "that we can handle exception with error-handler provided by the user of the component"
     (component.telegram.core/consume-update! update-with-exception-in-command-consumption consumers components)
-    (is (= {:cause :nothing}
-           @test-state))
+    (is (= :nothing
+           (:cause @test-state)))
     (reset! test-state nil))
   (testing "that we can consume unmatched command messages"
     (fake/with-fake-routes
-      {(format "https://api.telegram.org/bot%s/sendMessage" token) (fn [{:keys [body] :as request}]
+      {(format "https://api.telegram.org/bot%s/sendMessage" token) (fn [{:keys [body]}]
                                                                      (reset! test-state (-> (slurp body)
                                                                                             (json/parse-string true)
                                                                                             :text))
@@ -67,7 +67,7 @@
     (reset! test-state nil))
   (testing "that we can use a default error handler while consuming command messages"
     (fake/with-fake-routes
-      {(format "https://api.telegram.org/bot%s/sendMessage" token) (fn [{:keys [body] :as request}]
+      {(format "https://api.telegram.org/bot%s/sendMessage" token) (fn [{:keys [body]}]
                                                                      (reset! test-state (-> (slurp body)
                                                                                             (json/parse-string true)))
                                                                      {})}
@@ -80,7 +80,7 @@
 (s/deftest send-message!-test
   (testing "that we can send telegram messages"
     (fake/with-fake-routes
-      {(format "https://api.telegram.org/bot%s/sendMessage" token) (fn [{:keys [body] :as request}]
+      {(format "https://api.telegram.org/bot%s/sendMessage" token) (fn [{:keys [body]}]
                                                                      (reset! test-state (-> (slurp body)
                                                                                             (json/parse-string true)
                                                                                             :text))
@@ -93,10 +93,31 @@
 (s/deftest commit-update-as-consumed!-test
   (testing "that we can commit consumed messages"
     (fake/with-fake-routes
-      {(format "https://api.telegram.org/bot%s/getUpdates" token) (fn [{:keys [body] :as request}]
+      {(format "https://api.telegram.org/bot%s/getUpdates" token) (fn [{:keys [body]}]
                                                                     (reset! test-state (-> (slurp body)
                                                                                            (json/parse-string true)))
                                                                     {})}
       (component.telegram.core/commit-update-as-consumed! 123456789 (:telegram components)))
     (is (= {:offset 123456790}
            @test-state))))
+
+(def auth-interceptor
+  (interceptor/interceptor
+    {:name  :auth-interceptor
+     :enter (fn [_] nil)}))
+
+(def dumb-interceptor
+  (interceptor/interceptor
+    {:name  :dumb-interceptor
+     :enter (fn [_] nil)}))
+
+(def consumer-interceptor-test {:consumer/interceptors [:auth-interceptor]
+                                :consumer/handler      (fn [_] nil)})
+
+(def consumers-with-interceptors {:interceptors              [auth-interceptor dumb-interceptor]
+                                  :consumer-interceptor-test consumer-interceptor-test})
+
+(s/deftest interceptors-by-consumer-test
+  (testing "that we can get the correct interceptors specified by the consumer definition"
+    (is (= [auth-interceptor]
+           (component.telegram.core/interceptors-by-consumer consumer-interceptor-test consumers-with-interceptors)))))

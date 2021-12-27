@@ -20,6 +20,7 @@
                  [telegrambot-lib "1.2.0"]
                  [overtone/at-at "1.2.0"]
                  [io.pedestal/pedestal.service "0.5.9"]
+                 [io.pedestal/pedestal.interceptor "0.5.9"]
                  [prismatic/schema-generators "0.1.3"]
                  [nubank/matcher-combinators "3.3.1"]
                  [com.datomic/datomic-free "0.9.5697"]
