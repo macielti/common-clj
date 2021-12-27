@@ -1,4 +1,4 @@
-(ns common-clj.component.telegram
+(ns common-clj.component.telegram.core
   (:require [schema.core :as s]
             [com.stuartsierra.component :as component]
             [telegrambot-lib.core :as telegram-bot]
@@ -6,7 +6,6 @@
             [medley.core :as medley]
             [overtone.at-at :as at-at]
             [clojure.string :as str]))
-
 
 (s/defn ^:private message->command-type :- s/Keyword
   [message-text :- s/Str]
