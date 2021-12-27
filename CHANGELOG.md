@@ -5,6 +5,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+- Remove dead code that was throwing exceptions, causing some false positives when consuming message commands.
+
 ## [2.8.2] - 2021-12-27
 
 ### Changed

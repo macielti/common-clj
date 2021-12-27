@@ -43,7 +43,6 @@
                        (concat (interceptors-by-consumer consumer consumers)
                                [(interceptor/interceptor {:name  :handler-interceptor
                                                           :enter handler})]))
-        (handler message components)
         (catch Exception e
           (if error-handler
             (error-handler e components)
@@ -51,7 +50,6 @@
     (when-not handler
       (send-message! (parser/render-resource "templates/command_not_found.mustache") components))
     (commit-update-as-consumed! update-id telegram)))
-
 
 (s/defn ^:private consumer-job!
   [consumers
