@@ -36,8 +36,7 @@
 
 
 (s/defn ^:private consumer-job!
-  [chat-id :- s/Int
-   consumers
+  [consumers
    {:keys [telegram] :as components}]
   (when-let [updates (-> (telegram-bot/get-updates telegram) :result)]
     (doseq [update updates] (consume-update! update consumers components))))
@@ -46,16 +45,14 @@
   component/Lifecycle
   (start [component]
     (let [{{:keys [telegram] :as config-content} :config} config
-          token      (:token telegram)
-          chat-id    (:chat-id telegram)
-          telegram   (telegram-bot/create token)
+          bot        (telegram-bot/create (:token telegram))
           components (medley/assoc-some {}
                                         :database (:database database)
                                         :config config-content
-                                        :telegram telegram)
+                                        :telegram bot)
           pool       (at-at/mk-pool)]
-      (at-at/interspaced 100 (partial consumer-job! chat-id consumers components) pool)
-      (merge component {:telegram telegram})))
+      (at-at/interspaced 100 (partial consumer-job! consumers components) pool)
+      (merge component {:telegram bot})))
 
   (stop [{:keys [telegram]}]
     (telegram-bot/close telegram)))                         ;TODO: stop at-at pool here

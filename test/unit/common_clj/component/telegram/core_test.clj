@@ -4,7 +4,8 @@
             [clj-http.fake :as fake]
             [telegrambot-lib.core :as telegram-bot]
             [common-clj.component.telegram.core :as component.telegram.core]
-            [cheshire.core :as json]))
+            [cheshire.core :as json]
+            [taoensso.timbre :as timbre]))
 
 (def test-state (atom nil))
 
@@ -57,14 +58,26 @@
            @test-state))
     (reset! test-state nil)))
 
-(deftest send-message!-test
-  (fake/with-fake-routes
-    {(format "https://api.telegram.org/bot%s/sendMessage" token) (fn [{:keys [body] :as request}]
-                                                                   (reset! test-state (-> (slurp body)
-                                                                                          (json/parse-string true)
-                                                                                          :text))
-                                                                   {})}
-    (component.telegram.core/send-message! "Random message" components))
-  (is (= "Random message"
-         @test-state))
-  (reset! test-state nil))
+(s/deftest send-message!-test
+  (testing "that we can send telegram messages"
+    (fake/with-fake-routes
+      {(format "https://api.telegram.org/bot%s/sendMessage" token) (fn [{:keys [body] :as request}]
+                                                                     (reset! test-state (-> (slurp body)
+                                                                                            (json/parse-string true)
+                                                                                            :text))
+                                                                     {})}
+      (component.telegram.core/send-message! "Random message" components))
+    (is (= "Random message"
+           @test-state))
+    (reset! test-state nil)))
+
+(s/deftest commit-update-as-consumed!-test
+  (testing "that we can commit consumed messages"
+    (fake/with-fake-routes
+      {(format "https://api.telegram.org/bot%s/getUpdates" token) (fn [{:keys [body] :as request}]
+                                                                    (reset! test-state (-> (slurp body)
+                                                                                           (json/parse-string true)))
+                                                                    {})}
+      (component.telegram.core/commit-update-as-consumed! 123456789 (:telegram components)))
+    (is (= {:offset 123456790}
+           @test-state))))
