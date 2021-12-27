@@ -5,42 +5,31 @@
             [clostache.parser :as parser]
             [medley.core :as medley]
             [overtone.at-at :as at-at]
-            [clojure.string :as str]))
-
-(s/defn ^:private message->command-type :- s/Keyword
-  [message-text :- s/Str]
-  (-> (re-find #"\S*" message-text)
-      (str/replace #"\/" "")
-      str/lower-case
-      keyword))
-
-(s/defn ^:private message->handler
-  [message-text :- s/Str
-   consumers]
-  (let [command-type (message->command-type message-text)]
-    (command-type consumers)))
-
+            [common-clj.component.telegram.adapters.message :as telegram.adapters.message]))
 
 (s/defn send-message!
   [message :- s/Str
    {:keys [telegram config]}]
   (telegram-bot/send-message telegram (-> config :telegram :chat-id) message))
 
-
-(s/defn ^:private commit-update-as-consumed!
+(s/defn commit-update-as-consumed!
   [offset :- s/Int
-   bot]
-  (telegram-bot/get-updates bot {:offset (+ offset 1)}))
+   telegram]
+  (telegram-bot/get-updates telegram {:offset (+ offset 1)}))
 
-(s/defn ^:private consume-update!
+(s/defn consume-update!
   [update
    consumers
    {:keys [telegram] :as components}]
-  (let [handler   (message->handler (-> update :message :text) consumers)
+  (let [{:consumer/keys [handler error-handler]} (telegram.adapters.message/message->handler (-> update :message :text) consumers)
         message   (:message update)
         update-id (-> update :update_id)]
     (when (and handler message update-id)
-      (handler message components))
+      (try
+        (handler message components)
+        (catch Exception e
+          (when error-handler
+            (error-handler e components)))))
     (when-not handler
       (send-message! (parser/render-resource "templates/command_not_found.mustache") components))
     (commit-update-as-consumed! update-id telegram)))

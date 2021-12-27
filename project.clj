@@ -10,8 +10,12 @@
   :codox {:metadata    {:doc "Just common Clojure code that I use across projects."}
           :output-path "docs"}
 
+  :exclusions [log4j]
+
   :dependencies [[com.attendify/schema-refined "0.3.0-alpha4"]
                  [de.ubercode.clostache/clostache "1.4.0"]
+                 [nubank/state-flow "5.14.0"]
+                 [clj-http-fake "1.0.3"]
                  [medley "1.3.0"]
                  [telegrambot-lib "1.2.0"]
                  [overtone/at-at "1.2.0"]
