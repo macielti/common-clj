@@ -7,6 +7,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [1.8.2] - 2021-12-27
 
+### Added
+
 - Added Telegram Bot component. Compatible with Component framework by Stuart Sierra.
 
 ## [1.7.2] - 2021-12-04
