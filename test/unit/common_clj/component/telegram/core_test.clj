@@ -25,6 +25,11 @@
 (def update-with-unmatched-command-message {:update_id 123456800
                                             :message   {:chat {:id 123456900}
                                                         :text "/unknown"}})
+
+(def update-default-error-handler {:update_id 123456800
+                                   :message   {:chat {:id 123456900}
+                                               :text "/default-error-handler"}})
+
 (def consumers
   {:test                           {:consumer/handler       (fn [message components]
                                                               (reset! test-state (:text message)))
@@ -33,7 +38,10 @@
                                                               (throw (ex-info "Random exception"
                                                                               {:cause :nothing})))
                                     :consumer/error-handler (fn [exception components]
-                                                              (reset! test-state (ex-data exception)))}})
+                                                              (reset! test-state (ex-data exception)))}
+   :default-error-handler          {:consumer/handler (fn [message components]
+                                                        (throw (ex-info "Random exception"
+                                                                        {:cause :nothing})))}})
 
 (s/deftest consume-update!-test
   (testing "that we can consume a update"
@@ -55,6 +63,17 @@
                                                                      {})}
       (component.telegram.core/consume-update! update-with-unmatched-command-message consumers components))
     (is (= "Sorry, command not found.\n"
+           @test-state))
+    (reset! test-state nil))
+  (testing "that we can use a default error handler while consuming command messages"
+    (fake/with-fake-routes
+      {(format "https://api.telegram.org/bot%s/sendMessage" token) (fn [{:keys [body] :as request}]
+                                                                     (reset! test-state (-> (slurp body)
+                                                                                            (json/parse-string true)))
+                                                                     {})}
+      (component.telegram.core/consume-update! update-default-error-handler consumers components))
+    (is (= {:chat_id 123456789
+            :text    "Sorry. An error occurred while processing your previous command.\n"}
            @test-state))
     (reset! test-state nil)))
 

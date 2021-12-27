@@ -28,8 +28,9 @@
       (try
         (handler message components)
         (catch Exception e
-          (when error-handler
-            (error-handler e components)))))
+          (if error-handler
+            (error-handler e components)
+            (send-message! (parser/render-resource "templates/error_processing_message_command.mustache") components)))))
     (when-not handler
       (send-message! (parser/render-resource "templates/command_not_found.mustache") components))
     (commit-update-as-consumed! update-id telegram)))
