@@ -5,7 +5,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
-## [2.8.3] - 2021-12-27
+## [3.8.3] - 2021-12-27
 
 ### Fixed
 
@@ -101,7 +101,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/0.1.1...HEAD
 
-[2.8.3]: https://github.com/macielti/common-clj/compare/2.8.3...2.8.2
+[3.8.3]: https://github.com/macielti/common-clj/compare/3.8.3...2.8.2
 
 [2.8.2]: https://github.com/macielti/common-clj/compare/2.8.2...1.8.2
 
