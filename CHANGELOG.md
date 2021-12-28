@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [3.9.3] - 2021-12-27
+
+### Added
+
+- Added Datalevin database component. Compatible with Component framework by Stuart Sierra.
+
 ## [3.8.3] - 2021-12-27
 
 ### Fixed
@@ -100,6 +106,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/0.1.1...HEAD
+
+[3.9.3]: https://github.com/macielti/common-clj/compare/3.9.3...3.8.3
 
 [3.8.3]: https://github.com/macielti/common-clj/compare/3.8.3...2.8.2
 

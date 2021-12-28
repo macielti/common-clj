@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "3.8.3"
+(defproject net.clojars.macielti/common-clj "3.9.3"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -13,6 +13,7 @@
   :exclusions [log4j]
 
   :dependencies [[com.attendify/schema-refined "0.3.0-alpha4"]
+                 [datalevin "0.5.27"]
                  [de.ubercode.clostache/clostache "1.4.0"]
                  [nubank/state-flow "5.14.0"]
                  [clj-http-fake "1.0.3"]
