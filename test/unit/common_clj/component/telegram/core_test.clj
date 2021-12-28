@@ -31,9 +31,23 @@
                                    :message   {:chat {:id 123456900}
                                                :text "/default-error-handler"}})
 
+(def auth-interceptor
+  (interceptor/interceptor
+    {:name  :auth-interceptor
+     :enter (fn [context]
+              (swap! test-state assoc :interceptor :auth-interceptor)
+              context)}))
+
+(def dumb-interceptor
+  (interceptor/interceptor
+    {:name  :dumb-interceptor
+     :enter (fn [_] nil)}))
+
 (def consumers
-  {:test                           {:consumer/handler       (fn [{:keys [message]}]
-                                                              (reset! test-state (:text message)))
+  {:interceptors                   [auth-interceptor dumb-interceptor]
+   :test                           {:consumer/interceptors  [:auth-interceptor]
+                                    :consumer/handler       (fn [{:keys [message]}]
+                                                              (swap! test-state assoc :text (:text message)))
                                     :consumer/error-handler (fn [_ _])}
    :with-exception-in-main-handler {:consumer/handler       (fn [_]
                                                               (throw (ex-info "Random exception"
@@ -47,7 +61,8 @@
 (s/deftest consume-update!-test
   (testing "that we can consume a update"
     (component.telegram.core/consume-update! update consumers components)
-    (is (= "/test testing"
+    (is (= {:interceptor :auth-interceptor
+            :text        "/test testing"}
            @test-state))
     (reset! test-state nil))
   (testing "that we can handle exception with error-handler provided by the user of the component"
@@ -101,16 +116,6 @@
       (component.telegram.core/commit-update-as-consumed! 123456789 (:telegram components)))
     (is (= {:offset 123456790}
            @test-state))))
-
-(def auth-interceptor
-  (interceptor/interceptor
-    {:name  :auth-interceptor
-     :enter (fn [_] nil)}))
-
-(def dumb-interceptor
-  (interceptor/interceptor
-    {:name  :dumb-interceptor
-     :enter (fn [_] nil)}))
 
 (def consumer-interceptor-test {:consumer/interceptors [:auth-interceptor]
                                 :consumer/handler      (fn [_] nil)})
