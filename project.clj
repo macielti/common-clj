@@ -13,6 +13,7 @@
   :exclusions [log4j]
 
   :dependencies [[com.attendify/schema-refined "0.3.0-alpha4"]
+                 [datalevin "0.5.27"]
                  [de.ubercode.clostache/clostache "1.4.0"]
                  [nubank/state-flow "5.14.0"]
                  [clj-http-fake "1.0.3"]
@@ -32,7 +33,6 @@
                  [prismatic/plumbing "0.6.0"]
                  [camel-snake-kebab "0.4.2"]
                  [prismatic/schema "1.2.0"]
-                 [datalevin "0.5.27"]
                  [cheshire "5.10.1"]]
 
   :test-paths ["test/unit" "test/integration" "test/helpers"]
