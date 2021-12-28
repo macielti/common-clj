@@ -1,5 +1,6 @@
 (ns common-clj.component.telegram.core
   (:require [schema.core :as s]
+            [io.pedestal.interceptor :as interceptor]
             [com.stuartsierra.component :as component]
             [io.pedestal.interceptor.chain :as chain]
             [telegrambot-lib.core :as telegram-bot]
@@ -7,9 +8,7 @@
             [medley.core :as medley]
             [overtone.at-at :as at-at]
             [common-clj.component.telegram.adapters.message :as telegram.adapters.message]
-            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
-            [taoensso.timbre :as timbre]
-            [io.pedestal.interceptor :as interceptor])
+            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer])
   (:import (io.pedestal.interceptor Interceptor)))
 
 (s/defn send-message!
@@ -31,7 +30,7 @@
 (s/defn consume-update!
   [update
    consumers :- component.telegram.models.consumer/Consumers
-   {:keys [telegram] :as components}]
+   {:keys [telegram config] :as components}]
   (let [{:consumer/keys [handler error-handler] :as consumer} (telegram.adapters.message/message->handler (-> update :message :text) consumers)
         message   (:message update)
         update-id (-> update :update_id)
@@ -43,15 +42,17 @@
                        (concat (interceptors-by-consumer consumer consumers)
                                [(interceptor/interceptor {:name  :handler-interceptor
                                                           :enter handler})]))
-        (handler message components)
         (catch Exception e
           (if error-handler
             (error-handler e components)
-            (send-message! (parser/render-resource "templates/error_processing_message_command.mustache") components)))))
+            (send-message! (parser/render-resource
+                             (format "%s/error_processing_message_command.mustache"
+                                     (-> config :telegram :message-template-dir))) components)))))
     (when-not handler
-      (send-message! (parser/render-resource "templates/command_not_found.mustache") components))
+      (send-message! (parser/render-resource
+                       (format "%s/command_not_found.mustache"
+                               (-> config :telegram :message-template-dir))) components))
     (commit-update-as-consumed! update-id telegram)))
-
 
 (s/defn ^:private consumer-job!
   [consumers

@@ -14,8 +14,9 @@
 (def telegram (telegram-bot/create token))
 (def components
   {:telegram telegram
-   :config   {:telegram {:token   token
-                         :chat-id chat-id}}})
+   :config   {:telegram {:token                token
+                         :chat-id              chat-id
+                         :message-template-dir "templates"}}})
 (def update {:update_id 123456789
              :message   {:chat {:id 123456789}
                          :text "/test testing"}})
