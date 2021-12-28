@@ -5,8 +5,16 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [2.8.3] - 2021-12-27
+
 ### Fixed
+
 - Remove dead code that was throwing exceptions, causing some false positives when consuming message commands.
+
+### Change
+
+- Decouple template message dir value from component code, now you can use the config.json file to define the value used
+  by the component.
 
 ## [2.8.2] - 2021-12-27
 
@@ -92,6 +100,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/0.1.1...HEAD
+
+[2.8.3]: https://github.com/macielti/common-clj/compare/2.8.3...2.8.2
 
 [2.8.2]: https://github.com/macielti/common-clj/compare/2.8.2...1.8.2
 
