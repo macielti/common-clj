@@ -10,4 +10,5 @@
 
 (s/defschema Consumers
   {(s/optional-key :interceptors) [Interceptor]
-   s/Keyword                      Consumer})
+   :message                       {s/Keyword Consumer}
+   :callback-query                {s/Keyword Consumer}})

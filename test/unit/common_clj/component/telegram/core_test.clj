@@ -44,19 +44,20 @@
      :enter (fn [_] nil)}))
 
 (def consumers
-  {:interceptors                   [auth-interceptor dumb-interceptor]
-   :test                           {:consumer/interceptors  [:auth-interceptor]
-                                    :consumer/handler       (fn [{:keys [message]}]
-                                                              (swap! test-state assoc :text (:text message)))
-                                    :consumer/error-handler (fn [_ _])}
-   :with-exception-in-main-handler {:consumer/handler       (fn [_]
-                                                              (throw (ex-info "Random exception"
-                                                                              {:cause :nothing})))
-                                    :consumer/error-handler (fn [exception _]
-                                                              (reset! test-state (ex-data exception)))}
-   :default-error-handler          {:consumer/handler (fn [_]
-                                                        (throw (ex-info "Random exception"
-                                                                        {:cause :nothing})))}})
+  {:interceptors   [auth-interceptor dumb-interceptor]
+   :message        {:test                           {:consumer/interceptors  [:auth-interceptor]
+                                                     :consumer/handler       (fn [{:keys [message]}]
+                                                                               (swap! test-state assoc :text (:text message)))
+                                                     :consumer/error-handler (fn [_ _])}
+                    :with-exception-in-main-handler {:consumer/handler       (fn [_]
+                                                                               (throw (ex-info "Random exception"
+                                                                                               {:cause :nothing})))
+                                                     :consumer/error-handler (fn [exception _]
+                                                                               (reset! test-state (ex-data exception)))}
+                    :default-error-handler          {:consumer/handler (fn [_]
+                                                                         (throw (ex-info "Random exception"
+                                                                                         {:cause :nothing})))}}
+   :callback-query {}})
 
 (s/deftest consume-update!-test
   (testing "that we can consume a update"
@@ -120,8 +121,9 @@
 (def consumer-interceptor-test {:consumer/interceptors [:auth-interceptor]
                                 :consumer/handler      (fn [_] nil)})
 
-(def consumers-with-interceptors {:interceptors              [auth-interceptor dumb-interceptor]
-                                  :consumer-interceptor-test consumer-interceptor-test})
+(def consumers-with-interceptors {:interceptors   [auth-interceptor dumb-interceptor]
+                                  :message        {:consumer-interceptor-test consumer-interceptor-test}
+                                  :callback-query {}})
 
 (s/deftest interceptors-by-consumer-test
   (testing "that we can get the correct interceptors specified by the consumer definition"

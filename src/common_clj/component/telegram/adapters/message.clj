@@ -4,15 +4,20 @@
             [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
             [taoensso.timbre :as timbre]))
 
-(s/defn message->command-type :- s/Keyword
+(s/defn message->consumer-key :- s/Keyword
   [message-text :- s/Str]
   (-> (re-find #"\S*" message-text)
       (str/replace #"\/" "")
       str/lower-case
       keyword))
 
-(s/defn message->handler
-  [message-text :- s/Str
+(s/defn update->consumer
+  [{:keys [message callback_query]}
    consumers :- component.telegram.models.consumer/Consumers]
-  (let [command-type (message->command-type message-text)]
-    (command-type consumers)))
+  (let [consumer-type (cond
+                        message :message
+                        callback_query :callback-query)
+        consumer-key  (message->consumer-key (:text message))]
+    (-> (get consumers consumer-type)
+        (get consumer-key)
+        (assoc :consumer/type consumer-type))))

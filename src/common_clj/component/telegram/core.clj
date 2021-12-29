@@ -8,7 +8,8 @@
             [medley.core :as medley]
             [overtone.at-at :as at-at]
             [common-clj.component.telegram.adapters.message :as telegram.adapters.message]
-            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer])
+            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
+            [taoensso.timbre :as timbre])
   (:import (io.pedestal.interceptor Interceptor)))
 
 (s/defn send-message!
@@ -22,16 +23,16 @@
   (telegram-bot/get-updates telegram {:offset (+ offset 1)}))
 
 (s/defn interceptors-by-consumer :- [Interceptor]
-  [consumer :- component.telegram.models.consumer/Consumer
-   consumers :- component.telegram.models.consumer/Consumers]
-  (let [interceptor-groups (group-by :name (:interceptors consumers))]
+  [consumer
+   {:keys [interceptors]}]
+  (let [interceptor-groups (timbre/spy (group-by :name interceptors))]
     (map #(-> (get interceptor-groups %) first) (:consumer/interceptors consumer))))
 
 (s/defn consume-update!
   [update
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram config] :as components}]
-  (let [{:consumer/keys [handler error-handler] :as consumer} (telegram.adapters.message/message->handler (-> update :message :text) consumers)
+  (let [{:consumer/keys [handler error-handler type] :as consumer} (telegram.adapters.message/update->consumer update consumers)
         message   (:message update)
         update-id (-> update :update_id)
         context   {:message    message
@@ -43,6 +44,7 @@
                                [(interceptor/interceptor {:name  :handler-interceptor
                                                           :enter handler})]))
         (catch Exception e
+          (timbre/error e)
           (if error-handler
             (error-handler e components)
             (send-message! (parser/render-resource
