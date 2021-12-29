@@ -1,4 +1,5 @@
 (ns common-clj.component.telegram.core
+  (:use [clojure pprint])
   (:require [schema.core :as s]
             [io.pedestal.interceptor :as interceptor]
             [com.stuartsierra.component :as component]
@@ -7,8 +8,9 @@
             [clostache.parser :as parser]
             [medley.core :as medley]
             [overtone.at-at :as at-at]
-            [common-clj.component.telegram.adapters.message :as telegram.adapters.message]
-            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer])
+            [common-clj.component.telegram.adapters.update :as telegram.adapters.message]
+            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
+            [taoensso.timbre :as timbre])
   (:import (io.pedestal.interceptor Interceptor)))
 
 (s/defn send-message!
@@ -22,21 +24,20 @@
   (telegram-bot/get-updates telegram {:offset (+ offset 1)}))
 
 (s/defn interceptors-by-consumer :- [Interceptor]
-  [consumer :- component.telegram.models.consumer/Consumer
-   consumers :- component.telegram.models.consumer/Consumers]
-  (let [interceptor-groups (group-by :name (:interceptors consumers))]
+  [consumer
+   {:keys [interceptors]}]
+  (let [interceptor-groups (group-by :name interceptors)]
     (map #(-> (get interceptor-groups %) first) (:consumer/interceptors consumer))))
 
 (s/defn consume-update!
   [update
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram config] :as components}]
-  (let [{:consumer/keys [handler error-handler] :as consumer} (telegram.adapters.message/message->handler (-> update :message :text) consumers)
-        message   (:message update)
+  (let [{:consumer/keys [handler error-handler type] :as consumer} (telegram.adapters.message/update->consumer update consumers)
         update-id (-> update :update_id)
-        context   {:message    message
+        context   {:update     update
                    :components components}]
-    (when (and handler message update-id)
+    (when (and handler update update-id)
       (try
         (chain/execute context
                        (concat (interceptors-by-consumer consumer consumers)
