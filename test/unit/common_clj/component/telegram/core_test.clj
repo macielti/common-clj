@@ -1,4 +1,5 @@
 (ns common-clj.component.telegram.core-test
+  (:use [clojure pprint])
   (:require [clojure.test :refer :all]
             [schema.test :as s]
             [clj-http.fake :as fake]
@@ -31,6 +32,10 @@
                                    :message   {:chat {:id 123456900}
                                                :text "/default-error-handler"}})
 
+(def update-callback-query {:update_id      123456800
+                            :callback_query {:message {:chat {:id 123456900}}
+                                             :data    "{\"handler\":\"callback-query\"}"}})
+
 (def auth-interceptor
   (interceptor/interceptor
     {:name  :auth-interceptor
@@ -46,8 +51,8 @@
 (def consumers
   {:interceptors   [auth-interceptor dumb-interceptor]
    :message        {:test                           {:consumer/interceptors  [:auth-interceptor]
-                                                     :consumer/handler       (fn [{:keys [message]}]
-                                                                               (swap! test-state assoc :text (:text message)))
+                                                     :consumer/handler       (fn [{:keys [update]}]
+                                                                               (swap! test-state assoc :text (-> update :message :text)))
                                                      :consumer/error-handler (fn [_ _])}
                     :with-exception-in-main-handler {:consumer/handler       (fn [_]
                                                                                (throw (ex-info "Random exception"
@@ -57,13 +62,24 @@
                     :default-error-handler          {:consumer/handler (fn [_]
                                                                          (throw (ex-info "Random exception"
                                                                                          {:cause :nothing})))}}
-   :callback-query {}})
+   :callback-query {:callback-query {:consumer/interceptors  [:auth-interceptor]
+                                     :consumer/handler       (fn [{:keys [update]}]
+                                                               (swap! test-state assoc :update update))
+                                     :consumer/error-handler (fn [_ _])}}})
 
 (s/deftest consume-update!-test
   (testing "that we can consume a update"
     (component.telegram.core/consume-update! update consumers components)
     (is (= {:interceptor :auth-interceptor
             :text        "/test testing"}
+           @test-state))
+    (reset! test-state nil))
+  (testing "that we can handle/consume callback-queries"
+    (component.telegram.core/consume-update! update-callback-query consumers components)
+    (is (= {:interceptor :auth-interceptor
+            :update        {:callback_query {:data    "{\"handler\":\"callback-query\"}"
+                                           :message {:chat {:id 123456900}}}
+                          :update_id      123456800}}
            @test-state))
     (reset! test-state nil))
   (testing "that we can handle exception with error-handler provided by the user of the component"
