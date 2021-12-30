@@ -1,26 +1,16 @@
 (ns common-clj.component.telegram.core-test
-  (:use [clojure pprint])
   (:require [clojure.test :refer :all]
             [schema.test :as s]
             [clj-http.fake :as fake]
-            [telegrambot-lib.core :as telegram-bot]
-            [common-clj.component.telegram.core :as component.telegram.core]
             [cheshire.core :as json]
-            [io.pedestal.interceptor :as interceptor]))
+            [io.pedestal.interceptor :as interceptor]
+            [fixtures.update]
+            [fixtures.config]
+            [fixtures.components]
+            [common-clj.component.telegram.core :as component.telegram.core]))
 
 (def test-state (atom nil))
 
-(def chat-id 123456789)
-(def token "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11")
-(def telegram (telegram-bot/create token))
-(def components
-  {:telegram telegram
-   :config   {:telegram {:token                token
-                         :chat-id              chat-id
-                         :message-template-dir "templates"}}})
-(def update {:update_id 123456789
-             :message   {:chat {:id 123456789}
-                         :text "/test testing"}})
 (def update-with-exception-in-command-consumption {:update_id 123456800
                                                    :message   {:chat {:id 123456900}
                                                                :text "/with-exception-in-main-handler"}})
@@ -69,42 +59,43 @@
 
 (s/deftest consume-update!-test
   (testing "that we can consume a update"
-    (component.telegram.core/consume-update! update consumers components)
+    (component.telegram.core/consume-update! fixtures.update/update-with-test-command-call consumers fixtures.components/components-for-telegram)
     (is (= {:interceptor :auth-interceptor
             :text        "/test testing"}
            @test-state))
     (reset! test-state nil))
+
   (testing "that we can handle/consume callback-queries"
-    (component.telegram.core/consume-update! update-callback-query consumers components)
+    (component.telegram.core/consume-update! update-callback-query consumers fixtures.components/components-for-telegram)
     (is (= {:interceptor :auth-interceptor
-            :update        {:callback_query {:data    "{\"handler\":\"callback-query\"}"
+            :update      {:callback_query {:data    "{\"handler\":\"callback-query\"}"
                                            :message {:chat {:id 123456900}}}
                           :update_id      123456800}}
            @test-state))
     (reset! test-state nil))
   (testing "that we can handle exception with error-handler provided by the user of the component"
-    (component.telegram.core/consume-update! update-with-exception-in-command-consumption consumers components)
+    (component.telegram.core/consume-update! update-with-exception-in-command-consumption consumers fixtures.components/components-for-telegram)
     (is (= :nothing
            (:cause @test-state)))
     (reset! test-state nil))
   (testing "that we can consume unmatched command messages"
     (fake/with-fake-routes
-      {(format "https://api.telegram.org/bot%s/sendMessage" token) (fn [{:keys [body]}]
+      {(format "https://api.telegram.org/bot%s/sendMessage" fixtures.config/token) (fn [{:keys [body]}]
                                                                      (reset! test-state (-> (slurp body)
                                                                                             (json/parse-string true)
                                                                                             :text))
                                                                      {})}
-      (component.telegram.core/consume-update! update-with-unmatched-command-message consumers components))
+      (component.telegram.core/consume-update! update-with-unmatched-command-message consumers fixtures.components/components-for-telegram))
     (is (= "Sorry, command not found.\n"
            @test-state))
     (reset! test-state nil))
   (testing "that we can use a default error handler while consuming command messages"
     (fake/with-fake-routes
-      {(format "https://api.telegram.org/bot%s/sendMessage" token) (fn [{:keys [body]}]
+      {(format "https://api.telegram.org/bot%s/sendMessage" fixtures.config/token) (fn [{:keys [body]}]
                                                                      (reset! test-state (-> (slurp body)
                                                                                             (json/parse-string true)))
                                                                      {})}
-      (component.telegram.core/consume-update! update-default-error-handler consumers components))
+      (component.telegram.core/consume-update! update-default-error-handler consumers fixtures.components/components-for-telegram))
     (is (= {:chat_id 123456789
             :text    "Sorry. An error occurred while processing your previous command.\n"}
            @test-state))
@@ -113,12 +104,12 @@
 (s/deftest send-message!-test
   (testing "that we can send telegram messages"
     (fake/with-fake-routes
-      {(format "https://api.telegram.org/bot%s/sendMessage" token) (fn [{:keys [body]}]
+      {(format "https://api.telegram.org/bot%s/sendMessage" fixtures.config/token) (fn [{:keys [body]}]
                                                                      (reset! test-state (-> (slurp body)
                                                                                             (json/parse-string true)
                                                                                             :text))
                                                                      {})}
-      (component.telegram.core/send-message! "Random message" components))
+      (component.telegram.core/send-message! "Random message" fixtures.components/components-for-telegram))
     (is (= "Random message"
            @test-state))
     (reset! test-state nil)))
@@ -126,11 +117,11 @@
 (s/deftest commit-update-as-consumed!-test
   (testing "that we can commit consumed messages"
     (fake/with-fake-routes
-      {(format "https://api.telegram.org/bot%s/getUpdates" token) (fn [{:keys [body]}]
+      {(format "https://api.telegram.org/bot%s/getUpdates" fixtures.config/token) (fn [{:keys [body]}]
                                                                     (reset! test-state (-> (slurp body)
                                                                                            (json/parse-string true)))
                                                                     {})}
-      (component.telegram.core/commit-update-as-consumed! 123456789 (:telegram components)))
+      (component.telegram.core/commit-update-as-consumed! 123456789 fixtures.components/telegram))
     (is (= {:offset 123456790}
            @test-state))))
 
