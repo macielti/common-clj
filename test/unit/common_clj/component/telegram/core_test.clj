@@ -7,6 +7,7 @@
             [fixtures.update]
             [fixtures.config]
             [fixtures.components]
+            [fixtures.interceptors]
             [common-clj.component.telegram.core :as component.telegram.core]))
 
 (def test-state (atom nil))
@@ -29,13 +30,8 @@
               (swap! test-state assoc :interceptor :auth-interceptor)
               context)}))
 
-(def dumb-interceptor
-  (interceptor/interceptor
-    {:name  :dumb-interceptor
-     :enter (fn [_] nil)}))
-
 (def consumers
-  {:interceptors   [auth-interceptor dumb-interceptor]
+  {:interceptors   [auth-interceptor fixtures.interceptors/dumb-interceptor]
    :message        {:test                           {:consumer/interceptors  [:auth-interceptor]
                                                      :consumer/handler       (fn [{:keys [update]}]
                                                                                (swap! test-state assoc :text (-> update :message :text)))
@@ -65,8 +61,8 @@
     (component.telegram.core/consume-update! fixtures.update/update-with-callback-query consumers fixtures.components/components-for-telegram)
     (is (= {:interceptor :auth-interceptor
             :update      {:callback_query {:data    "{\"handler\":\"callback-query\"}"
-                                           :message {:chat {:id 123456900}}}
-                          :update_id      123456800}}
+                                           :message {:chat {:id 123456789}}}
+                          :update_id      9876543221}}
            @test-state))
     (reset! test-state nil))
   (testing "that we can handle exception with error-handler provided by the user of the component"
@@ -77,10 +73,10 @@
   (testing "that we can consume unmatched command messages"
     (fake/with-fake-routes
       {(format "https://api.telegram.org/bot%s/sendMessage" fixtures.config/token) (fn [{:keys [body]}]
-                                                                     (reset! test-state (-> (slurp body)
-                                                                                            (json/parse-string true)
-                                                                                            :text))
-                                                                     {})}
+                                                                                     (reset! test-state (-> (slurp body)
+                                                                                                            (json/parse-string true)
+                                                                                                            :text))
+                                                                                     {})}
       (component.telegram.core/consume-update! update-with-unmatched-command-message consumers fixtures.components/components-for-telegram))
     (is (= "Sorry, command not found.\n"
            @test-state))
@@ -88,9 +84,9 @@
   (testing "that we can use a default error handler while consuming command messages"
     (fake/with-fake-routes
       {(format "https://api.telegram.org/bot%s/sendMessage" fixtures.config/token) (fn [{:keys [body]}]
-                                                                     (reset! test-state (-> (slurp body)
-                                                                                            (json/parse-string true)))
-                                                                     {})}
+                                                                                     (reset! test-state (-> (slurp body)
+                                                                                                            (json/parse-string true)))
+                                                                                     {})}
       (component.telegram.core/consume-update! update-default-error-handler consumers fixtures.components/components-for-telegram))
     (is (= {:chat_id 123456789
             :text    "Sorry. An error occurred while processing your previous command.\n"}
@@ -101,10 +97,10 @@
   (testing "that we can send telegram messages"
     (fake/with-fake-routes
       {(format "https://api.telegram.org/bot%s/sendMessage" fixtures.config/token) (fn [{:keys [body]}]
-                                                                     (reset! test-state (-> (slurp body)
-                                                                                            (json/parse-string true)
-                                                                                            :text))
-                                                                     {})}
+                                                                                     (reset! test-state (-> (slurp body)
+                                                                                                            (json/parse-string true)
+                                                                                                            :text))
+                                                                                     {})}
       (component.telegram.core/send-message! "Random message" fixtures.components/components-for-telegram))
     (is (= "Random message"
            @test-state))
@@ -114,9 +110,9 @@
   (testing "that we can commit consumed messages"
     (fake/with-fake-routes
       {(format "https://api.telegram.org/bot%s/getUpdates" fixtures.config/token) (fn [{:keys [body]}]
-                                                                    (reset! test-state (-> (slurp body)
-                                                                                           (json/parse-string true)))
-                                                                    {})}
+                                                                                    (reset! test-state (-> (slurp body)
+                                                                                                           (json/parse-string true)))
+                                                                                    {})}
       (component.telegram.core/commit-update-as-consumed! 123456789 fixtures.components/telegram))
     (is (= {:offset 123456790}
            @test-state))))
@@ -124,7 +120,7 @@
 (def consumer-interceptor-test {:consumer/interceptors [:auth-interceptor]
                                 :consumer/handler      (fn [_] nil)})
 
-(def consumers-with-interceptors {:interceptors   [auth-interceptor dumb-interceptor]
+(def consumers-with-interceptors {:interceptors   [auth-interceptor fixtures.interceptors/dumb-interceptor]
                                   :message        {:consumer-interceptor-test consumer-interceptor-test}
                                   :callback-query {}})
 
