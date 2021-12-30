@@ -22,10 +22,6 @@
                                    :message   {:chat {:id 123456900}
                                                :text "/default-error-handler"}})
 
-(def update-callback-query {:update_id      123456800
-                            :callback_query {:message {:chat {:id 123456900}}
-                                             :data    "{\"handler\":\"callback-query\"}"}})
-
 (def auth-interceptor
   (interceptor/interceptor
     {:name  :auth-interceptor
@@ -66,7 +62,7 @@
     (reset! test-state nil))
 
   (testing "that we can handle/consume callback-queries"
-    (component.telegram.core/consume-update! update-callback-query consumers fixtures.components/components-for-telegram)
+    (component.telegram.core/consume-update! fixtures.update/update-with-callback-query consumers fixtures.components/components-for-telegram)
     (is (= {:interceptor :auth-interceptor
             :update      {:callback_query {:data    "{\"handler\":\"callback-query\"}"
                                            :message {:chat {:id 123456900}}}

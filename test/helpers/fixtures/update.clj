@@ -8,3 +8,8 @@
   {:update_id update-id
    :message   {:chat {:id chat-id}
                :text "/test testing"}})
+
+(def update-with-callback-query
+  {:update_id      update-id
+   :callback_query {:message {:chat {:id chat-id}}
+                    :data    "{\"handler\":\"callback-query\"}"}})
