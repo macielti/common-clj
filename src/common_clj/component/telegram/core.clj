@@ -1,5 +1,4 @@
 (ns common-clj.component.telegram.core
-  (:use [clojure pprint])
   (:require [schema.core :as s]
             [io.pedestal.interceptor :as interceptor]
             [com.stuartsierra.component :as component]
@@ -9,9 +8,7 @@
             [medley.core :as medley]
             [overtone.at-at :as at-at]
             [common-clj.component.telegram.adapters.update :as telegram.adapters.message]
-            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
-            [taoensso.timbre :as timbre])
-  (:import (io.pedestal.interceptor Interceptor)))
+            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]))
 
 (s/defn send-message!
   [message :- s/Str
@@ -23,7 +20,7 @@
    telegram]
   (telegram-bot/get-updates telegram {:offset (+ offset 1)}))
 
-(s/defn interceptors-by-consumer :- [Interceptor]
+(s/defn interceptors-by-consumer
   [consumer
    {:keys [interceptors]}]
   (let [interceptor-groups (group-by :name interceptors)]
