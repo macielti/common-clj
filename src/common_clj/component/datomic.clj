@@ -2,6 +2,13 @@
   (:require [com.stuartsierra.component :as component]
             [datomic.api :as d]))
 
+(defn mocked-datomic [datomic-schemas]
+  (let [datomic-uri "datomic:mem://mocked"
+        connection  (do (d/create-database datomic-uri)
+                        (d/connect datomic-uri))]
+    @(d/transact connection (flatten datomic-schemas))
+    connection))
+
 (defrecord Datomic [config schemas]
   component/Lifecycle
   (start [component]
