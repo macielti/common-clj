@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [4.10.4] - 2022-01-19
+
+### Added
+
+- Added `mocked-datomic` function so you can do unit test for datomic queries and insertions.
+
 ## [4.9.4] - 2021-12-28
 
 ### Fixed
@@ -118,6 +124,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/0.1.1...HEAD
+
+[4.10.4]: https://github.com/macielti/common-clj/compare/4.10.4...4.9.4
 
 [4.9.4]: https://github.com/macielti/common-clj/compare/4.9.4...4.9.3
 
