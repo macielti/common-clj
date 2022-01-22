@@ -58,13 +58,13 @@
   (when-let [updates (-> (telegram-bot/get-updates telegram) :result)]
     (doseq [update updates] (consume-update! update consumers components))))
 
-(defrecord Telegram [config database consumers]
+(defrecord Telegram [config datomic consumers]
   component/Lifecycle
   (start [component]
     (let [{{:keys [telegram] :as config-content} :config} config
           bot        (telegram-bot/create (:token telegram))
           components (medley/assoc-some {}
-                                        :database (:database database)
+                                        :datomic (:datomic datomic)
                                         :config config-content
                                         :telegram bot)
           pool       (at-at/mk-pool)]

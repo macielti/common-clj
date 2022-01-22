@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [5.10.4] - 2022-01-22
+
+## Change
+
+- Now telegram component expect a `datomic` entity instead of a more generic `database`.
+
 ## [4.10.4] - 2022-01-19
 
 ### Added
@@ -123,7 +129,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/0.1.1...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/HEAD...0.1.1
+
+[5.10.4]: https://github.com/macielti/common-clj/compare/5.10.4...4.10.4
 
 [4.10.4]: https://github.com/macielti/common-clj/compare/4.10.4...4.9.4
 
