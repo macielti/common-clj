@@ -5,6 +5,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## Added
+ - Now you can access the `:current-env` from the config component, case other components need this information.
+
 ## [5.10.4] - 2022-01-22
 
 ## Change
