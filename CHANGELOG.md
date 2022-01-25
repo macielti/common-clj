@@ -5,8 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [5.11.6] - 2022-01-25
+
 ## Added
- - Now you can access the `:current-env` from the config component, case other components need this information.
+
+- Now you can access the `:current-env` from the config component, case other components need this information.
+- Producer component for Kafka messages.
 
 ## [5.10.4] - 2022-01-22
 
@@ -133,6 +137,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/HEAD...0.1.1
+
+[5.11.5]: https://github.com/macielti/common-clj/compare/5.11.6...5.10.4
 
 [5.10.4]: https://github.com/macielti/common-clj/compare/5.10.4...4.10.4
 
