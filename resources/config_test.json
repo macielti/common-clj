@@ -1,5 +1,6 @@
 {
   "prod": {
+    "bootstrapServer": "http://localhost:9092",
     "datomicURI": "datomic:mem://example-prod",
     "service": {
       "host": "0.0.0.0",
@@ -7,6 +8,7 @@
     }
   },
   "test": {
+    "bootstrapServer": "http://localhost:9092",
     "datomicURI": "datomic:mem://example-test",
     "service": {
       "host": "0.0.0.0",

@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "5.10.4"
+(defproject net.clojars.macielti/common-clj "5.11.5"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -14,21 +14,22 @@
 
   :dependencies [[com.attendify/schema-refined "0.3.0-alpha4"]
                  [datalevin "0.5.27"]
+                 [org.apache.kafka/kafka-clients "2.8.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
                  [nubank/state-flow "5.14.0"]
                  [clj-http-fake "1.0.3"]
                  [medley "1.3.0"]
-                 [telegrambot-lib "1.2.0"]
+                 [telegrambot-lib "1.3.0"]
                  [overtone/at-at "1.2.0"]
-                 [io.pedestal/pedestal.service "0.5.9"]
-                 [io.pedestal/pedestal.interceptor "0.5.9"]
+                 [io.pedestal/pedestal.service "0.5.10"]
+                 [io.pedestal/pedestal.interceptor "0.5.10"]
                  [prismatic/schema-generators "0.1.3"]
                  [nubank/matcher-combinators "3.3.1"]
                  [com.datomic/datomic-free "0.9.5697"]
-                 [io.pedestal/pedestal.jetty "0.5.9"]
-                 [io.pedestal/pedestal.route "0.5.7"]
+                 [io.pedestal/pedestal.jetty "0.5.10"]
+                 [io.pedestal/pedestal.route "0.5.10"]
                  [com.stuartsierra/component "1.0.0"]
-                 [org.clojure/tools.logging "1.2.3"]
+                 [org.clojure/tools.logging "1.2.4"]
                  [org.clojure/clojure "1.10.3"]
                  [prismatic/plumbing "0.6.0"]
                  [camel-snake-kebab "0.4.2"]
