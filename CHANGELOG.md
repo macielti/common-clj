@@ -5,7 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
-## [5.11.6] - 2022-01-25
+## [5.11.7] - 2022-01-28
+
+# Added
+
+- Added `producer` component to `service` component, so you can access `producer` component inside endpoint controllers.
+
+## [5.11.5] - 2022-01-25
 
 ## Added
 
@@ -138,7 +144,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/HEAD...0.1.1
 
-[5.11.5]: https://github.com/macielti/common-clj/compare/5.11.6...5.10.4
+[5.11.7]: https://github.com/macielti/common-clj/compare/5.11.7...5.11.5
+
+[5.11.5]: https://github.com/macielti/common-clj/compare/5.11.5...5.10.4
 
 [5.10.4]: https://github.com/macielti/common-clj/compare/5.10.4...4.10.4
 

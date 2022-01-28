@@ -1,11 +1,10 @@
 (ns common-clj.component.service
-  (:use [clojure pprint])
   (:require [io.pedestal.http :as http]
             [com.stuartsierra.component :as component]
             [common-clj.io.interceptors :as io.interceptors]
             [plumbing.core :as plumbing]))
 
-(defrecord Service [routes config datomic]
+(defrecord Service [routes config datomic producer]
   component/Lifecycle
   (start [component]
     (let [{{{:keys [host port]} :service} :config} config
@@ -15,6 +14,7 @@
                        ::http/type   :jetty
                        ::http/join?  false}
           components  (plumbing/assoc-when {}
+                                           :producer (:producer producer)
                                            :config (:config config)
                                            :datomic (:datomic datomic))]
       (assoc component :service (http/start (-> service-map
@@ -27,4 +27,4 @@
     (assoc component :service nil)))
 
 (defn new-service []
-  (->Service {} {} {}))
+  (->Service {} {} {} {}))

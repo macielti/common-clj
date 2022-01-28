@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "5.11.6"
+(defproject net.clojars.macielti/common-clj "5.11.7"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -34,7 +34,7 @@
                  [prismatic/plumbing "0.6.0"]
                  [camel-snake-kebab "0.4.2"]
                  [prismatic/schema "1.2.0"]
-                 [cheshire "5.10.1"]]
+                 [cheshire "5.10.2"]]
 
   :test-paths ["test/unit" "test/integration" "test/helpers"]
 
