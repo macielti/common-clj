@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [5.12.7] - 2022-01-30
+
+## Added
+
+- Added Kafka `consumer` component.
+
 ## [5.11.7] - 2022-01-28
 
 # Added
@@ -143,6 +149,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/HEAD...0.1.1
+
+[5.12.7]: https://github.com/macielti/common-clj/compare/5.12.7...5.11.7
 
 [5.11.7]: https://github.com/macielti/common-clj/compare/5.11.7...5.11.5
 
