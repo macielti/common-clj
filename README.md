@@ -4,13 +4,19 @@
 
 Just common Clojure codes that I use across projects.
 
-# Installation
+## Installation
 
-To install, add the following dependency to your project or build file:
+Add the following dependency to your project or build file:
 
 `[net.clojars.macielti/common-clj "x.y.z"]`
 
-You can check what is the last available version on [Clojars page](https://clojars.org/net.clojars.macielti/common-clj/).
+You can check for the last available version on [Clojars page](https://clojars.org/net.clojars.macielti/common-clj/).
+
+## Documentation
+
+Tests are the best documentation! Better than nothing.
+
+That's all what I have for now. I am planning to add proper documentation in a near future.
 
 ## License
 
@@ -26,5 +32,6 @@ the Free Software Foundation, either version 2 of the License, or (at your optio
 Classpath Exception which is available at https://www.gnu.org/software/classpath/license.html.
 
 ## Bibliography
+
 - [Versionamento Semântico 2.0.0](https://semver.org/lang/pt-BR/)
 - [Library Development and Distribution](http://clojure-doc.org/articles/ecosystem/libraries_authoring.htmls)
