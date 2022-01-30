@@ -3,7 +3,8 @@
             [cheshire.core :as json]
             [com.stuartsierra.component :as component]
             [io.pedestal.interceptor :as interceptor]
-            [io.pedestal.interceptor.chain :as chain])
+            [io.pedestal.interceptor.chain :as chain]
+            [plumbing.core :as plumbing])
   (:import (org.apache.kafka.clients.consumer KafkaConsumer MockConsumer OffsetResetStrategy)
            (org.apache.kafka.common TopicPartition)
            (java.time Duration)
@@ -61,7 +62,7 @@
                                                           {:keys [handler]} (handler-by-topic topic topic-consumers)]
                                                       (handler message components))))))))}))
 
-(s/defrecord Consumer [config topic-consumers]
+(s/defrecord Consumer [config datomic producer topic-consumers]
   component/Lifecycle
 
   (start [this]
@@ -70,7 +71,10 @@
                           "key.deserializer"   StringDeserializer
                           "bootstrap.servers"  (get-in config [:config :bootstrap-server])
                           "group.id"           (get-in config [:config :service-name])}
-          components     {:config (:config config)}
+          components     (plumbing/assoc-when {}
+                                              :producer (:producer producer)
+                                              :config (:config config)
+                                              :datomic (:datomic datomic))
           topics         (get-in config [:config :topics])
           context        {:consumer-props  consumer-props
                           :topics          topics
