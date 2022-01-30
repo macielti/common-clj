@@ -8,6 +8,9 @@
     }
   },
   "test": {
+    "topics": [
+      "consumer-topic-test"
+    ],
     "bootstrapServer": "http://localhost:9092",
     "datomicURI": "datomic:mem://example-test",
     "service": {
