@@ -12,7 +12,7 @@
     :producer (component/using (component.producer/new-producer)
                                [:config])))
 
-(s/deftest datomic-component-test
+(s/deftest kafka-producer-component-test
   (let [system   (component/start system-test)
         producer (component.helper/get-component-content :producer system)]
 
