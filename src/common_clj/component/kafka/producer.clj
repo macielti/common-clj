@@ -1,8 +1,6 @@
 (ns common-clj.component.kafka.producer
   (:require [cheshire.core :as json]
-            [schema.core :as s]
-            [com.stuartsierra.component :as component]
-            [taoensso.timbre :as timbre])
+            [com.stuartsierra.component :as component])
   (:import (org.apache.kafka.clients.producer KafkaProducer ProducerRecord MockProducer)
            (org.apache.kafka.common.serialization StringSerializer)
            (org.apache.kafka.clients.consumer ConsumerRecord)))
