@@ -31,7 +31,6 @@
 
 (s-test/deftest kafka-consumer-component-test
   (let [system   (component/start system-test)
-        consumer (component.helper/get-component-content :consumer system)
         producer (component.helper/get-component-content :producer system)]
 
     (component.producer/produce! {:topic   :consumer-topic-test

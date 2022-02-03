@@ -1,7 +1,8 @@
 (ns common-clj.component.kafka.producer
   (:require [cheshire.core :as json]
             [schema.core :as s]
-            [com.stuartsierra.component :as component])
+            [com.stuartsierra.component :as component]
+            [taoensso.timbre :as timbre])
   (:import (org.apache.kafka.clients.producer KafkaProducer ProducerRecord MockProducer)
            (org.apache.kafka.common.serialization StringSerializer)
            (org.apache.kafka.clients.consumer ConsumerRecord)))
@@ -16,8 +17,9 @@
     (.addRecord mock-consumer
                 (ConsumerRecord. (name topic) 0 (long 0) nil (json/encode message)))))
 
-(s/defn mock-produced-messages [producer :- MockProducer]
-  (->> (.history producer)
+(defn mock-produced-messages
+  [{:keys [kafka-producer]}]
+  (->> (.history kafka-producer)
        (map (fn [record]
               {:topic (keyword (.topic record))
                :value (json/decode (.value record) true)}))))
