@@ -5,34 +5,35 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
-## Changed
+## [6.12.7] - 2022-02-03
+
+### Changed
 
 - Now Kafka mocked client and kafka consumer are integrated this will make more ease to do integration tests.
 - Now we have separated components for Kafka Producer and MockerKafkaProducer.
-- Now we have separated components for Consumer and MockedKafkaConsumer.
 
 ## [5.12.7] - 2022-01-30
 
-## Added
+### Added
 
 - Added Kafka `consumer` component.
 
 ## [5.11.7] - 2022-01-28
 
-# Added
+### Added
 
 - Added `producer` component to `service` component, so you can access `producer` component inside endpoint controllers.
 
 ## [5.11.5] - 2022-01-25
 
-## Added
+### Added
 
 - Now you can access the `:current-env` from the config component, case other components need this information.
 - Producer component for Kafka messages.
 
 ## [5.10.4] - 2022-01-22
 
-## Change
+### Change
 
 - Now telegram component expect a `datomic` entity instead of a more generic `database`.
 
@@ -155,6 +156,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/HEAD...0.1.1
+
+[6.12.7]: https://github.com/macielti/common-clj/compare/6.12.7...5.12.7
 
 [5.12.7]: https://github.com/macielti/common-clj/compare/5.12.7...5.11.7
 
