@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## Changed
+
+- Now Kafka mocked client and kafka consumer are integrated this will make more ease to do integration tests.
+- Now we have separated components for Kafka Producer and MockerKafkaProducer.
+- Now we have separated components for Consumer and MockedKafkaConsumer.
+
 ## [5.12.7] - 2022-01-30
 
 ## Added
