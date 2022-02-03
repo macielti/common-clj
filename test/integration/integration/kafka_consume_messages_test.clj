@@ -1,13 +1,12 @@
 (ns integration.kafka-consume-messages-test
   (:require [clojure.test :refer :all]
             [schema.test :as s-test]
-            [cheshire.core :as json]
             [schema.core :as s]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.kafka.consumer :as component.consumer]
-            [common-clj.component.helper.core :as component.helper])
-  (:import (org.apache.kafka.clients.consumer ConsumerRecord)))
+            [common-clj.component.helper.core :as component.helper]
+            [common-clj.component.kafka.producer :as component.producer]))
 
 (def test-state (atom nil))
 
@@ -27,15 +26,17 @@
 (def ^:private system-test
   (component/system-map
     :config (component.config/new-config "resources/config_test.json" :test)
-    :consumer (component/using (component.consumer/new-consumer topic-consumers) [:config])))
+    :consumer (component/using (component.consumer/new-consumer topic-consumers) [:config])
+    :producer (component/using (component.producer/new-mock-producer) [:consumer])))
 
 (s-test/deftest kafka-consumer-component-test
   (let [system   (component/start system-test)
-        consumer (component.helper/get-component-content :consumer system)]
+        consumer (component.helper/get-component-content :consumer system)
+        producer (component.helper/get-component-content :producer system)]
 
-
-    (.addRecord (:kafka-client consumer)
-                (ConsumerRecord. "consumer-topic-test" 0 (long 0) nil (json/encode {:test-title "just a simple test"})))
+    (component.producer/produce! {:topic   :consumer-topic-test
+                                  :message {:test-title "just a simple test"}}
+                                 producer)
 
     (Thread/sleep 5000)
 

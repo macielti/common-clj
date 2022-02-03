@@ -26,8 +26,7 @@
                (some-> (try (json/parse-string data true)
                             (catch Exception _ nil))
                        :handler
-                       keyword
-                       timbre/spy)))
+                       keyword)))
 
 (s/defn update->consumer
   [{:keys [message callback_query] :as update}
