@@ -1,26 +1,21 @@
 (ns common-clj.component.kafka.producer
   (:require [cheshire.core :as json]
             [com.stuartsierra.component :as component])
-  (:import (org.apache.kafka.clients.producer KafkaProducer ProducerRecord MockProducer)
-           (org.apache.kafka.common.serialization StringSerializer)
-           (org.apache.kafka.clients.consumer ConsumerRecord)))
+  (:import (org.apache.kafka.clients.producer KafkaProducer ProducerRecord)
+           (org.apache.kafka.common.serialization StringSerializer)))
 
 (defn produce!
-  [{:keys [topic message]}
+  [{:keys [topic message] :as document}
    producer]
-  (let [{:keys [kafka-producer mock-consumer]} producer]
-    (-> kafka-producer
-        (.send (ProducerRecord. (name topic) (json/encode message)))
-        .get)
-    (.addRecord mock-consumer
-                (ConsumerRecord. (name topic) 0 (long 0) nil (json/encode message)))))
+  (let [{:keys [kafka-producer current-env produced-messages]} producer]
+    (cond
+      (= :prod current-env)
+      (-> kafka-producer
+          (.send (ProducerRecord. (name topic) (json/encode message)))
+          .get)
 
-(defn mock-produced-messages
-  [{:keys [kafka-producer]}]
-  (->> (.history kafka-producer)
-       (map (fn [record]
-              {:topic (keyword (.topic record))
-               :value (json/decode (.value record) true)}))))
+      (= :test current-env)
+      (swap! produced-messages conj document))))
 
 (defrecord Producer [config]
   component/Lifecycle
@@ -40,15 +35,15 @@
   (->Producer {}))
 
 
-(defrecord MockKafkaProducer [consumer]
+(defrecord MockKafkaProducer [consumer config]
   component/Lifecycle
 
   (start [this]
-    (assoc this :producer {:kafka-producer (MockProducer. true (StringSerializer.) (StringSerializer.))
-                           :mock-consumer  (-> consumer :consumer :kafka-client)}))
+    (assoc this :producer {:produced-messages (-> consumer :consumer :produced-messages)
+                           :current-env       (-> config :config :current-env)}))
 
   (stop [this]
     (assoc this :producer nil)))
 
 (defn new-mock-producer []
-  (->MockKafkaProducer {}))
+  (->MockKafkaProducer {} {}))

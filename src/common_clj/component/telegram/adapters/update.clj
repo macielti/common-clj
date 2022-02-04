@@ -1,9 +1,8 @@
 (ns common-clj.component.telegram.adapters.update
   (:require [schema.core :as s]
             [clojure.string :as str]
-            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
-            [taoensso.timbre :as timbre]
-            [cheshire.core :as json]))
+            [cheshire.core :as json]
+            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]))
 
 (defmulti update->consumer-key
           (s/fn [_

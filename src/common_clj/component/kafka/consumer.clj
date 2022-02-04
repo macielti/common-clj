@@ -1,12 +1,12 @@
 (ns common-clj.component.kafka.consumer
   (:require [schema.core :as s]
             [cheshire.core :as json]
+            [overtone.at-at :as at-at]
+            [plumbing.core :as plumbing]
             [com.stuartsierra.component :as component]
             [io.pedestal.interceptor :as interceptor]
-            [io.pedestal.interceptor.chain :as chain]
-            [plumbing.core :as plumbing])
-  (:import (org.apache.kafka.clients.consumer KafkaConsumer MockConsumer OffsetResetStrategy)
-           (org.apache.kafka.common TopicPartition)
+            [io.pedestal.interceptor.chain :as chain])
+  (:import (org.apache.kafka.clients.consumer KafkaConsumer)
            (java.time Duration)
            (org.apache.kafka.common.serialization StringDeserializer)))
 
@@ -15,23 +15,6 @@
     {:name  ::kafka-client
      :enter (fn [{:keys [consumer-props] :as context}]
               (assoc context :kafka-client (new KafkaConsumer consumer-props)))}))
-
-(def mock-kafka-client-starter
-  (interceptor/interceptor
-    {:name  ::mock-kafka-client
-     :enter (fn [{:keys [_] :as context}]
-              (assoc context :kafka-client (new MockConsumer OffsetResetStrategy/EARLIEST)))}))
-
-(def mock-subscriber
-  (interceptor/interceptor
-    {:name  ::mock-subscriber
-     :enter (fn [{:keys [topics kafka-client] :as context}]
-              (doto kafka-client
-                (.subscribe topics)
-                (.rebalance (map #(TopicPartition. % 0) topics)))
-              (doseq [topic topics]
-                (.updateBeginningOffsets kafka-client {(TopicPartition. topic 0) (long 0)}))
-              context)}))
 
 (def subscriber
   (interceptor/interceptor
@@ -42,8 +25,8 @@
 
 (defn kafka-record->clj-message
   [record]
-  {:topic (keyword (.topic record))
-   :value (json/decode (.value record) true)})
+  {:topic   (keyword (.topic record))
+   :message (json/decode (.value record) true)})
 
 (s/defn handler-by-topic
   [topic :- s/Keyword
@@ -66,8 +49,7 @@
   component/Lifecycle
 
   (start [this]
-    (let [current-env    (-> config :config :current-env)
-          consumer-props {"value.deserializer" StringDeserializer
+    (let [consumer-props {"value.deserializer" StringDeserializer
                           "key.deserializer"   StringDeserializer
                           "bootstrap.servers"  (get-in config [:config :bootstrap-server])
                           "group.id"           (get-in config [:config :service-name])}
@@ -80,16 +62,62 @@
                           :topics          topics
                           :topic-consumers topic-consumers
                           :components      components}]
-      (cond-> this
-              (= current-env :prod) (assoc :consumer (-> (chain/execute context [kafka-client-starter subscriber kafka-consumer!])
-                                                         :kafka-client))
-              (= current-env :test) (assoc :consumer (-> (chain/execute context [mock-kafka-client-starter mock-subscriber kafka-consumer!])
-                                                         (select-keys [:loop-consumer :kafka-client]))))))
 
-  (stop [{{:keys [kafka-client loop-consumer]} :consumer :as this}]
-    (deref loop-consumer 5000 loop-consumer)
+      (assoc this :consumer (-> (chain/execute context [kafka-client-starter subscriber kafka-consumer!])
+                                :kafka-client))))
+
+  (stop [{{:keys [kafka-client]} :consumer :as this}]
     (.close kafka-client)
     (assoc this :consumer nil)))
 
 (defn new-consumer [topic-consumers]
   (map->Consumer {:topic-consumers topic-consumers}))
+
+(defn produced-messages
+  [{:keys [produced-messages]}]
+  @produced-messages)
+
+(defn consumed-messages
+  [{:keys [consumed-messages]}]
+  @consumed-messages)
+
+(defn ^:private commit-message-as-consumed
+  [message
+   consumed-messages]
+  (swap! consumed-messages conj message))
+
+(defn ^:private messages-that-were-produced-but-not-consumed-yet
+  [produced-messages
+   consumed-messages]
+  (clojure.set/difference produced-messages consumed-messages))
+
+(defrecord MockKafkaConsumer [config datomic producer topic-consumers]
+  component/Lifecycle
+
+  (start [this]
+    (let [produced-messages (atom [])
+          consumed-messages (atom [])
+          components        (plumbing/assoc-when {}
+                                                 :producer (:producer producer)
+                                                 :config (:config config)
+                                                 :datomic (:datomic datomic))
+          consumer-pool     (at-at/mk-pool)]
+
+      (at-at/interspaced 100 (fn []
+                               (doseq [message (messages-that-were-produced-but-not-consumed-yet
+                                                 @produced-messages
+                                                 @consumed-messages)]
+                                 (let [{:keys [handler]} (handler-by-topic (:topic message) topic-consumers)]
+                                   (handler message components)
+                                   (commit-message-as-consumed message consumed-messages)))) consumer-pool)
+
+      (assoc this :consumer {:produced-messages produced-messages
+                             :consumed-messages consumed-messages
+                             :consumer-pool     consumer-pool})))
+
+  (stop [{{:keys [consumer-pool]} :consumer :as this}]
+    (at-at/stop-and-reset-pool! consumer-pool)
+    (assoc this :consumer nil)))
+
+(defn new-mock-consumer [topic-consumers]
+  (->MockKafkaConsumer {} {} {} topic-consumers))
