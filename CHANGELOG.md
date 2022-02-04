@@ -5,12 +5,29 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [7.12.8] - 2022-02-04
+
+### Fixed
+
+- Fixed integration between mocked consumer and producer (Kafka) for better integration tests.
+
+### Changed
+
+- Now we have separated components for Kafka Consumer and MockKafkaConsumer.
+
+### Added
+
+- Added helper functions to do integration tests with Kafka
+    - Helper function to fetch produced messages.
+    - Helper function to fetch successfully consumed and processed messages (the ones that their handler function didn't
+      raise exceptions)
+
 ## [6.12.7] - 2022-02-03
 
 ### Changed
 
 - Now Kafka mocked client and kafka consumer are integrated this will make more ease to do integration tests.
-- Now we have separated components for Kafka Producer and MockerKafkaProducer.
+- Now we have separated components for Kafka Producer and MockKafkaProducer.
 
 ## [5.12.7] - 2022-01-30
 
@@ -156,6 +173,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/HEAD...0.1.1
+
+[7.12.8]: https://github.com/macielti/common-clj/compare/7.12.8...6.12.7
 
 [6.12.7]: https://github.com/macielti/common-clj/compare/6.12.7...5.12.7
 

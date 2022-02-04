@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "6.12.7"
+(defproject net.clojars.macielti/common-clj "7.12.8"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -13,13 +13,15 @@
   :exclusions [log4j]
 
   :dependencies [[com.attendify/schema-refined "0.3.0-alpha4"]
+                 [overtone/at-at "1.2.0"]
+                 [clj-test-containers "0.5.0"]
                  [datalevin "0.5.27"]
                  [org.apache.kafka/kafka-clients "2.8.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
-                 [nubank/state-flow "5.14.0"]
+                 [nubank/state-flow "5.14.1"]
                  [clj-http-fake "1.0.3"]
                  [medley "1.3.0"]
-                 [telegrambot-lib "1.3.0"]
+                 [telegrambot-lib "1.4.0"]
                  [overtone/at-at "1.2.0"]
                  [io.pedestal/pedestal.service "0.5.10"]
                  [io.pedestal/pedestal.interceptor "0.5.10"]
