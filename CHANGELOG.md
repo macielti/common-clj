@@ -5,9 +5,15 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [8.12.8] - 2022-02-05
+
 ### Added
 
-- Telegram producer messages component.
+- Added Telegram producer messages component.
+
+### Removed
+
+- Removed Telegram component
 
 ## [7.12.8] - 2022-02-04
 
@@ -177,6 +183,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/HEAD...0.1.1
+
+[8.12.8]: https://github.com/macielti/common-clj/compare/8.12.8...7.12.8
 
 [7.12.8]: https://github.com/macielti/common-clj/compare/7.12.8...6.12.7
 
