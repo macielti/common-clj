@@ -68,12 +68,12 @@
                                         :telegram-consumer bot)
           pool       (at-at/mk-pool)]
       (at-at/interspaced 100 (partial consumer-job! consumers components) pool)
-      (assoc component :telegram {:bot    bot
-                                  :poller pool})))
+      (assoc component :telegram-consumer {:bot    bot
+                                           :poller pool})))
 
-  (stop [{:keys [telegram]}]
-    (telegram-bot/close (:bot telegram))
-    (at-at/stop-and-reset-pool! (:poller telegram))))
+  (stop [{:keys [telegram-consumer]}]
+    (telegram-bot/close (:bot telegram-consumer))
+    (at-at/shutdown-pool-gracefully! (:poller telegram-consumer))))
 
 (defn new-telegram-consumer
   [consumers]
