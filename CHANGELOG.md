@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [8.13.8] - 2022-02-05
+
+### Added
+
+- Added TelegramConsumer component.
+
 ## [8.12.8] - 2022-02-05
 
 ### Added
@@ -176,54 +182,58 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Properly update the change log doc.
 
-## 0.1.0 - 2021-09-05
+## [0.1.0] - 2021-09-05
 
 ### Added
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/HEAD...0.1.1
+[Unreleased]: https://github.com/macielti/common-clj/compare/v8.13.8...HEAD
 
-[8.12.8]: https://github.com/macielti/common-clj/compare/8.12.8...7.12.8
+[8.13.8]: https://github.com/macielti/common-clj/compare/v8.12.8...v8.13.8
 
-[7.12.8]: https://github.com/macielti/common-clj/compare/7.12.8...6.12.7
+[8.12.8]: https://github.com/macielti/common-clj/compare/v7.12.8...v8.12.8
 
-[6.12.7]: https://github.com/macielti/common-clj/compare/6.12.7...5.12.7
+[7.12.8]: https://github.com/macielti/common-clj/compare/v6.12.7...v7.12.8
 
-[5.12.7]: https://github.com/macielti/common-clj/compare/5.12.7...5.11.7
+[6.12.7]: https://github.com/macielti/common-clj/compare/v5.12.7...v6.12.7
 
-[5.11.7]: https://github.com/macielti/common-clj/compare/5.11.7...5.11.5
+[5.12.7]: https://github.com/macielti/common-clj/compare/v5.11.7...v5.12.7
 
-[5.11.5]: https://github.com/macielti/common-clj/compare/5.11.5...5.10.4
+[5.11.7]: https://github.com/macielti/common-clj/compare/v5.11.5...v5.11.7
 
-[5.10.4]: https://github.com/macielti/common-clj/compare/5.10.4...4.10.4
+[5.11.5]: https://github.com/macielti/common-clj/compare/v5.10.4...v5.11.5
 
-[4.10.4]: https://github.com/macielti/common-clj/compare/4.10.4...4.9.4
+[5.10.4]: https://github.com/macielti/common-clj/compare/v4.10.4...v5.10.4
 
-[4.9.4]: https://github.com/macielti/common-clj/compare/4.9.4...4.9.3
+[4.10.4]: https://github.com/macielti/common-clj/compare/v4.9.4...v4.10.4
 
-[4.9.3]: https://github.com/macielti/common-clj/compare/4.9.3...3.9.3
+[4.9.4]: https://github.com/macielti/common-clj/compare/v4.9.3...v4.9.4
 
-[3.9.3]: https://github.com/macielti/common-clj/compare/3.9.3...3.8.3
+[4.9.3]: https://github.com/macielti/common-clj/compare/v3.9.3...v4.9.3
 
-[3.8.3]: https://github.com/macielti/common-clj/compare/3.8.3...2.8.2
+[3.9.3]: https://github.com/macielti/common-clj/compare/v3.8.3...v3.9.3
 
-[2.8.2]: https://github.com/macielti/common-clj/compare/2.8.2...1.8.2
+[3.8.3]: https://github.com/macielti/common-clj/compare/v2.8.2...v3.8.3
 
-[1.8.2]: https://github.com/macielti/common-clj/compare/1.8.2...1.7.2
+[2.8.2]: https://github.com/macielti/common-clj/compare/v1.8.2...v2.8.2
 
-[1.7.2]: https://github.com/macielti/common-clj/compare/1.7.2...1.6.2
+[1.8.2]: https://github.com/macielti/common-clj/compare/v1.7.2...v1.8.2
 
-[1.6.2]: https://github.com/macielti/common-clj/compare/1.6.2...1.5.1
+[1.7.2]: https://github.com/macielti/common-clj/compare/v1.6.2...v1.7.2
 
-[1.5.1]: https://github.com/macielti/common-clj/compare/1.5.1...0.5.1
+[1.6.2]: https://github.com/macielti/common-clj/compare/v1.5.1...v1.6.2
 
-[0.5.1]: https://github.com/macielti/common-clj/compare/0.5.1...0.4.1
+[1.5.1]: https://github.com/macielti/common-clj/compare/v0.5.1...v1.5.1
 
-[0.4.1]: https://github.com/macielti/common-clj/compare/0.4.1...0.3.1
+[0.5.1]: https://github.com/macielti/common-clj/compare/v0.4.1...v0.5.1
 
-[0.3.1]: https://github.com/macielti/common-clj/compare/0.3.1...0.2.1
+[0.4.1]: https://github.com/macielti/common-clj/compare/v0.3.1...v0.4.1
 
-[0.2.1]: https://github.com/macielti/common-clj/compare/0.2.1...0.1.1
+[0.3.1]: https://github.com/macielti/common-clj/compare/v0.2.1...v0.3.1
 
-[0.1.1]: https://github.com/macielti/common-clj/compare/0.1.1...0.1.0
+[0.2.1]: https://github.com/macielti/common-clj/compare/v0.1.1...v0.2.1
+
+[0.1.1]: https://github.com/macielti/common-clj/compare/v0.1.0...v0.1.1
+
+[0.1.0]: https://github.com/macielti/common-clj/compare/v0.1.0...v0.1.0
