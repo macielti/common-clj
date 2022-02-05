@@ -12,3 +12,4 @@ pom.xml.asc
 .hg/
 /.idea/
 /common-clj.iml
+/resources/config.json

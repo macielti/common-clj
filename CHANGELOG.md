@@ -5,6 +5,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Telegram producer messages component.
+
 ## [7.12.8] - 2022-02-04
 
 ### Fixed
