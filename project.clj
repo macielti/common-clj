@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "7.12.8"
+(defproject net.clojars.macielti/common-clj "8.12.8"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -13,6 +13,7 @@
   :exclusions [log4j]
 
   :dependencies [[com.attendify/schema-refined "0.3.0-alpha4"]
+                 [morse "0.4.3"]
                  [overtone/at-at "1.2.0"]
                  [clj-test-containers "0.5.0"]
                  [datalevin "0.5.27"]
@@ -31,7 +32,6 @@
                  [io.pedestal/pedestal.jetty "0.5.10"]
                  [io.pedestal/pedestal.route "0.5.10"]
                  [com.stuartsierra/component "1.0.0"]
-                 [org.clojure/tools.logging "1.2.4"]
                  [org.clojure/clojure "1.10.3"]
                  [prismatic/plumbing "0.6.0"]
                  [camel-snake-kebab "0.4.2"]
