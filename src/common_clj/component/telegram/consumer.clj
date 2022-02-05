@@ -78,19 +78,3 @@
 (defn new-telegram-consumer
   [consumers]
   (map->TelegramConsumer {:consumers consumers}))
-
-;Please ignore this:
-;(def consumers
-;  {:interceptors []
-;   :message      {:test {:consumer/interceptors  []
-;                         :consumer/handler       (fn [{:keys [update]}]
-;                                                   (timbre/spy :meu-ovo-consumed))
-;                         :consumer/error-handler (fn [_ _])}}})
-;
-;(def ^:private system
-;  (component/system-map
-;    :config (component.config/new-config "resources/config.json" :prod)
-;    :telegram-consumer (component/using (new-telegram-consumer consumers) [:config])))
-;
-;(component/start system)
-
