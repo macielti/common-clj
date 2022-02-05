@@ -18,7 +18,8 @@
       "port": 8080
     },
     "telegram": {
-      "token": "123456789:wqsmdksdksjdkjskksjdksjd"
+      "token": "123456789:wqsmdksdksjdkjskksjdksjd",
+      "messageTemplateDir": "templates"
     }
   }
 }

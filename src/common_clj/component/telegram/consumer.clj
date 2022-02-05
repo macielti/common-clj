@@ -4,12 +4,12 @@
             [telegrambot-lib.core :as telegram-bot]
             [clostache.parser :as parser]
             [overtone.at-at :as at-at]
+            [io.pedestal.interceptor.chain :as chain]
+            [io.pedestal.interceptor :as interceptor]
             [com.stuartsierra.component :as component]
             [common-clj.component.telegram.producer :as component.telegram.producer]
             [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
-            [common-clj.component.telegram.adapters.update :as telegram.adapters.message]
-            [io.pedestal.interceptor.chain :as chain]
-            [io.pedestal.interceptor :as interceptor]))
+            [common-clj.component.telegram.adapters.update :as telegram.adapters.message]))
 
 (s/defn commit-update-as-consumed!
   [offset :- s/Int
@@ -27,8 +27,9 @@
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram-consumer config] :as components}]
   (let [{:consumer/keys [handler error-handler type] :as consumer} (telegram.adapters.message/update->consumer update consumers)
-        {{:keys [token]} :telegram} config
+        token     (-> config :telegram :token)
         update-id (-> update :update_id)
+        chat-id   (-> update :message :chat :id)
         context   {:update     update
                    :components components}]
     (when (and handler update update-id)
@@ -40,22 +41,23 @@
         (catch Exception e
           (if error-handler
             (error-handler e components)
-            (component.telegram.producer/produce! (parser/render-resource
-                                                    (format "%s/error_processing_message_command.mustache"
-                                                            (-> config :telegram :message-template-dir))) token)))))
+            (component.telegram.producer/produce! chat-id (parser/render-resource
+                                                            (format "%s/error_processing_message_command.mustache"
+                                                                    (-> config :telegram :message-template-dir))) token)))))
     (when-not handler
-      (component.telegram.producer/produce! (parser/render-resource
-                                              (format "%s/command_not_found.mustache"
-                                                      (-> config :telegram :message-template-dir))) token))
-    (commit-update-as-consumed! update-id (:bot telegram-consumer))))
+      (component.telegram.producer/produce! chat-id (parser/render-resource
+                                                      (format "%s/command_not_found.mustache"
+                                                              (-> config :telegram :message-template-dir))) token))
+    (commit-update-as-consumed! update-id telegram-consumer)))
 
 (s/defn ^:private consumer-job!
   [consumers
-   {:keys [telegram] :as components}]
-  (when-let [updates (-> (telegram-bot/get-updates telegram) :result)]
-    (doseq [update updates] (consume-update! update consumers components))))
+   {:keys [telegram-consumer] :as components}]
+  (when-let [updates (-> (telegram-bot/get-updates telegram-consumer) :result)]
+    (doseq [update updates]
+      (consume-update! update consumers components))))
 
-(defrecord Telegram [config datomic consumers]
+(defrecord TelegramConsumer [config datomic consumers]
   component/Lifecycle
   (start [component]
     (let [{{:keys [telegram] :as config-content} :config} config
@@ -71,8 +73,24 @@
 
   (stop [{:keys [telegram]}]
     (telegram-bot/close (:bot telegram))
-    (at-at/stop-and-reset-pool! (:poller telegram))))       ;TODO: stop at-at pool here
+    (at-at/stop-and-reset-pool! (:poller telegram))))
 
-(defn new-telegram
+(defn new-telegram-consumer
   [consumers]
-  (map->Telegram {:consumers consumers}))
+  (map->TelegramConsumer {:consumers consumers}))
+
+;Please ignore this:
+;(def consumers
+;  {:interceptors []
+;   :message      {:test {:consumer/interceptors  []
+;                         :consumer/handler       (fn [{:keys [update]}]
+;                                                   (timbre/spy :meu-ovo-consumed))
+;                         :consumer/error-handler (fn [_ _])}}})
+;
+;(def ^:private system
+;  (component/system-map
+;    :config (component.config/new-config "resources/config.json" :prod)
+;    :telegram-consumer (component/using (new-telegram-consumer consumers) [:config])))
+;
+;(component/start system)
+
