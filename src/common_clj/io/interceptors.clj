@@ -1,5 +1,4 @@
 (ns common-clj.io.interceptors
-  (:use [clojure pprint])
   (:require [io.pedestal.http.body-params :as body-params]
             [io.pedestal.interceptor.error :as error]
             [io.pedestal.interceptor :as pedestal.interceptor]

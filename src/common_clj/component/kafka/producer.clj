@@ -26,7 +26,8 @@
                             "key.serializer"    StringSerializer
                             "bootstrap.servers" bootstrap-server}]
 
-      (assoc this :producer (KafkaProducer. producer-props))))
+      (assoc this :producer {:kafka-producer (KafkaProducer. producer-props)
+                             :current-env    (-> config :config :current-env)})))
 
   (stop [this]
     (assoc this :producer nil)))

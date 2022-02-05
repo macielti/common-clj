@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [8.13.9] - 2022-02-05
+
+### Fixed
+
+- Fixed KafkaProducer for production environments.
+
 ## [8.13.8] - 2022-02-05
 
 ### Added
@@ -189,6 +195,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/v8.13.8...HEAD
+
+[8.13.9]: https://github.com/macielti/common-clj/compare/v8.13.8...v8.13.9
 
 [8.13.8]: https://github.com/macielti/common-clj/compare/v8.12.8...v8.13.8
 

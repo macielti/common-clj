@@ -1,5 +1,4 @@
 (ns integration.service-component-test
-  (:use [clojure pprint])
   (:require [common-clj.component.service :as component.service]
             [common-clj.component.config :as component.config]
             [common-clj.component.routes :as component.routes]
