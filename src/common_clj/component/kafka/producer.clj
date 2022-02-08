@@ -4,18 +4,21 @@
   (:import (org.apache.kafka.clients.producer KafkaProducer ProducerRecord)
            (org.apache.kafka.common.serialization StringSerializer)))
 
-(defn produce!
-  [{:keys [topic message] :as document}
-   producer]
-  (let [{:keys [kafka-producer current-env produced-messages]} producer]
-    (cond
-      (= :prod current-env)
-      (-> kafka-producer
-          (.send (ProducerRecord. (name topic) (json/encode message)))
-          .get)
+(defmulti produce!
+          (fn [_ {:keys [current-env]}]
+            current-env))
 
-      (= :test current-env)
-      (swap! produced-messages conj document))))
+(defmethod produce! :prod
+  [{:keys [topic message]}
+   {:keys [kafka-producer]}]
+  (-> kafka-producer
+      (.send (ProducerRecord. (name topic) (json/encode message)))
+      .get))
+
+(defmethod produce! :test
+  [document
+   {:keys [produced-messages]}]
+  (swap! produced-messages conj document))
 
 (defrecord Producer [config]
   component/Lifecycle
