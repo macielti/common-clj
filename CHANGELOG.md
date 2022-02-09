@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [9.13.10] - 2022-02-09
+
+### Fixed
+
+- Using `stop-and-reset-pool!` instead of `shutdown-pool-gracefully!` (this is a private function).
+
 ## [9.13.9] - 2022-02-05
 
 ### Fixed
@@ -194,7 +200,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v9.13.9...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v9.13.10...HEAD
+
+[9.13.10]: https://github.com/macielti/common-clj/compare/v9.13.9...v9.13.10
 
 [9.13.9]: https://github.com/macielti/common-clj/compare/v8.13.8...v9.13.9
 
