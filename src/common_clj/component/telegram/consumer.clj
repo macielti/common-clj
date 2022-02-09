@@ -73,7 +73,7 @@
 
   (stop [{:keys [telegram-consumer]}]
     (telegram-bot/close (:bot telegram-consumer))
-    (at-at/shutdown-pool-gracefully! (:poller telegram-consumer))))
+    (at-at/stop-and-reset-pool! (:poller telegram-consumer))))
 
 (defn new-telegram-consumer
   [consumers]
