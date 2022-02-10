@@ -5,7 +5,8 @@
             [plumbing.core :as plumbing]
             [com.stuartsierra.component :as component]
             [io.pedestal.interceptor :as interceptor]
-            [io.pedestal.interceptor.chain :as chain])
+            [io.pedestal.interceptor.chain :as chain]
+            [taoensso.timbre :as timbre])
   (:import (org.apache.kafka.clients.consumer KafkaConsumer)
            (java.time Duration)
            (org.apache.kafka.common.serialization StringDeserializer)))
@@ -62,6 +63,9 @@
                           :topics          topics
                           :topic-consumers topic-consumers
                           :components      components}]
+
+      (when-not topics
+        (timbre/error :kafka-topics-not-configured))
 
       (assoc this :consumer (-> (chain/execute context [kafka-client-starter subscriber kafka-consumer!])
                                 :kafka-client))))
