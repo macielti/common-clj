@@ -13,6 +13,7 @@
   :exclusions [log4j]
 
   :dependencies [[com.attendify/schema-refined "0.3.0-alpha4"]
+                 [nubank/mockfn "0.7.0"]
                  [morse "0.4.3"]
                  [overtone/at-at "1.2.0"]
                  [clj-test-containers "0.5.0"]
