@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [9.14.10] - 2022-02-23
+
+### Added
+
+- Added time util function `now-datetime` that enables us to mock the usage of the java.util.Date class. Make
+  integration tests more easy to write.
+
 ## [9.13.10] - 2022-02-09
 
 ### Fixed
@@ -200,7 +207,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v9.13.10...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v9.14.10...HEAD
+
+[9.14.10]: https://github.com/macielti/common-clj/compare/v9.13.10...v9.14.10
 
 [9.13.10]: https://github.com/macielti/common-clj/compare/v9.13.9...v9.13.10
 
