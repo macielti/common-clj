@@ -6,11 +6,11 @@
 
 (def system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test)))
+    :config (component.config/new-config "resources/config_test.json" :test :json)))
 
 (def system-prod
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :prod)))
+    :config (component.config/new-config "resources/config_test.json" :prod :json)))
 
 (deftest config-component-test
   (let [system            (component/start system-test)
@@ -27,12 +27,12 @@
 
 (deftest config-component-content-test
   (testing "that we can get config content from config component"
-    (let [system      (component/start system-test)
+    (let [system (component/start system-test)
           {:keys [datomic-uri]} (component.helper/get-component-content :config system)]
       (is (= "datomic:mem://example-test"
              datomic-uri))
       (component/stop-system system))
-    (let [system      (component/start system-prod)
+    (let [system (component/start system-prod)
           {:keys [datomic-uri]} (component.helper/get-component-content :config system)]
       (is (= "datomic:mem://example-prod"
              datomic-uri))

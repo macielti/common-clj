@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [10.15.12] - 2022-02-26
+
+### Added
+
+- Add support to EDN files for Config component.
+
 ## [9.14.12] - 2022-02-26
 
 ### Fixed
@@ -214,7 +220,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v9.14.12...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v10.15.12...HEAD
+
+[10.15.12]: https://github.com/macielti/common-clj/compare/v9.14.12...v10.15.12
 
 [9.14.12]: https://github.com/macielti/common-clj/compare/v9.14.10...v9.14.12
 
