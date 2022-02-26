@@ -32,7 +32,7 @@
                                  producer)
 
     (testing "that we can use kafka producer to send messages"
-      (is (= [{:message {:test-title "just a simple test"}
-               :topic   :consumer-topic-test}]
+      (is (= [{:topic   :consumer-topic-test
+               :message {:test-title "just a simple test"}}]
              (component.consumer/produced-messages consumer))))
     (component/stop system)))

@@ -16,9 +16,9 @@
       .get))
 
 (defmethod produce! :test
-  [document
+  [{:keys [topic message]}
    {:keys [produced-messages]}]
-  (swap! produced-messages conj document))
+  (swap! produced-messages conj (ProducerRecord. (name topic) (json/encode message))))
 
 (defrecord Producer [config]
   component/Lifecycle
