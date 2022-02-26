@@ -20,7 +20,7 @@
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test)
+    :config (component.config/new-config "resources/config_test.json" :test :json)
     :routes (component/using (component.routes/new-routes routes-example)
                              [:config])
     :service (component/using (component.service/new-service)

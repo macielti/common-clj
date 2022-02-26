@@ -5,7 +5,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
-## [9.15.12] - 2022-02-26
+## [10.15.12] - 2022-02-26
 
 ### Added
 
@@ -220,9 +220,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v9.15.12...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v10.15.12...HEAD
 
-[9.15.12]: https://github.com/macielti/common-clj/compare/v9.14.12...v9.15.12
+[10.15.12]: https://github.com/macielti/common-clj/compare/v9.14.12...v10.15.12
 
 [9.14.12]: https://github.com/macielti/common-clj/compare/v9.14.10...v9.14.12
 
