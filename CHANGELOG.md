@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [9.14.12] - 2022-02-26
+
+### Fixed
+
+- Now Kafka mocked producer and consumer encodes messages using `ProducerRecord` the same way as in production
+  environment.
+
 ## [9.14.10] - 2022-02-23
 
 ### Added
@@ -207,7 +214,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v9.14.10...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v9.14.12...HEAD
+
+[9.14.12]: https://github.com/macielti/common-clj/compare/v9.14.10...v9.14.12
 
 [9.14.10]: https://github.com/macielti/common-clj/compare/v9.13.10...v9.14.10
 

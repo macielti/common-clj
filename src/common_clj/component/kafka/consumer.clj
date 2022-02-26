@@ -79,7 +79,7 @@
 
 (defn produced-messages
   [{:keys [produced-messages]}]
-  @produced-messages)
+  (map kafka-record->clj-message @produced-messages))
 
 (defn consumed-messages
   [{:keys [consumed-messages]}]
@@ -108,12 +108,11 @@
           consumer-pool     (at-at/mk-pool)]
 
       (at-at/interspaced 100 (fn []
-                               (doseq [message (messages-that-were-produced-but-not-consumed-yet
-                                                 @produced-messages
-                                                 @consumed-messages)]
-                                 (let [{:keys [handler]} (handler-by-topic (:topic message) topic-consumers)]
+                               (doseq [message-record (messages-that-were-produced-but-not-consumed-yet @produced-messages @consumed-messages)]
+                                 (let [message (kafka-record->clj-message message-record)
+                                       {:keys [handler]} (handler-by-topic (:topic message) topic-consumers)]
                                    (handler message components)
-                                   (commit-message-as-consumed message consumed-messages)))) consumer-pool)
+                                   (commit-message-as-consumed message-record consumed-messages)))) consumer-pool)
 
       (assoc this :consumer {:produced-messages produced-messages
                              :consumed-messages consumed-messages
