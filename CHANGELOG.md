@@ -5,6 +5,15 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [11.15.12] - 2022-02-28
+
+### Added
+
+- Added the interceptor `schema-body-in-interceptor` that make so much simpler to set up schema validation for the json
+  body content entering the service endpoint.
+- Added a function `http-friendly-exception` to easily throw exceptions that are compatible with the global error
+  catcher exception, returning a http response that follows best practices for REST API error handling.
+
 ## [10.15.12] - 2022-02-26
 
 ### Added
@@ -220,7 +229,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v10.15.12...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v11.15.12...HEAD
+
+[11.15.12]: https://github.com/macielti/common-clj/compare/v10.15.12...v11.15.12
 
 [10.15.12]: https://github.com/macielti/common-clj/compare/v9.14.12...v10.15.12
 

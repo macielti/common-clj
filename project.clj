@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "10.15.12"
+(defproject net.clojars.macielti/common-clj "11.15.12"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -33,6 +33,7 @@
                  [io.pedestal/pedestal.jetty "0.5.10"]
                  [io.pedestal/pedestal.route "0.5.10"]
                  [com.stuartsierra/component "1.0.0"]
+                 [siili/humanize "0.1.1"]
                  [org.clojure/clojure "1.10.3"]
                  [prismatic/plumbing "0.6.0"]
                  [camel-snake-kebab "0.4.2"]
