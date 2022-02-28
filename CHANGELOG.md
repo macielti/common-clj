@@ -5,6 +5,11 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Added a `schema-body-in-interceptor` that make so much simpler to set up schema validation for the json body content
+  entering the service endpoint.
+
 ## [10.15.12] - 2022-02-26
 
 ### Added
