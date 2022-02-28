@@ -1,16 +1,23 @@
 (ns common-clj.io.interceptors
-  (:require [io.pedestal.http.body-params :as body-params]
+  (:use [clojure.pprint])
+  (:require [schema.core :as s]
+            [io.pedestal.http.body-params :as body-params]
             [io.pedestal.interceptor.error :as error]
             [io.pedestal.interceptor :as pedestal.interceptor]
             [clojure.tools.logging :as log]
-            [io.pedestal.http :as http]))
+            [io.pedestal.http :as http]
+            [common-clj.error.core :as common-error]
+            [humanize.schema :as h])
+  (:import (clojure.lang ExceptionInfo)))
 
 (def error-handler-interceptor
   (error/error-dispatch [ctx ex]
                         [{:exception-type :clojure.lang.ExceptionInfo}]
-                        (let [{:keys [status cause reason]} (ex-data ex)]
+                        (let [{:keys [status error message detail]} (ex-data ex)]
                           (assoc ctx :response {:status status
-                                                :body   {:cause (or cause reason)}}))
+                                                :body   {:error   error
+                                                         :message message
+                                                         :detail  detail}}))
 
                         :else
                         (do (log/error ex)
@@ -20,6 +27,18 @@
   (pedestal.interceptor/interceptor {:name  ::components-interceptor
                                      :enter (fn [context]
                                               (assoc-in context [:request :components] system-components))}))
+
+(defn schema-body-in-interceptor [schema]
+  (pedestal.interceptor/interceptor {:name  ::schema-body-in-interceptor
+                                     :enter (fn [{{:keys [json-params]} :request :as context}]
+                                              (try (s/validate schema json-params)
+                                                   (catch ExceptionInfo e
+                                                     (when (= (:type (ex-data e)) :schema.core/error)
+                                                       (common-error/http-friendly-exception 422
+                                                                                             "invalid-schema-in"
+                                                                                             "The system detected that the received data is invalid"
+                                                                                             (get-in (h/ex->err e) [:unknown :error])))))
+                                              context)}))
 
 (defn common-interceptors [components]
   [(body-params/body-params)

@@ -33,6 +33,7 @@
                  [io.pedestal/pedestal.jetty "0.5.10"]
                  [io.pedestal/pedestal.route "0.5.10"]
                  [com.stuartsierra/component "1.0.0"]
+                 [siili/humanize "0.1.1"]
                  [org.clojure/clojure "1.10.3"]
                  [prismatic/plumbing "0.6.0"]
                  [camel-snake-kebab "0.4.2"]
