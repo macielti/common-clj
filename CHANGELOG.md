@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [12.15.12] - 2022-03-01
+
+### Fixed
+
+- Fixed response schema inconsistency for error handler interceptor response (for 500 status code errors)
+
 ## [11.15.12] - 2022-02-28
 
 ### Added
@@ -229,7 +235,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v11.15.12...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v12.15.12...HEAD
+
+[12.15.12]: https://github.com/macielti/common-clj/compare/v11.15.12...v12.15.12
 
 [11.15.12]: https://github.com/macielti/common-clj/compare/v10.15.12...v11.15.12
 

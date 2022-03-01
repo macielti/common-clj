@@ -47,7 +47,9 @@
                        :message "I'm not a teapot"
                        :detail  "Just chilling"}}
              (aux.http/request-test-endpoints "/throw-info-exception" service-fn)))
-      (is (= {:body   {:cause "Internal Server Error"}
-              :status 500}
+      (is (= {:status 500
+              :body   {:detail  "Internal Server Error"
+                       :error   "unexpected-server-error"
+                       :message "Internal Server Error"}}
              (aux.http/request-test-endpoints "/throw-simple-exception" service-fn))))
     (component/stop-system system)))
