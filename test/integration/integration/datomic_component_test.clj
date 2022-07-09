@@ -3,11 +3,9 @@
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.datomic :as component.datomic]
-            [clojure.test.check.generators :as generators]
-            [schema-refined.core :as r]
             [datomic.api :as d]
             [schema.core :as s]
-            [schema-generators.generators :as g]
+            [schema-generators.complete :as c]
             [common-clj.component.helper.core :as component.helper]))
 
 (def ^:private user-skeleton
@@ -25,14 +23,15 @@
 (def ^:private schemas [user-skeleton])
 
 (s/defschema ^:private User
-  #:user{:id       s/Uuid
-         :username (r/refined s/Str r/NonEmptyStr)})
+  {:user/id       s/Uuid
+   :user/username s/Str})
 
 (def ^:private user-test
-  (g/generate User {s/Str generators/string-alphanumeric}))
+  (c/complete {:user/username "username-test"} User))
 
 (def ^:private user-test-2
-  (g/generate User {s/Str generators/string-alphanumeric}))
+  (c/complete {:user/username "username-test2"
+               :user/email    "example@example.com"} User))
 
 (defn ^:private insert-an-user!
   [user connection]
@@ -52,7 +51,7 @@
                               [:config])))
 
 (deftest datomic-component-test
-  (let [system     (component/start system-test)
+  (let [system (component/start system-test)
         connection (:connection (component.helper/get-component-content :datomic system))]
 
     (testing "that we can start the datomic component completely"
@@ -60,7 +59,7 @@
 
       (testing "that the schemas were transacted"
         @(insert-an-user! user-test connection)
-        (is (thrown? Exception @(insert-an-user! (assoc user-test-2 :user/email "example@example.com") connection))))
+        (is (thrown? Exception @(insert-an-user! user-test-2 connection))))
 
       (testing "that can query data from the datomic database"
         (is (= user-test
@@ -77,4 +76,4 @@
           (is (false? (boolean (component.helper/get-component-content :datomic system-after-stop)))))
 
         (testing "that we can't transact using a stopped datomic component"
-          (is (thrown? Exception  (query-user-by-id (:user/id user-test) connection))))))))
+          (is (thrown? Exception (query-user-by-id (:user/id user-test) connection))))))))
