@@ -11,6 +11,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Added `common-clj.auth.core/->token` function that we can use to convert Clojure maps containing authentication
   related information to a JWToken.
+
+### Changed
+
 - The `common-clj.test.helper/uuid` function was moved to another place due to better code organization, instead use the
   one from `common-clj.test.helper.core/uuid`.
 
