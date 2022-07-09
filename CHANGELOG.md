@@ -5,6 +5,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [13.16.12] - 2022-07-09
+
 ### Added
 
 - Added `common-clj.auth.core/->token` function that we can use to convert Clojure maps containing authentication
@@ -242,7 +244,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v12.15.12...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v13.16.12...HEAD
+
+[13.16.12]: https://github.com/macielti/common-clj/compare/v12.15.12...v13.16.12
 
 [12.15.12]: https://github.com/macielti/common-clj/compare/v11.15.12...v12.15.12
 

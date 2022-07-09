@@ -34,4 +34,4 @@ Classpath Exception which is available at https://www.gnu.org/software/classpath
 ## Bibliography
 
 - [Versionamento Semântico 2.0.0](https://semver.org/lang/pt-BR/)
-- [Library Development and Distribution](http://clojure-doc.org/articles/ecosystem/libraries_authoring.htmls)
+- [Library Development and Distribution](https://clojure-doc.org/articles/ecosystem/libraries_authoring/)
