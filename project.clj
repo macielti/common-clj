@@ -38,6 +38,7 @@
                  [prismatic/plumbing "0.6.0"]
                  [camel-snake-kebab "0.4.3"]
                  [prismatic/schema "1.2.1"]
+                 [buddy/buddy-sign "3.4.1"]
                  [cheshire "5.11.0"]]
 
   :test-paths ["test/unit" "test/integration" "test/helpers"]
