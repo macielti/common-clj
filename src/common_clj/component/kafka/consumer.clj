@@ -11,6 +11,10 @@
            (java.time Duration)
            (org.apache.kafka.common.serialization StringDeserializer)))
 
+(s/defschema KafkaMessageCLJ
+  {:topic   s/Keyword
+   :message {s/Keyword (s/maybe s/Any)}})
+
 (def kafka-client-starter
   (interceptor/interceptor
     {:name  ::kafka-client
@@ -24,7 +28,7 @@
               (.subscribe kafka-client topics)
               context)}))
 
-(defn kafka-record->clj-message
+(s/defn kafka-record->clj-message :- KafkaMessageCLJ
   [record]
   {:topic   (keyword (.topic record))
    :message (json/decode (.value record) true)})
@@ -54,15 +58,15 @@
                           "key.deserializer"   StringDeserializer
                           "bootstrap.servers"  (get-in config [:config :bootstrap-server])
                           "group.id"           (get-in config [:config :service-name])}
-          components     (plumbing/assoc-when {}
-                                              :producer (:producer producer)
-                                              :config (:config config)
-                                              :datomic (:datomic datomic))
-          topics         (get-in config [:config :topics])
-          context        {:consumer-props  consumer-props
-                          :topics          topics
-                          :topic-consumers topic-consumers
-                          :components      components}]
+          components (plumbing/assoc-when {}
+                                          :producer (:producer producer)
+                                          :config (:config config)
+                                          :datomic (:datomic datomic))
+          topics (get-in config [:config :topics])
+          context {:consumer-props  consumer-props
+                   :topics          topics
+                   :topic-consumers topic-consumers
+                   :components      components}]
 
       (when-not topics
         (timbre/error :kafka-topics-not-configured))
@@ -101,11 +105,11 @@
   (start [this]
     (let [produced-messages (atom [])
           consumed-messages (atom [])
-          components        (plumbing/assoc-when {}
-                                                 :producer (:producer producer)
-                                                 :config (:config config)
-                                                 :datomic (:datomic datomic))
-          consumer-pool     (at-at/mk-pool)]
+          components (plumbing/assoc-when {}
+                                          :producer (:producer producer)
+                                          :config (:config config)
+                                          :datomic (:datomic datomic))
+          consumer-pool (at-at/mk-pool)]
 
       (at-at/interspaced 100 (fn []
                                (doseq [message-record (messages-that-were-produced-but-not-consumed-yet @produced-messages @consumed-messages)]
