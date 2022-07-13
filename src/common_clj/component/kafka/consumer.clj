@@ -46,7 +46,7 @@
                                               (while true
                                                 (let [records (seq (.poll kafka-client (Duration/ofMillis 100)))]
                                                   (doseq [record records]
-                                                    (let [{:keys [topic] :as message} (kafka-record->clj-message record)
+                                                    (let [{:keys [topic message]} (kafka-record->clj-message record)
                                                           {:keys [handler]} (handler-by-topic topic topic-consumers)]
                                                       (handler message components))))))))}))
 
