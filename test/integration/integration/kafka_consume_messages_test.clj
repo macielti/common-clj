@@ -6,7 +6,8 @@
             [common-clj.component.config :as component.config]
             [common-clj.component.kafka.consumer :as component.consumer]
             [common-clj.component.helper.core :as component.helper]
-            [common-clj.component.kafka.producer :as component.producer]))
+            [common-clj.component.kafka.producer :as component.producer]
+            [clojure.tools.logging :as log]))
 
 (def test-state (atom nil))
 
@@ -30,7 +31,7 @@
     :producer (component/using (component.producer/new-mock-producer) [:consumer :config])))
 
 (s-test/deftest kafka-consumer-component-test
-  (let [system   (component/start system-test)
+  (let [system (component/start system-test)
         producer (component.helper/get-component-content :producer system)]
 
     (component.producer/produce! {:topic   :consumer-topic-test
@@ -40,8 +41,7 @@
     (Thread/sleep 5000)
 
     (testing "that we can use kafka consumer to consumer messages"
-      (is (= {:topic   :consumer-topic-test
-              :message {:test-title "just a simple test"}}
+      (is (= {:test-title "just a simple test"}
              @test-state)))
 
     (reset! test-state nil)

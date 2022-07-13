@@ -115,7 +115,7 @@
                                (doseq [message-record (messages-that-were-produced-but-not-consumed-yet @produced-messages @consumed-messages)]
                                  (let [message (kafka-record->clj-message message-record)
                                        {:keys [handler]} (handler-by-topic (:topic message) topic-consumers)]
-                                   (handler message components)
+                                   (handler (:message message) components)
                                    (commit-message-as-consumed message-record consumed-messages)))) consumer-pool)
 
       (assoc this :consumer {:produced-messages produced-messages
