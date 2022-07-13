@@ -13,7 +13,7 @@
 
 (s/defschema KafkaMessageCLJ
   {:topic   s/Keyword
-   :message {s/Keyword (s/maybe s/Any)}})
+   :data {:payload {s/Keyword (s/maybe s/Any)}}})
 
 (def kafka-client-starter
   (interceptor/interceptor
@@ -30,8 +30,9 @@
 
 (s/defn kafka-record->clj-message :- KafkaMessageCLJ
   [record]
-  {:topic   (keyword (.topic record))
-   :message (json/decode (.value record) true)})
+  (let [message (json/decode (.value record) true)]
+    {:topic   (keyword (.topic record))
+     :data {:payload (:payload message)}}))
 
 (s/defn handler-by-topic
   [topic :- s/Keyword
