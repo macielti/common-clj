@@ -13,6 +13,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 ### Changed
 
 - Kafka consumer now pass only message content to topic handler instead of entire Kafka record with topic and message.
+- Changed `common-clj.kafka.consumer/kafka-record->clj-message` to support more flexible Kafka message content in the
+  future.
 
 ## [13.16.12] - 2022-07-09
 
