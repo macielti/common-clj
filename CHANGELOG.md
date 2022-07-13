@@ -5,6 +5,11 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Added prismatic schemas for Kafka message producer input and consumer output (when we internalize Kafka consumer
+  message).
+
 ## [13.16.12] - 2022-07-09
 
 ### Added
