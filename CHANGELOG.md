@@ -10,6 +10,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Added prismatic schemas for Kafka message producer input and consumer output (when we internalize Kafka consumer
   message).
 
+### Changed
+
+- Kafka consumer now pass only message content to topic handler instead of entire Kafka record with topic and message.
+
 ## [13.16.12] - 2022-07-09
 
 ### Added
