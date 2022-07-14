@@ -1,29 +1,26 @@
 (ns common-clj.component.kafka.producer
   (:require [cheshire.core :as json]
             [com.stuartsierra.component :as component]
-            [schema.core :as s])
+            [schema.core :as s]
+            [common-clj.component.kafka.models :as component.kafka.models])
   (:import (org.apache.kafka.clients.producer KafkaProducer ProducerRecord)
            (org.apache.kafka.common.serialization StringSerializer)))
-
-(s/defschema KafkaMessageInput
-  {:topic   s/Keyword
-   :message {s/Keyword (s/maybe s/Any)}})
 
 (defmulti produce!
           (fn [_ {:keys [current-env]}]
             current-env))
 
 (s/defmethod produce! :prod
-             [{:keys [topic message]} :- KafkaMessageInput
+             [{:keys [topic data]} :- component.kafka.models/KafkaMessage
               {:keys [kafka-producer]}]
              (-> kafka-producer
-                 (.send (ProducerRecord. (name topic) (json/encode message)))
+                 (.send (ProducerRecord. (name topic) (json/encode data)))
                  .get))
 
 (s/defmethod produce! :test
-             [{:keys [topic message]} :- KafkaMessageInput
+             [{:keys [topic data]} :- component.kafka.models/KafkaMessage
               {:keys [produced-messages]}]
-             (swap! produced-messages conj (ProducerRecord. (name topic) (json/encode message))))
+             (swap! produced-messages conj (ProducerRecord. (name topic) (json/encode data))))
 
 (defrecord Producer [config]
   component/Lifecycle

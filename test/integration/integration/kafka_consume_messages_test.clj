@@ -13,15 +13,14 @@
 
 (defn ^:private test-topic-consumer
   [message
-   components]
+   _components]
   (reset! test-state message))
 
-(s/defschema ^:private TestMessage
-  {:topic   (s/enum :consumer-topic-test)
-   :message {:test-title s/Str}})
+(s/defschema ^:private TestMessagePayload
+  {:test s/Str})
 
 (def ^:private topic-consumers
-  {:consumer-topic-test {:schema  TestMessage
+  {:consumer-topic-test {:schema  TestMessagePayload
                          :handler test-topic-consumer}})
 
 (def ^:private system-test
@@ -34,14 +33,14 @@
   (let [system (component/start system-test)
         producer (component.helper/get-component-content :producer system)]
 
-    (component.producer/produce! {:topic   :consumer-topic-test
-                                  :message {:test-title "just a simple test"}}
+    (component.producer/produce! {:topic :consumer-topic-test
+                                  :data  {:payload {:test "just a simple test"}}}
                                  producer)
 
     (Thread/sleep 5000)
 
     (testing "that we can use kafka consumer to consumer messages"
-      (is (= {:test-title "just a simple test"}
+      (is (= {:test "just a simple test"}
              @test-state)))
 
     (reset! test-state nil)

@@ -4,16 +4,14 @@
             [overtone.at-at :as at-at]
             [plumbing.core :as plumbing]
             [com.stuartsierra.component :as component]
+            [common-clj.component.kafka.models :as component.kafka.models]
             [io.pedestal.interceptor :as interceptor]
             [io.pedestal.interceptor.chain :as chain]
-            [taoensso.timbre :as timbre])
+            [taoensso.timbre :as timbre]
+            [taoensso.timbre :as log])
   (:import (org.apache.kafka.clients.consumer KafkaConsumer)
            (java.time Duration)
            (org.apache.kafka.common.serialization StringDeserializer)))
-
-(s/defschema KafkaMessageCLJ
-  {:topic   s/Keyword
-   :data {:payload {s/Keyword (s/maybe s/Any)}}})
 
 (def kafka-client-starter
   (interceptor/interceptor
@@ -28,11 +26,11 @@
               (.subscribe kafka-client topics)
               context)}))
 
-(s/defn kafka-record->clj-message :- KafkaMessageCLJ
+(s/defn kafka-record->clj-message :- component.kafka.models/KafkaMessage
   [record]
   (let [message (json/decode (.value record) true)]
-    {:topic   (keyword (.topic record))
-     :data {:payload (:payload message)}}))
+    {:topic (keyword (.topic record))
+     :data  {:payload (:payload message)}}))
 
 (s/defn handler-by-topic
   [topic :- s/Keyword
@@ -47,9 +45,9 @@
                                               (while true
                                                 (let [records (seq (.poll kafka-client (Duration/ofMillis 100)))]
                                                   (doseq [record records]
-                                                    (let [{:keys [topic message]} (kafka-record->clj-message record)
+                                                    (let [{:keys [topic data]} (kafka-record->clj-message record)
                                                           {:keys [handler]} (handler-by-topic topic topic-consumers)]
-                                                      (handler message components))))))))}))
+                                                      (handler (:payload data) components))))))))}))
 
 (s/defrecord Consumer [config datomic producer topic-consumers]
   component/Lifecycle
@@ -114,9 +112,9 @@
 
       (at-at/interspaced 100 (fn []
                                (doseq [message-record (messages-that-were-produced-but-not-consumed-yet @produced-messages @consumed-messages)]
-                                 (let [message (kafka-record->clj-message message-record)
-                                       {:keys [handler]} (handler-by-topic (:topic message) topic-consumers)]
-                                   (handler (:message message) components)
+                                 (let [{:keys [topic data]} (kafka-record->clj-message message-record)
+                                       {:keys [handler]} (handler-by-topic topic topic-consumers)]
+                                   (handler (:payload data) components)
                                    (commit-message-as-consumed message-record consumed-messages)))) consumer-pool)
 
       (assoc this :consumer {:produced-messages produced-messages

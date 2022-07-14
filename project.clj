@@ -41,6 +41,8 @@
                  [buddy/buddy-sign "3.4.333"]
                  [cheshire "5.11.0"]]
 
+  :resource-paths ["resources" "test/resources/"]
+
   :test-paths ["test/unit" "test/integration" "test/helpers"]
 
   :repl-options {:init-ns common-clj.schema.core})
