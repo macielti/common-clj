@@ -5,6 +5,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [14.16.13] - 2022-07-14
+
 ### Added
 
 - Added prismatic schemas for Kafka message producer input and consumer output (when we internalize Kafka consumer
@@ -258,7 +260,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v13.16.12...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v14.16.13...HEAD
+
+[14.16.13]: https://github.com/macielti/common-clj/compare/v13.16.12...v14.16.13
 
 [13.16.12]: https://github.com/macielti/common-clj/compare/v12.15.12...v13.16.12
 
