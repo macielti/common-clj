@@ -17,6 +17,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Kafka consumer now pass only message content to topic handler instead of entire Kafka record with topic and message.
 - Changed `common-clj.kafka.consumer/kafka-record->clj-message` to support more flexible Kafka message content in the
   future.
+- Add schema validation for Kafka message payload while consuming messages.
 
 ## [13.16.12] - 2022-07-09
 
