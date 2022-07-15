@@ -50,7 +50,8 @@
                                                       (try
                                                         (do (s/validate schema (:payload data))
                                                             (handler (:payload data) components))
-                                                        (catch Exception e (log/error e))))))))))}))
+                                                        (catch Exception e
+                                                          (log/error e))))))))))}))
 
 (s/defrecord Consumer [config datomic producer topic-consumers]
   component/Lifecycle
@@ -121,7 +122,8 @@
                                      (do (s/validate schema (:payload data))
                                          (handler (:payload data) components)
                                          (commit-message-as-consumed message-record consumed-messages))
-                                     (catch Exception e (log/error e)))))) consumer-pool)
+                                     (catch Exception e
+                                       (log/error e)))))) consumer-pool)
 
       (assoc this :consumer {:produced-messages produced-messages
                              :consumed-messages consumed-messages
