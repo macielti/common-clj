@@ -44,6 +44,21 @@
 
     (component/stop system)))
 
+(s-test/deftest kafka-consumer-component-only-consumes-interested-topics
+  (let [system (component/start system-test)
+        producer (component.helper/get-component-content :producer system)]
+
+    (testing "that mock consumer only consumes messages from topics defined in config file"
+      (component.producer/produce! {:topic :not-interesting-topic-test
+                                    :data  {:payload {:test "just a simple test"}}}
+                                   producer)
+      (Thread/sleep 5000)
+      (is (= nil
+             @test-state))
+      (reset! test-state nil))
+
+    (component/stop system)))
+
 (s-test/deftest kafka-consumer-component-test-wrong-schema
   (let [system (component/start system-test)
         producer (component.helper/get-component-content :producer system)]

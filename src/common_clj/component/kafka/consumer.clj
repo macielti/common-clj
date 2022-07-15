@@ -97,10 +97,12 @@
    consumed-messages]
   (swap! consumed-messages conj message))
 
-(defn ^:private messages-that-were-produced-but-not-consumed-yet
-  [produced-messages
+(s/defn ^:private messages-that-were-produced-but-not-consumed-yet
+  [topics :- #{s/Keyword}
+   produced-messages
    consumed-messages]
-  (clojure.set/difference produced-messages consumed-messages))
+  (-> (filter #(topics (keyword (.topic %))) produced-messages)
+      (clojure.set/difference consumed-messages)))
 
 (defrecord MockKafkaConsumer [config datomic producer topic-consumers]
   component/Lifecycle
@@ -112,10 +114,11 @@
                                           :producer (:producer producer)
                                           :config (:config config)
                                           :datomic (:datomic datomic))
+          topics (->> components :config :topics (map keyword) set)
           consumer-pool (at-at/mk-pool)]
 
       (at-at/interspaced 100 (fn []
-                               (doseq [message-record (messages-that-were-produced-but-not-consumed-yet @produced-messages @consumed-messages)]
+                               (doseq [message-record (messages-that-were-produced-but-not-consumed-yet topics @produced-messages @consumed-messages)]
                                  (let [{:keys [topic data]} (kafka-record->clj-message message-record)
                                        {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
                                    (try
