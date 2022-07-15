@@ -48,9 +48,9 @@
                                                     (let [{:keys [topic data]} (kafka-record->clj-message record)
                                                           {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
                                                       (try
-                                                        (s/validate schema (:payload data))
-                                                        (catch Exception e (log/error e)))
-                                                      (handler (:payload data) components))))))))}))
+                                                        (do (s/validate schema (:payload data))
+                                                            (handler (:payload data) components))
+                                                        (catch Exception e (log/error e))))))))))}))
 
 (s/defrecord Consumer [config datomic producer topic-consumers]
   component/Lifecycle
@@ -118,10 +118,10 @@
                                  (let [{:keys [topic data]} (kafka-record->clj-message message-record)
                                        {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
                                    (try
-                                     (s/validate schema (:payload data))
-                                     (catch Exception e (log/error e)))
-                                   (handler (:payload data) components)
-                                   (commit-message-as-consumed message-record consumed-messages)))) consumer-pool)
+                                     (do (s/validate schema (:payload data))
+                                         (handler (:payload data) components)
+                                         (commit-message-as-consumed message-record consumed-messages))
+                                     (catch Exception e (log/error e)))))) consumer-pool)
 
       (assoc this :consumer {:produced-messages produced-messages
                              :consumed-messages consumed-messages

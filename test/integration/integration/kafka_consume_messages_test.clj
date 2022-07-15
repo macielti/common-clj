@@ -33,14 +33,29 @@
   (let [system (component/start system-test)
         producer (component.helper/get-component-content :producer system)]
 
-    (component.producer/produce! {:topic :consumer-topic-test
-                                  :data  {:payload {:test "just a simple test"}}}
-                                 producer)
+    (testing "that we can use kafka consumer to consumer messages"
+      (component.producer/produce! {:topic :consumer-topic-test
+                                    :data  {:payload {:test "just a simple test"}}}
+                                   producer)
+      (Thread/sleep 5000)
+      (is (= {:test "just a simple test"}
+             @test-state))
+      (reset! test-state nil))
 
+    (component/stop system)))
+
+(s-test/deftest kafka-consumer-component-test-wrong-schema
+  (let [system (component/start system-test)
+        producer (component.helper/get-component-content :producer system)]
+
+    (component.producer/produce! {:topic :consumer-topic-test
+                                  :data  {:payload {:wrong-keyword "just a simple test"}}}
+                                 producer)
     (Thread/sleep 5000)
 
-    (testing "that we can use kafka consumer to consumer messages"
-      (is (= {:test "just a simple test"}
+    (testing "that we can consume a message with wrong payload for consumer schema"
+
+      (is (= nil
              @test-state)))
 
     (reset! test-state nil)
