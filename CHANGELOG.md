@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [14.16.14] - 2022-07-15
+
+### Fixed
+
+- The mock consumer only tries to consume specified topics defined by the config file. That is the expected behavior.
+
 ## [14.16.13] - 2022-07-14
 
 ### Added
@@ -261,7 +267,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v14.16.13...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v14.16.14...HEAD
+
+[14.16.14]: https://github.com/macielti/common-clj/compare/v14.16.13...v14.16.14
 
 [14.16.13]: https://github.com/macielti/common-clj/compare/v13.16.12...v14.16.13
 
