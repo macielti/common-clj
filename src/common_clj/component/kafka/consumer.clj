@@ -8,7 +8,7 @@
             [io.pedestal.interceptor :as interceptor]
             [io.pedestal.interceptor.chain :as chain]
             [taoensso.timbre :as timbre]
-            [taoensso.timbre :as log])
+            [clojure.tools.logging :as log])
   (:import (org.apache.kafka.clients.consumer KafkaConsumer)
            (java.time Duration)
            (org.apache.kafka.common.serialization StringDeserializer)))
@@ -46,7 +46,10 @@
                                                 (let [records (seq (.poll kafka-client (Duration/ofMillis 100)))]
                                                   (doseq [record records]
                                                     (let [{:keys [topic data]} (kafka-record->clj-message record)
-                                                          {:keys [handler]} (handler-by-topic topic topic-consumers)]
+                                                          {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
+                                                      (try
+                                                        (s/validate schema (:payload data))
+                                                        (catch Exception e (log/error e)))
                                                       (handler (:payload data) components))))))))}))
 
 (s/defrecord Consumer [config datomic producer topic-consumers]
@@ -113,7 +116,10 @@
       (at-at/interspaced 100 (fn []
                                (doseq [message-record (messages-that-were-produced-but-not-consumed-yet @produced-messages @consumed-messages)]
                                  (let [{:keys [topic data]} (kafka-record->clj-message message-record)
-                                       {:keys [handler]} (handler-by-topic topic topic-consumers)]
+                                       {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
+                                   (try
+                                     (s/validate schema (:payload data))
+                                     (catch Exception e (log/error e)))
                                    (handler (:payload data) components)
                                    (commit-message-as-consumed message-record consumed-messages)))) consumer-pool)
 
