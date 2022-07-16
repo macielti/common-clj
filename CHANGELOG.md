@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [14.17.14] - 2022-07-16
+
+### Added
+
+- Added `common-clj.io.interceptors.datomic/resource-existence-check-interceptor` Datomic interceptor.
+
 ## [14.16.14] - 2022-07-15
 
 ### Fixed
@@ -267,7 +273,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v14.16.14...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v14.17.14...HEAD
+
+[14.17.14]: https://github.com/macielti/common-clj/compare/v14.16.14...v14.17.14
 
 [14.16.14]: https://github.com/macielti/common-clj/compare/v14.16.13...v14.16.14
 
