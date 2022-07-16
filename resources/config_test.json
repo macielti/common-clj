@@ -8,6 +8,7 @@
     }
   },
   "test": {
+    "serviceName": "test-service",
     "topics": [
       "consumer-topic-test"
     ],

@@ -5,6 +5,18 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [15.17.15] - 2022-07-16
+
+### Changed
+
+- Added integration with DLQ service.
+- Now MockConsumer component depends on MockProducer, to fetch produced messages in the test environment.
+- Now MockProducer component doesn't depend on MockConsumer anymore.
+
+### Fixed
+
+- Fixed infinite loop for Kafka messages that throws exceptions while being consumed (Mocked components).
+
 ## [14.17.14] - 2022-07-16
 
 ### Added
@@ -273,7 +285,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v14.17.14...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v15.17.15...HEAD
+
+[15.17.15]: https://github.com/macielti/common-clj/compare/v14.17.14...v15.17.15
 
 [14.17.14]: https://github.com/macielti/common-clj/compare/v14.16.14...v14.17.14
 

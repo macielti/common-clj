@@ -7,7 +7,7 @@
             [common-clj.component.kafka.consumer :as component.consumer]
             [common-clj.component.helper.core :as component.helper]
             [common-clj.component.kafka.producer :as component.producer]
-            [clojure.tools.logging :as log]))
+            [matcher-combinators.test :refer [match?]]))
 
 (def test-state (atom nil))
 
@@ -26,8 +26,8 @@
 (def ^:private system-test
   (component/system-map
     :config (component.config/new-config "resources/config_test.json" :test :json)
-    :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config])
-    :producer (component/using (component.producer/new-mock-producer) [:consumer :config])))
+    :producer (component/using (component.producer/new-mock-producer) [:config])
+    :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])))
 
 (s-test/deftest kafka-consumer-component-test
   (let [system (component/start system-test)
@@ -68,10 +68,19 @@
                                  producer)
     (Thread/sleep 5000)
 
-    (testing "that we can consume a message with wrong payload for consumer schema"
-
+    (testing "that we can't consume a message with wrong payload for consumer schema"
       (is (= nil
-             @test-state)))
+             @test-state))
+      (reset! test-state nil)
 
-    (reset! test-state nil)
+      (testing "that we produced a message to the DLQ service"
+        (is (= [{:topic :consumer-topic-test
+                 :data  {:payload {:wrong-keyword "just a simple test"}}}
+                {:topic :create-dead-letter
+                 :data  {:payload {:service "TEST_SERVICE"
+                                   :topic   "CONSUMER_TOPIC_TEST"
+                                   :exceptionInfo
+                                   "clojure.lang.ExceptionInfo: Value does not match schema: {:test missing-required-key, :wrong-keyword disallowed-key} {:type :schema.core/error, :schema {:test java.lang.String}, :value {:wrong-keyword \"just a simple test\"}, :error {:test missing-required-key, :wrong-keyword disallowed-key}}"
+                                   :payload "{\"wrong-keyword\":\"just a simple test\"}"}}}]
+               (component.producer/produced-messages producer)))))
     (component/stop system)))
