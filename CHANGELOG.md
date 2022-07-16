@@ -10,12 +10,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 ### Changed
 
 - Added integration with DLQ service.
-- Now MockConsumer component depends on MockProducer, to fetch produced messages in test environment.
+- Now MockConsumer component depends on MockProducer, to fetch produced messages in the test environment.
 - Now MockProducer component doesn't depend on MockConsumer anymore.
 
 ### Fixed
 
-- Fixed infinite loop for Kafka messages that throws exception while being consumed (Mocked components).
+- Fixed infinite loop for Kafka messages that throws exceptions while being consumed (Mocked components).
 
 ## [14.17.14] - 2022-07-16
 
