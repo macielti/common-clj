@@ -2,8 +2,7 @@
   (:require [schema.core :as s]
             [io.pedestal.interceptor :as pedestal.interceptor]
             [datomic.api :as d]
-            [common-clj.error.core :as common-error]
-            [taoensso.timbre :as log]))
+            [common-clj.error.core :as common-error]))
 
 (s/defn resource-existence-check-interceptor
   "resource-identifier-fn -> function used to extract param used to query the resource, must receive a context as argument.
