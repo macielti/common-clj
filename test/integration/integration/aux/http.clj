@@ -1,6 +1,5 @@
 (ns integration.aux.http
   (:require [cheshire.core :as json]
-            [clojure.test :refer :all]
             [io.pedestal.test :as test]))
 
 (defn request-test-endpoints

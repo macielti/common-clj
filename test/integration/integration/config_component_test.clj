@@ -1,8 +1,9 @@
 (ns integration.config-component-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
-            [common-clj.component.helper.core :as component.helper]))
+            [common-clj.component.helper.core :as component.helper]
+            [schema.test :as s]))
 
 (def system-test
   (component/system-map
@@ -12,7 +13,7 @@
   (component/system-map
    :config (component.config/new-config "resources/config_test.json" :prod :json)))
 
-(deftest config-component-test
+(s/deftest config-component-test
   (let [system            (component/start system-test)
         system-after-stop (component/stop-system system)]
     (testing "that we can start the config component"
@@ -25,7 +26,7 @@
       (testing "that the component was stopped"
         (is (false? (boolean (component.helper/get-component-content :config system-after-stop))))))))
 
-(deftest config-component-content-test
+(s/deftest config-component-content-test
   (testing "that we can get config content from config component"
     (let [system (component/start system-test)
           {:keys [datomic-uri]} (component.helper/get-component-content :config system)]

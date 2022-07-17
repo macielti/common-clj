@@ -1,5 +1,5 @@
 (ns common-clj.component.telegram.adapters.update-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.component.telegram.adapters.update :as component.telegram.adapters.update]
             [fixtures.update]
             [schema.test :as s]))

@@ -7,8 +7,8 @@
 (s/defn mocked-datalevin-component
   [schema]
   (let [database-uri "/tmp/datalevin"]
-    (try (do (io/delete-file (str database-uri "/data.mdb"))
-             (io/delete-file (str database-uri "/lock.mdb")))
+    (try (io/delete-file (str database-uri "/data.mdb"))
+         (io/delete-file (str database-uri "/lock.mdb"))
          (catch Exception _))
     (datalevin/get-conn database-uri schema)))
 

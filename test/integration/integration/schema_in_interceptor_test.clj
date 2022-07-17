@@ -1,5 +1,5 @@
 (ns integration.schema-in-interceptor-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]
@@ -7,7 +7,8 @@
             [common-clj.component.service :as component.service]
             [common-clj.io.interceptors :as io.interceptors]
             [integration.aux.http :as aux.http]
-            [schema.core :as s]))
+            [schema.core :as s]
+            [schema.test :as schema-test]))
 
 (s/defschema SchemaTest
   {:username s/Str})
@@ -23,7 +24,7 @@
    :routes (component/using (component.routes/new-routes routes-example) [:config])
    :service (component/using (component.service/new-service) [:config :routes])))
 
-(deftest schema-in-interceptor-test
+(schema-test/deftest schema-in-interceptor-test
   (let [system     (component/start system-test)
         service-fn (-> (component.helper/get-component-content :service system)
                        :io.pedestal.http/service-fn)]

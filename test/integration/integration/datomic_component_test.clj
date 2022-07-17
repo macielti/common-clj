@@ -1,12 +1,13 @@
 (ns integration.datomic-component-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.datomic :as component.datomic]
             [common-clj.component.helper.core :as component.helper]
             [datomic.api :as d]
             [schema-generators.complete :as c]
-            [schema.core :as s]))
+            [schema.core :as s]
+            [schema.test :as schema-test]))
 
 (def ^:private user-skeleton
   [{:db/ident       :user/id
@@ -50,7 +51,7 @@
    :datomic (component/using (component.datomic/new-datomic schemas)
                              [:config])))
 
-(deftest datomic-component-test
+(schema-test/deftest datomic-component-test
   (let [system (component/start system-test)
         connection (:connection (component.helper/get-component-content :datomic system))]
 

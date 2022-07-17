@@ -1,5 +1,4 @@
 (ns common-clj.io.interceptors
-  (:use [clojure.pprint])
   (:require [clojure.tools.logging :as log]
             [common-clj.error.core :as common-error]
             [humanize.schema :as h]

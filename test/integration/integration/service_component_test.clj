@@ -1,12 +1,13 @@
 (ns integration.service-component-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]
             [common-clj.component.routes :as component.routes]
             [common-clj.component.service :as component.service]
             [common-clj.error.core :as common-error]
-            [integration.aux.http :as aux.http]))
+            [integration.aux.http :as aux.http]
+            [schema.test :as s]))
 
 (def ^:private routes-example [["/test" :get (fn [{{{:keys [datomic-uri]} :config} :components}]
                                                {:status 200 :body {:test "ok" :datomic-uri datomic-uri}})
@@ -28,7 +29,7 @@
    :service (component/using (component.service/new-service)
                              [:config :routes])))
 
-(deftest service-component-test
+(s/deftest service-component-test
   (let [system     (component/start system-test)
         service-fn (-> (component.helper/get-component-content :service system)
                        :io.pedestal.http/service-fn)]

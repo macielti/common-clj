@@ -1,5 +1,5 @@
 (ns common-clj.time.core-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.time.core :as time]
             [mockfn.macros :as mfn]
             [schema.test :as s]))

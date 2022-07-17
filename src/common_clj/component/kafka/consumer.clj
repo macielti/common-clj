@@ -57,8 +57,8 @@
                                                    (let [{:keys [topic data] :as clj-message} (component.kafka.adapters/kafka-record->clj-message record)
                                                          {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
                                                      (try
-                                                       (do (s/validate schema (:payload data))
-                                                           (handler (:payload data) components))
+                                                       (s/validate schema (:payload data))
+                                                       (handler (:payload data) components)
                                                        (catch Exception e
                                                          (do (log/error e)
                                                              (replay-dead-letter! clj-message service-name (str e) (:producer components))))))))))))}))
@@ -130,8 +130,8 @@
                                  (let [{:keys [topic data] :as clj-message} (component.kafka.adapters/kafka-record->clj-message message-record)
                                        {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
                                    (try
-                                     (do (s/validate schema (:payload data))
-                                         (handler (:payload data) components))
+                                     (s/validate schema (:payload data))
+                                     (handler (:payload data) components)
                                      (catch Exception e
                                        (do (log/error e)
                                            (replay-dead-letter! clj-message service-name (str e) (:producer components))))

@@ -1,9 +1,7 @@
 (ns common-clj.keyword.core-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.keyword.core :as keyword.core]
             [schema.test :as s]))
-
-(use-fixtures :once s/validate-schemas)
 
 (s/deftest str->keyword-kebab-case-test
   (testing "that loweCamelCase strings can be converted to kebab case"

@@ -26,7 +26,7 @@
   [update
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram-consumer config] :as components}]
-  (let [{:consumer/keys [handler error-handler type] :as consumer} (telegram.adapters.message/update->consumer update consumers)
+  (let [{:consumer/keys [handler error-handler] :as consumer} (telegram.adapters.message/update->consumer update consumers)
         token     (-> config :telegram :token)
         update-id (-> update :update_id)
         chat-id   (-> update :message :chat :id)

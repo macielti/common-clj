@@ -1,5 +1,5 @@
 (ns common-clj.component.config-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.component.config :as component.config]
             [matcher-combinators.test :refer [match?]]
             [schema.test :as s]))
