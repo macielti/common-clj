@@ -13,3 +13,5 @@ pom.xml.asc
 /.idea/
 /common-clj.iml
 /resources/config.json
+/.lsp/.cache/
+/.clj-kondo/.cache/
