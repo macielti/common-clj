@@ -4,9 +4,7 @@
             [common-clj.component.kafka.adapters :as component.kafka.adapters]
             [common-clj.component.kafka.models :as component.kafka.models]
             [schema.core :as s])
-  (:import (org.apache.kafka.clients.producer
-            KafkaProducer
-            ProducerRecord)
+  (:import (org.apache.kafka.clients.producer KafkaProducer ProducerRecord)
            (org.apache.kafka.common.serialization StringSerializer)))
 
 (defmulti produce!
