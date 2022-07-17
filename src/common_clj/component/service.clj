@@ -1,7 +1,7 @@
 (ns common-clj.component.service
-  (:require [io.pedestal.http :as http]
-            [com.stuartsierra.component :as component]
+  (:require [com.stuartsierra.component :as component]
             [common-clj.io.interceptors :as io.interceptors]
+            [io.pedestal.http :as http]
             [plumbing.core :as plumbing]))
 
 (defrecord Service [routes config datomic producer]
@@ -20,7 +20,7 @@
       (assoc component :service (http/start (-> service-map
                                                 http/default-interceptors
                                                 (update ::http/interceptors concat (io.interceptors/common-interceptors
-                                                                                     components))
+                                                                                    components))
                                                 http/create-server)))))
   (stop [component]
     (http/stop (:service component))

@@ -1,9 +1,8 @@
 (ns common-clj.component.config-test
   (:require [clojure.test :refer :all]
-            [schema.test :as s]
+            [common-clj.component.config :as component.config]
             [matcher-combinators.test :refer [match?]]
-            [common-clj.component.config :as component.config]))
-
+            [schema.test :as s]))
 
 (s/deftest read-config-file-test
   (testing "that we can read a edn config file"

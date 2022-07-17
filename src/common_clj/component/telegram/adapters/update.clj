@@ -1,31 +1,31 @@
 (ns common-clj.component.telegram.adapters.update
-  (:require [schema.core :as s]
+  (:require [cheshire.core :as json]
             [clojure.string :as str]
-            [cheshire.core :as json]
-            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]))
+            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
+            [schema.core :as s]))
 
 (defmulti update->consumer-key
-          (s/fn [_
-                 consumer-type :- s/Keyword]
-            consumer-type))
+  (s/fn [_
+         consumer-type :- s/Keyword]
+    consumer-type))
 
 (s/defmethod update->consumer-key :message :- s/Keyword
-             [{:keys [message]}
-              _]
-             (let [{:keys [text]} message]
-               (-> (re-find #"\S*" text)
-                   (str/replace #"\/" "")
-                   str/lower-case
-                   keyword)))
+  [{:keys [message]}
+   _]
+  (let [{:keys [text]} message]
+    (-> (re-find #"\S*" text)
+        (str/replace #"\/" "")
+        str/lower-case
+        keyword)))
 
 (s/defmethod update->consumer-key :callback-query :- s/Keyword
-             [{:keys [callback_query]}
-              _]
-             (let [{:keys [data]} callback_query]
-               (some-> (try (json/parse-string data true)
-                            (catch Exception _ nil))
-                       :handler
-                       keyword)))
+  [{:keys [callback_query]}
+   _]
+  (let [{:keys [data]} callback_query]
+    (some-> (try (json/parse-string data true)
+                 (catch Exception _ nil))
+            :handler
+            keyword)))
 
 (s/defn update->consumer
   [{:keys [message callback_query] :as update}

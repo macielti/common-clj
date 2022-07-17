@@ -1,8 +1,8 @@
 (ns common-clj.io.interceptors.datomic
-  (:require [schema.core :as s]
-            [io.pedestal.interceptor :as pedestal.interceptor]
+  (:require [common-clj.error.core :as common-error]
             [datomic.api :as d]
-            [common-clj.error.core :as common-error]))
+            [io.pedestal.interceptor :as pedestal.interceptor]
+            [schema.core :as s]))
 
 (s/defn resource-existence-check-interceptor
   "resource-identifier-fn -> function used to extract param used to query the resource, must receive a context as argument.

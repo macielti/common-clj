@@ -1,8 +1,8 @@
 (ns common-clj.auth.core
-  (:require [schema.core :as s]
+  (:require [buddy.sign.jwt :as jwt]
+            [clj-time.coerce :as c]
             [clj-time.core :as t]
-            [buddy.sign.jwt :as jwt]
-            [clj-time.coerce :as c]))
+            [schema.core :as s]))
 
 (s/defn ->token :- s/Str
   [map :- {s/Keyword s/Any}

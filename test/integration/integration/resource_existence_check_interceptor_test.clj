@@ -1,12 +1,12 @@
 (ns integration.resource-existence-check-interceptor-test
   (:require [clojure.test :refer :all]
-            [common-clj.io.interceptors.datomic :as io.interceptors.datomic]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
-            [common-clj.component.routes :as component.routes]
-            [common-clj.component.service :as component.service]
             [common-clj.component.datomic :as component.datomic]
             [common-clj.component.helper.core :as component.helper]
+            [common-clj.component.routes :as component.routes]
+            [common-clj.component.service :as component.service]
+            [common-clj.io.interceptors.datomic :as io.interceptors.datomic]
             [datomic.api :as d]
             [integration.aux.http :as aux.http])
   (:import (java.util UUID)))
@@ -37,10 +37,10 @@
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)
-    :routes (component/using (component.routes/new-routes routes-example) [:config])
-    :datomic (component/using (component.datomic/new-datomic schemas) [:config])
-    :service (component/using (component.service/new-service) [:config :datomic :routes])))
+   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :routes (component/using (component.routes/new-routes routes-example) [:config])
+   :datomic (component/using (component.datomic/new-datomic schemas) [:config])
+   :service (component/using (component.service/new-service) [:config :datomic :routes])))
 
 (deftest resource-existence-check-interceptor-test
   (let [system (component/start system-test)

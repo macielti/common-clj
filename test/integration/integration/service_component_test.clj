@@ -1,12 +1,12 @@
 (ns integration.service-component-test
   (:require [clojure.test :refer :all]
-            [common-clj.component.service :as component.service]
-            [common-clj.component.config :as component.config]
-            [common-clj.component.routes :as component.routes]
             [com.stuartsierra.component :as component]
+            [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]
-            [integration.aux.http :as aux.http]
-            [common-clj.error.core :as common-error]))
+            [common-clj.component.routes :as component.routes]
+            [common-clj.component.service :as component.service]
+            [common-clj.error.core :as common-error]
+            [integration.aux.http :as aux.http]))
 
 (def ^:private routes-example [["/test" :get (fn [{{{:keys [datomic-uri]} :config} :components}]
                                                {:status 200 :body {:test "ok" :datomic-uri datomic-uri}})
@@ -22,11 +22,11 @@
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)
-    :routes (component/using (component.routes/new-routes routes-example)
-                             [:config])
-    :service (component/using (component.service/new-service)
-                              [:config :routes])))
+   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :routes (component/using (component.routes/new-routes routes-example)
+                            [:config])
+   :service (component/using (component.service/new-service)
+                             [:config :routes])))
 
 (deftest service-component-test
   (let [system     (component/start system-test)

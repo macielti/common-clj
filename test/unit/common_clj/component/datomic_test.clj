@@ -1,8 +1,8 @@
 (ns common-clj.component.datomic-test
   (:require [clojure.test :refer :all]
+            [common-clj.component.datomic :as component.datomic]
             [datomic.api :as d]
             [matcher-combinators.test :refer [match?]]
-            [common-clj.component.datomic :as component.datomic]
             [schema.test :as s])
   (:import (java.util UUID)))
 

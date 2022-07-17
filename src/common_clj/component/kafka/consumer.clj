@@ -1,33 +1,33 @@
 (ns common-clj.component.kafka.consumer
-  (:require [schema.core :as s]
+  (:require [camel-snake-kebab.core :as camel-snake-kebab]
             [cheshire.core :as json]
-            [overtone.at-at :as at-at]
-            [plumbing.core :as plumbing]
+            [clojure.tools.logging :as log]
             [com.stuartsierra.component :as component]
+            [common-clj.component.kafka.adapters :as component.kafka.adapters]
             [common-clj.component.kafka.models :as component.kafka.models]
             [common-clj.component.kafka.producer :as component.kafka.producer]
-            [camel-snake-kebab.core :as camel-snake-kebab]
             [io.pedestal.interceptor :as interceptor]
             [io.pedestal.interceptor.chain :as chain]
-            [taoensso.timbre :as timbre]
-            [common-clj.component.kafka.adapters :as component.kafka.adapters]
-            [clojure.tools.logging :as log])
-  (:import (org.apache.kafka.clients.consumer KafkaConsumer)
-           (java.time Duration)
+            [overtone.at-at :as at-at]
+            [plumbing.core :as plumbing]
+            [schema.core :as s]
+            [taoensso.timbre :as timbre])
+  (:import (java.time Duration)
+           (org.apache.kafka.clients.consumer KafkaConsumer)
            (org.apache.kafka.common.serialization StringDeserializer)))
 
 (def kafka-client-starter
   (interceptor/interceptor
-    {:name  ::kafka-client
-     :enter (fn [{:keys [consumer-props] :as context}]
-              (assoc context :kafka-client (new KafkaConsumer consumer-props)))}))
+   {:name  ::kafka-client
+    :enter (fn [{:keys [consumer-props] :as context}]
+             (assoc context :kafka-client (new KafkaConsumer consumer-props)))}))
 
 (def subscriber
   (interceptor/interceptor
-    {:name  ::subscriber
-     :enter (fn [{:keys [topics kafka-client] :as context}]
-              (.subscribe kafka-client topics)
-              context)}))
+   {:name  ::subscriber
+    :enter (fn [{:keys [topics kafka-client] :as context}]
+             (.subscribe kafka-client topics)
+             context)}))
 
 (s/defn handler-by-topic
   [topic :- s/Keyword
@@ -48,20 +48,20 @@
 
 (def kafka-consumer!
   (interceptor/interceptor
-    {:name  ::kafka-consumer
-     :enter (fn [{:keys [kafka-client topic-consumers components service-name] :as context}]
-              (assoc context :loop-consumer (future
-                                              (while true
-                                                (let [records (seq (.poll kafka-client (Duration/ofMillis 100)))]
-                                                  (doseq [record records]
-                                                    (let [{:keys [topic data] :as clj-message} (component.kafka.adapters/kafka-record->clj-message record)
-                                                          {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
-                                                      (try
-                                                        (do (s/validate schema (:payload data))
-                                                            (handler (:payload data) components))
-                                                        (catch Exception e
-                                                          (do (log/error e)
-                                                              (replay-dead-letter! clj-message service-name (str e) (:producer components))))))))))))}))
+   {:name  ::kafka-consumer
+    :enter (fn [{:keys [kafka-client topic-consumers components service-name] :as context}]
+             (assoc context :loop-consumer (future
+                                             (while true
+                                               (let [records (seq (.poll kafka-client (Duration/ofMillis 100)))]
+                                                 (doseq [record records]
+                                                   (let [{:keys [topic data] :as clj-message} (component.kafka.adapters/kafka-record->clj-message record)
+                                                         {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
+                                                     (try
+                                                       (do (s/validate schema (:payload data))
+                                                           (handler (:payload data) components))
+                                                       (catch Exception e
+                                                         (do (log/error e)
+                                                             (replay-dead-letter! clj-message service-name (str e) (:producer components))))))))))))}))
 
 (s/defrecord Consumer [config datomic producer topic-consumers]
   component/Lifecycle

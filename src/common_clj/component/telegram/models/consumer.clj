@@ -2,7 +2,6 @@
   (:require [schema.core :as s])
   (:import (clojure.lang IFn)))
 
-
 (s/defschema Consumer
   {(s/optional-key :consumer/interceptors)  [s/Keyword]
    :consumer/handler                        IFn

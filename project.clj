@@ -5,7 +5,8 @@
             :url  "https://www.eclipse.org/legal/epl-2.0/"}
 
   :plugins [[lein-codox "0.10.8"]
-            [lein-cloverage "1.2.3"]]
+            [lein-cloverage "1.2.3"]
+            [com.github.clojure-lsp/lein-clojure-lsp "1.3.5"]]
 
   :codox {:metadata    {:doc "Just common Clojure code that I use across projects."}
           :output-path "docs"}
@@ -44,5 +45,14 @@
   :resource-paths ["resources" "test/resources/"]
 
   :test-paths ["test/unit" "test/integration" "test/helpers"]
+
+  :aliases {"clean-ns"     ["clojure-lsp" "clean-ns" "--dry"] ;; check if namespaces are clean
+            "format"       ["clojure-lsp" "format" "--dry"] ;; check if namespaces are formatted
+            "diagnostics"  ["clojure-lsp" "diagnostics"]
+            "lint"         ["do" ["clean-ns"] ["format"] ["diagnostics"]]
+
+            "clean-ns-fix" ["clojure-lsp" "clean-ns"]
+            "format-fix"   ["clojure-lsp" "format"]
+            "lint-fix"     ["do" ["clean-ns-fix"] ["format-fix"]]}
 
   :repl-options {:init-ns common-clj.schema.core})

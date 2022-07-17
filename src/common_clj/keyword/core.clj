@@ -1,6 +1,6 @@
 (ns common-clj.keyword.core
-  (:require [schema.core :as s]
-            [camel-snake-kebab.core :refer [->kebab-case]]))
+  (:require [camel-snake-kebab.core :refer [->kebab-case]]
+            [schema.core :as s]))
 
 (s/defn str->keyword-kebab-case :- s/Keyword
   [k :- s/Str]

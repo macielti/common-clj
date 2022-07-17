@@ -1,7 +1,7 @@
 (ns fixtures.components
   (:require [clojure.test :refer :all]
-            [telegrambot-lib.core :as telegram-bot]
-            [fixtures.config]))
+            [fixtures.config]
+            [telegrambot-lib.core :as telegram-bot]))
 
 (def telegram (telegram-bot/create fixtures.config/token))
 

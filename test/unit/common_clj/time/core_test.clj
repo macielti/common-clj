@@ -1,8 +1,8 @@
 (ns common-clj.time.core-test
   (:require [clojure.test :refer :all]
+            [common-clj.time.core :as time]
             [mockfn.macros :as mfn]
-            [schema.test :as s]
-            [common-clj.time.core :as time]))
+            [schema.test :as s]))
 
 (s/deftest now-datetime-test
   (testing "that we can generate a datetime now"

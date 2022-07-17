@@ -1,0 +1,5 @@
+{:clean {:ns-inner-blocks-indentation :same-line
+         :sort                        {:ns      true
+                                       :require true
+                                       :import  true
+                                       :refer   {:max-line-length 80}}}}

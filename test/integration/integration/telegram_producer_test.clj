@@ -1,16 +1,16 @@
 (ns integration.telegram-producer-test
   (:require [clojure.test :refer :all]
-            [schema.test :as s]
             [com.stuartsierra.component :as component]
-            [matcher-combinators.test :refer [match?]]
             [common-clj.component.config :as component.config]
+            [common-clj.component.helper.core :as component.helper]
             [common-clj.component.telegram.producer :as component.telegram.producer]
-            [common-clj.component.helper.core :as component.helper]))
+            [matcher-combinators.test :refer [match?]]
+            [schema.test :as s]))
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)
-    :telegram-producer (component/using (component.telegram.producer/new-telegram-producer) [:config])))
+   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :telegram-producer (component/using (component.telegram.producer/new-telegram-producer) [:config])))
 
 (s/deftest telegram-producer-component-test
   (let [system            (component/start system-test)

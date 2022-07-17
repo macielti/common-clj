@@ -1,16 +1,16 @@
 (ns integration.config-component-test
   (:require [clojure.test :refer :all]
-            [common-clj.component.helper.core :as component.helper]
+            [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
-            [com.stuartsierra.component :as component]))
+            [common-clj.component.helper.core :as component.helper]))
 
 (def system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)))
+   :config (component.config/new-config "resources/config_test.json" :test :json)))
 
 (def system-prod
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :prod :json)))
+   :config (component.config/new-config "resources/config_test.json" :prod :json)))
 
 (deftest config-component-test
   (let [system            (component/start system-test)

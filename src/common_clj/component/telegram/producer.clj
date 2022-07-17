@@ -1,7 +1,7 @@
 (ns common-clj.component.telegram.producer
-  (:require [schema.core :as s]
-            [com.stuartsierra.component :as component]
-            [morse.api :as morse-api]))
+  (:require [com.stuartsierra.component :as component]
+            [morse.api :as morse-api]
+            [schema.core :as s]))
 
 (s/defn produce!
   [chat-id :- s/Int

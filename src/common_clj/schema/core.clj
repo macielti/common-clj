@@ -1,6 +1,6 @@
 (ns common-clj.schema.core
-  (:require [schema.core :as s]
-            [clojure.walk :as walk])
+  (:require [clojure.walk :as walk]
+            [schema.core :as s])
   (:import (clojure.lang PersistentArrayMap)))
 
 (defn loose-schema

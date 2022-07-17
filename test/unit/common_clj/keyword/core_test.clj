@@ -1,7 +1,7 @@
 (ns common-clj.keyword.core-test
-  (:require [schema.test :as s]
-            [clojure.test :refer :all]
-            [common-clj.keyword.core :as keyword.core]))
+  (:require [clojure.test :refer :all]
+            [common-clj.keyword.core :as keyword.core]
+            [schema.test :as s]))
 
 (use-fixtures :once s/validate-schemas)
 

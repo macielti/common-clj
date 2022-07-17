@@ -10,4 +10,4 @@
   ;#TODO: Assert that we can decode the token
   (testing "that we can convert a map to a signed JWToken string"
     (is (match? string?
-               (auth/->token token-content jwt-secret)))))
+                (auth/->token token-content jwt-secret)))))

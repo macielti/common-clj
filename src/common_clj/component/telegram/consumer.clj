@@ -1,15 +1,15 @@
 (ns common-clj.component.telegram.consumer
-  (:require [schema.core :as s]
-            [medley.core :as medley]
-            [telegrambot-lib.core :as telegram-bot]
-            [clostache.parser :as parser]
-            [overtone.at-at :as at-at]
-            [io.pedestal.interceptor.chain :as chain]
-            [io.pedestal.interceptor :as interceptor]
+  (:require [clostache.parser :as parser]
             [com.stuartsierra.component :as component]
-            [common-clj.component.telegram.producer :as component.telegram.producer]
+            [common-clj.component.telegram.adapters.update :as telegram.adapters.message]
             [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
-            [common-clj.component.telegram.adapters.update :as telegram.adapters.message]))
+            [common-clj.component.telegram.producer :as component.telegram.producer]
+            [io.pedestal.interceptor :as interceptor]
+            [io.pedestal.interceptor.chain :as chain]
+            [medley.core :as medley]
+            [overtone.at-at :as at-at]
+            [schema.core :as s]
+            [telegrambot-lib.core :as telegram-bot]))
 
 (s/defn commit-update-as-consumed!
   [offset :- s/Int
@@ -42,12 +42,12 @@
           (if error-handler
             (error-handler e components)
             (component.telegram.producer/produce! chat-id (parser/render-resource
-                                                            (format "%s/error_processing_message_command.mustache"
-                                                                    (-> config :telegram :message-template-dir))) token)))))
+                                                           (format "%s/error_processing_message_command.mustache"
+                                                                   (-> config :telegram :message-template-dir))) token)))))
     (when-not handler
       (component.telegram.producer/produce! chat-id (parser/render-resource
-                                                      (format "%s/command_not_found.mustache"
-                                                              (-> config :telegram :message-template-dir))) token))
+                                                     (format "%s/command_not_found.mustache"
+                                                             (-> config :telegram :message-template-dir))) token))
     (commit-update-as-consumed! update-id telegram-consumer)))
 
 (s/defn ^:private consumer-job!

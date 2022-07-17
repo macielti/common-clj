@@ -1,8 +1,8 @@
 (ns common-clj.component.kafka.adapters-test
-  (:require [clojure.test :refer :all]
-            [cheshire.core :as json]
-            [matcher-combinators.test :refer [match?]]
-            [common-clj.component.kafka.adapters :as component.kafka.adapters])
+  (:require [cheshire.core :as json]
+            [clojure.test :refer :all]
+            [common-clj.component.kafka.adapters :as component.kafka.adapters]
+            [matcher-combinators.test :refer [match?]])
   (:import (org.apache.kafka.clients.producer ProducerRecord)))
 
 (def kafka-message-record (ProducerRecord. (name :test-topic) (json/encode {:payload {:test-key :test-value}})))

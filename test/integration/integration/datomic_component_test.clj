@@ -3,10 +3,10 @@
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.datomic :as component.datomic]
+            [common-clj.component.helper.core :as component.helper]
             [datomic.api :as d]
-            [schema.core :as s]
             [schema-generators.complete :as c]
-            [common-clj.component.helper.core :as component.helper]))
+            [schema.core :as s]))
 
 (def ^:private user-skeleton
   [{:db/ident       :user/id
@@ -46,9 +46,9 @@
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)
-    :datomic (component/using (component.datomic/new-datomic schemas)
-                              [:config])))
+   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :datomic (component/using (component.datomic/new-datomic schemas)
+                             [:config])))
 
 (deftest datomic-component-test
   (let [system (component/start system-test)

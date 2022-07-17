@@ -1,7 +1,7 @@
 (ns common-clj.component.datalevin
-  (:require [com.stuartsierra.component :as component]
+  (:require [clojure.java.io :as io]
+            [com.stuartsierra.component :as component]
             [datalevin.core :as datalevin]
-            [clojure.java.io :as io]
             [schema.core :as s]))
 
 (s/defn mocked-datalevin-component
