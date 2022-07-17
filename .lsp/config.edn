@@ -3,4 +3,4 @@
                                          :require true
                                          :import  false
                                          :refer   {:max-line-length 80}}}
- :lint-as {schema.test/deftest clojure.test/deftest}}
+ :lint-as {schema.test/deftest                   clojure.test/deftest}}
