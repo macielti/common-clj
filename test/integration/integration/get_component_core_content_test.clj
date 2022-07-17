@@ -1,7 +1,8 @@
 (ns integration.get-component-core-content-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
-            [common-clj.component.helper.core :as component.helper]))
+            [common-clj.component.helper.core :as component.helper]
+            [schema.test :as s]))
 
 (def ^:private core-content {:name "Freddie Mercury Prateado"})
 
@@ -20,7 +21,7 @@
   (component/system-map
    :example-component (new-example-component)))
 
-(deftest get-component-content-test
+(s/deftest get-component-content-test
   (testing "that we can get the core content of the component"
     (let [started-system (component/start system-example)]
       (is (= core-content

@@ -1,5 +1,5 @@
 (ns common-clj.error.core-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is testing]]
             [common-clj.error.core :as error])
   (:import (clojure.lang ExceptionInfo)))
 

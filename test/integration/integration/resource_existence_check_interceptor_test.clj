@@ -1,5 +1,5 @@
 (ns integration.resource-existence-check-interceptor-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.datomic :as component.datomic]
@@ -8,7 +8,8 @@
             [common-clj.component.service :as component.service]
             [common-clj.io.interceptors.datomic :as io.interceptors.datomic]
             [datomic.api :as d]
-            [integration.aux.http :as aux.http])
+            [integration.aux.http :as aux.http]
+            [schema.test :as s])
   (:import (java.util UUID)))
 
 (def ^:private test-skeleton
@@ -42,7 +43,7 @@
    :datomic (component/using (component.datomic/new-datomic schemas) [:config])
    :service (component/using (component.service/new-service) [:config :datomic :routes])))
 
-(deftest resource-existence-check-interceptor-test
+(s/deftest resource-existence-check-interceptor-test
   (let [system (component/start system-test)
         datomic (component.helper/get-component-content :datomic system)
         service-fn (-> (component.helper/get-component-content :service system)

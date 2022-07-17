@@ -1,8 +1,9 @@
 (ns common-clj.money.converter-test
-  (:require [clojure.test :refer :all]
-            [common-clj.money.converter :as money.converter]))
+  (:require [clojure.test :refer [is testing]]
+            [common-clj.money.converter :as money.converter]
+            [schema.test :as s]))
 
-(deftest ->cents-test
+(s/deftest ->cents-test
   (testing "should be able to convert money value to cents"
     (is (= 200N
            (money.converter/->cents 2N)))

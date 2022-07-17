@@ -1,5 +1,5 @@
 (ns common-clj.schema.core-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is testing]]
             [common-clj.schema.core :refer [loose-schema]]
             [schema.core :as s])
   (:import (clojure.lang ExceptionInfo)))

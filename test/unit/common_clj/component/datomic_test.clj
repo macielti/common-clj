@@ -1,5 +1,5 @@
 (ns common-clj.component.datomic-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.component.datomic :as component.datomic]
             [datomic.api :as d]
             [matcher-combinators.test :refer [match?]]

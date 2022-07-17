@@ -1,5 +1,5 @@
 (ns common-clj.test.helper.core-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is testing]]
             [common-clj.test.helper.core :as test.helper]
             [matcher-combinators.test :refer [match?]]))
 

@@ -1,6 +1,7 @@
 (ns common-clj.time.parser.core-test
-  (:require [clojure.test :refer :all]
-            [common-clj.time.parser.core :as time.parser.core])
+  (:require [clojure.test :refer [is testing]]
+            [common-clj.time.parser.core :as time.parser.core]
+            [schema.test :as s])
   (:import (java.time LocalDate)))
 
 (def date (LocalDate/of 1998 12 26))
@@ -8,7 +9,7 @@
 (def yesterday (doto (LocalDate/now)
                  (.minusDays 1)))
 
-(deftest str->local-date-test
+(s/deftest str->local-date-test
   (testing "that we can parse strings that contain the word 'Hoje' to a LocalDate"
     (is (= today
            (time.parser.core/str->local-date "" "Hoje vai chover"))))
@@ -19,7 +20,7 @@
     (is (= date
            (time.parser.core/str->local-date "dd-MM-yyyy" "26-12-1998")))))
 
-(deftest local-date->str-test
+(s/deftest local-date->str-test
   (testing "that we can parse LocalDate to formatted date string"
     (is (= "26-12-1998"
            (time.parser.core/local-date->str "dd-MM-yyyy" date)))
