@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [15.17.16] - 2022-07-21
+
+### Fixed
+
+- Fixed `common-clj.money.converter/->cents` function expected output type from BigInteger to BigInt.
+
 ## [15.17.15] - 2022-07-16
 
 ### Changed
@@ -285,7 +291,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v15.17.15...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v15.17.16...HEAD
+
+[15.17.16]: https://github.com/macielti/common-clj/compare/v15.17.15...v15.17.16
 
 [15.17.15]: https://github.com/macielti/common-clj/compare/v14.17.14...v15.17.15
 
