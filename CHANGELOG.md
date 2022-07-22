@@ -5,6 +5,14 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Added `common-clj.time.parser.core/date->wire` function to convert Date object to ISO-8601 string.
+
+### Fixed
+
+- Fixed `detail` expected param type for `common-clj.error.core/http-friendly-exception` function.
+
 ## [15.17.16] - 2022-07-21
 
 ### Fixed

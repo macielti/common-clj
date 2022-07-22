@@ -6,7 +6,7 @@
   [status-code :- s/Int
    error :- s/Str
    message :- s/Str
-   detail :- s/Str]
+   detail :- s/Any]
   (throw (ex-info (format "%s - %s" status-code error)
                   {:status  status-code
                    :error   error

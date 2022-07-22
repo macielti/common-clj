@@ -28,3 +28,8 @@
            (time.parser.core/local-date->str "yyyy" date)))
     (is (= "26/12/1998"
            (time.parser.core/local-date->str "dd/MM/yyyy" date)))))
+
+(s/deftest date->wire-test
+  (testing "that we can convert a Date object to ISO-8601 string"
+    (is (= "2022-07-22T17:54:43-0300"
+           (time.parser.core/date->wire #inst "2022-07-22T20:54:43.440-00:00")))))
