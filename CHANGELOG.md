@@ -5,6 +5,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [15.18.17] - 2022-07-22
+
 ### Added
 
 - Added `common-clj.time.parser.core/date->wire` function to convert Date object to ISO-8601 string.
@@ -301,7 +303,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v15.17.16...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v15.18.17...HEAD
+
+[15.18.17]: https://github.com/macielti/common-clj/compare/v15.17.16...v15.18.17
 
 [15.17.16]: https://github.com/macielti/common-clj/compare/v15.17.15...v15.17.16
 
