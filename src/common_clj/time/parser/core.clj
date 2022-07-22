@@ -27,4 +27,6 @@
 (s/defn wire->date :- Date
   "Convert ISO-8601 string to Date object"
   [date-iso-8601 :- s/Str]
-  (OffsetDateTime/parse date-iso-8601))
+  (-> (OffsetDateTime/parse date-iso-8601)
+      .toInstant
+      Date/from))
