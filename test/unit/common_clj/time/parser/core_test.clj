@@ -32,5 +32,4 @@
 (s/deftest date->wire-test
   (testing "that we can convert a Date object to ISO-8601 string"
     (let [parsed-date (time.parser.core/date->wire #inst "2022-07-22T20:54:43.440-00:00")]
-      (is (or (= "2022-07-22T17:54:43-0300" parsed-date)
-              (= "2022-07-22T17:54:43+0000" parsed-date))))))
+      (is (= "2022-07-22T17:54:43-0300" parsed-date)))))
