@@ -2,7 +2,9 @@
   (:require [clojure.test :refer [is testing]]
             [common-clj.time.parser.core :as time.parser.core]
             [schema.test :as s])
-  (:import (java.time LocalDate)))
+  (:import (java.time LocalDate LocalDateTime OffsetDateTime)
+           (java.time.format DateTimeFormatter)
+           (java.util Date)))
 
 (def date (LocalDate/of 1998 12 26))
 (def today (LocalDate/now))
@@ -31,6 +33,5 @@
 
 (s/deftest date->wire-test
   (testing "that we can convert a Date object to ISO-8601 string"
-    (let [parsed-date (time.parser.core/date->wire #inst "2022-07-22T20:54:43.440-00:00")]
-      (is (or (= "2022-07-22T17:54:43-0300" parsed-date)
-              (= "2022-07-22T20:54:43+0000" parsed-date))))))
+    (is (= "2022-07-22T22:59:17.598Z"
+           (time.parser.core/date->wire #inst"2022-07-22T22:59:17.598-00:00")))))
