@@ -8,6 +8,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 ### Added
 
 - Added `common-clj.time.parser.core/date->wire` function to convert Date object to ISO-8601 string.
+- Added `common-clj.time.parser.core/wire->date` function to convert ISO-8601 string into Date object.
 
 ### Fixed
 
