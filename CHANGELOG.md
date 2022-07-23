@@ -9,7 +9,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Fixed
 
-- `MockKafkaConsumer` component throws exception if not setup correctly. Make debug process more easy while testing.
+- `MockKafkaConsumer` component throws an exception if not set up correctly. Make debug process easier while testing.
 
 ## [15.18.17] - 2022-07-22
 
