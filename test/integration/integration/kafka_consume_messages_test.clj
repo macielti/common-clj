@@ -5,8 +5,10 @@
             [common-clj.component.helper.core :as component.helper]
             [common-clj.component.kafka.consumer :as component.consumer]
             [common-clj.component.kafka.producer :as component.producer]
+            [matcher-combinators.test :refer [match?]]
             [schema.core :as s]
-            [schema.test :as s-test]))
+            [schema.test :as s-test])
+  (:import (clojure.lang ExceptionInfo)))
 
 (def test-state (atom nil))
 
@@ -24,9 +26,9 @@
 
 (def ^:private system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.json" :test :json)
-   :producer (component/using (component.producer/new-mock-producer) [:config])
-   :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])))
+    :config (component.config/new-config "resources/config_test.json" :test :json)
+    :producer (component/using (component.producer/new-mock-producer) [:config])
+    :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])))
 
 (s-test/deftest kafka-consumer-component-test
   (let [system (component/start system-test)
@@ -83,3 +85,16 @@
                                    :payload "{\"wrong-keyword\":\"just a simple test\"}"}}}]
                (component.producer/produced-messages producer)))))
     (component/stop system)))
+
+(def ^:private system-test-invalid-consumer
+  (component/system-map
+    :config (component.config/new-config "resources/config_test.json" :test :json)
+    :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config])
+    :producer (component/using (component.producer/new-mock-producer) [:config :consumer])))
+
+(s-test/deftest throw-exception-when-producer-component-is-not-provided
+  (testing "that we throw an exception if the producer component is not provided for consumer"
+    (is (match? {:system-key :consumer}
+                (try (component/start system-test-invalid-consumer)
+                     (catch ExceptionInfo ex
+                       (ex-data ex)))))))
