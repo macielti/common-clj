@@ -115,6 +115,9 @@
   component/Lifecycle
 
   (start [this]
+    (when-not (:producer producer)
+      (throw (ex-info "MockKafkaConsumer depends on MockKafkaProducer"
+                      {:error   :mock-kafka-producer-component-not-provided})))
     (let [components (plumbing/assoc-when {}
                                           :producer (:producer producer)
                                           :config (:config config)
