@@ -1,4 +1,4 @@
-![Clojure CI - Unit and Integration Tests](https://github.com/macielti/common-clj/actions/workflows/github_actions.yml/badge.svg)
+![Clojure CI - Unit and Integration Tests](https://github.com/macielti/common-clj/actions/workflows/tests.yml/badge.svg)
 
 # common-clj
 
