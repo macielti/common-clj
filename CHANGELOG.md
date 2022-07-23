@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [15.18.18] - 2022-07-23
+
+### Fixed
+
+- `MockKafkaConsumer` component throws exception if not setup correctly. Make debug process more easy while testing.
+
 ## [15.18.17] - 2022-07-22
 
 ### Added
@@ -303,7 +309,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v15.18.17...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v15.18.18...HEAD
+
+[15.18.18]: https://github.com/macielti/common-clj/compare/v15.18.17...v15.18.18
 
 [15.18.17]: https://github.com/macielti/common-clj/compare/v15.17.16...v15.18.17
 
