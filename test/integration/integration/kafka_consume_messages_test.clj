@@ -98,3 +98,30 @@
                 (try (component/start system-test-invalid-consumer)
                      (catch ExceptionInfo ex
                        (ex-data ex)))))))
+
+(def ^:private system-test-disabled-dlq-service-integration
+  (component/system-map
+    :config (component.config/new-config "resources/config_test_dead_letter_disabled.json" :test :json)
+    :producer (component/using (component.producer/new-mock-producer) [:config])
+    :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])))
+
+
+(s-test/deftest kafka-consumer-component-test-wrong-schema-dlq-disabled
+  (let [system (component/start system-test-disabled-dlq-service-integration)
+        producer (component.helper/get-component-content :producer system)]
+
+    (component.producer/produce! {:topic :consumer-topic-test
+                                  :data  {:payload {:wrong-keyword "just a simple test"}}}
+                                 producer)
+    (Thread/sleep 5000)
+
+    (testing "that we can't consume a message with wrong payload for consumer schema"
+      (is (= nil
+             @test-state))
+      (reset! test-state nil)
+
+      (testing "that we produced a message to the DLQ service"
+        (is (= [{:topic :consumer-topic-test
+                 :data  {:payload {:wrong-keyword "just a simple test"}}}]
+               (component.producer/produced-messages producer)))))
+    (component/stop system)))

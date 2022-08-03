@@ -18,16 +18,16 @@
 
 (def kafka-client-starter
   (interceptor/interceptor
-   {:name  ::kafka-client
-    :enter (fn [{:keys [consumer-props] :as context}]
-             (assoc context :kafka-client (new KafkaConsumer consumer-props)))}))
+    {:name  ::kafka-client
+     :enter (fn [{:keys [consumer-props] :as context}]
+              (assoc context :kafka-client (new KafkaConsumer consumer-props)))}))
 
 (def subscriber
   (interceptor/interceptor
-   {:name  ::subscriber
-    :enter (fn [{:keys [topics kafka-client] :as context}]
-             (.subscribe kafka-client topics)
-             context)}))
+    {:name  ::subscriber
+     :enter (fn [{:keys [topics kafka-client] :as context}]
+              (.subscribe kafka-client topics)
+              context)}))
 
 (s/defn handler-by-topic
   [topic :- s/Keyword
@@ -48,20 +48,21 @@
 
 (def kafka-consumer!
   (interceptor/interceptor
-   {:name  ::kafka-consumer
-    :enter (fn [{:keys [kafka-client topic-consumers components service-name] :as context}]
-             (assoc context :loop-consumer (future
-                                             (while true
-                                               (let [records (seq (.poll kafka-client (Duration/ofMillis 100)))]
-                                                 (doseq [record records]
-                                                   (let [{:keys [topic data] :as clj-message} (component.kafka.adapters/kafka-record->clj-message record)
-                                                         {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
-                                                     (try
-                                                       (s/validate schema (:payload data))
-                                                       (handler (:payload data) components)
-                                                       (catch Exception e
-                                                         (do (log/error e)
-                                                             (replay-dead-letter! clj-message service-name (str e) (:producer components))))))))))))}))
+    {:name  ::kafka-consumer
+     :enter (fn [{:keys [kafka-client topic-consumers components service-name] :as context}]
+              (assoc context :loop-consumer (future
+                                              (while true
+                                                (let [records (seq (.poll kafka-client (Duration/ofMillis 100)))]
+                                                  (doseq [record records]
+                                                    (let [{:keys [topic data] :as clj-message} (component.kafka.adapters/kafka-record->clj-message record)
+                                                          {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
+                                                      (try
+                                                        (s/validate schema (:payload data))
+                                                        (handler (:payload data) components)
+                                                        (catch Exception e
+                                                          (do (log/error e)
+                                                              (when (-> components :config :dead-letter-queue-service-integration-enabled)
+                                                                (replay-dead-letter! clj-message service-name (str e) (:producer components)))))))))))))}))
 
 (s/defrecord Consumer [config datomic producer topic-consumers]
   component/Lifecycle
@@ -117,7 +118,7 @@
   (start [this]
     (when-not (:producer producer)
       (throw (ex-info "MockKafkaConsumer depends on MockKafkaProducer"
-                      {:error   :mock-kafka-producer-component-not-provided})))
+                      {:error :mock-kafka-producer-component-not-provided})))
     (let [components (plumbing/assoc-when {}
                                           :producer (:producer producer)
                                           :config (:config config)
@@ -137,7 +138,8 @@
                                      (handler (:payload data) components)
                                      (catch Exception e
                                        (do (log/error e)
-                                           (replay-dead-letter! clj-message service-name (str e) (:producer components))))
+                                           (when (-> components :config :dead-letter-queue-service-integration-enabled)
+                                             (replay-dead-letter! clj-message service-name (str e) (:producer components)))))
                                      (finally (commit-message-as-consumed message-record consumed-messages)))))) consumer-pool)
 
       (assoc this :consumer {:consumed-messages consumed-messages
