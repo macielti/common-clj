@@ -5,6 +5,11 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Added the `:dead-letter-integration-enabled` (`true`|`false`) config option to toggle the integration with a DQL
+  service (aka [Wraith-King](https://github.com/macielti/wraith-king)).
+
 ## [15.18.18] - 2022-07-23
 
 ### Fixed
