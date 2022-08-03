@@ -5,6 +5,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [16.18.18] - 2022-08-03
+
 ### Added
 
 - Added the `:dead-letter-integration-enabled` (`true`|`false`) config option to toggle the integration with a DQL
@@ -314,7 +316,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v15.18.18...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v16.18.18...HEAD
+
+[16.18.18]: https://github.com/macielti/common-clj/compare/v15.18.18...v16.18.18
 
 [15.18.18]: https://github.com/macielti/common-clj/compare/v15.18.17...v15.18.18
 
