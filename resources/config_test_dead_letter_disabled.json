@@ -22,6 +22,6 @@
       "token": "123456789:wqsmdksdksjdkjskksjdksjd",
       "messageTemplateDir": "templates"
     },
-    "deadLetterIntegrationEnabled": false
+    "deadLetterQueueServiceIntegrationEnabled": false
   }
 }

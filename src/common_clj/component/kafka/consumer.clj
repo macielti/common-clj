@@ -61,7 +61,7 @@
                                                         (handler (:payload data) components)
                                                         (catch Exception e
                                                           (do (log/error e)
-                                                              (when (-> components :config :dead-letter-integration-enabled)
+                                                              (when (-> components :config :dead-letter-queue-service-integration-enabled)
                                                                 (replay-dead-letter! clj-message service-name (str e) (:producer components)))))))))))))}))
 
 (s/defrecord Consumer [config datomic producer topic-consumers]
@@ -138,7 +138,7 @@
                                      (handler (:payload data) components)
                                      (catch Exception e
                                        (do (log/error e)
-                                           (when (-> components :config :dead-letter-integration-enabled)
+                                           (when (-> components :config :dead-letter-queue-service-integration-enabled)
                                              (replay-dead-letter! clj-message service-name (str e) (:producer components)))))
                                      (finally (commit-message-as-consumed message-record consumed-messages)))))) consumer-pool)
 
