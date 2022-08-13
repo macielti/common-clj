@@ -3,9 +3,9 @@
 
 (def ^:dynamic *correlation-id* nil)
 
-(s/defn ^:private current-correlation-id :- (s/maybe s/Str)
-  [http-request-handler-fn]
-  (-> (:headers http-request-handler-fn)
+(s/defn current-correlation-id-from-request-context :- (s/maybe s/Str)
+  [request-context]
+  (-> (:headers request-context)
       (get-in "x-correlation-id" "DEFAULT")))
 
 (s/defn correlation-id-appended :- s/Str
@@ -16,6 +16,6 @@
 (s/defn with-correlation-id
   [http-request-handler-fn]
   (s/fn [request-context]
-    (binding [*correlation-id* (-> (current-correlation-id request-context)
+    (binding [*correlation-id* (-> (current-correlation-id-from-request-context request-context)
                                    correlation-id-appended)]
       (http-request-handler-fn request-context))))
