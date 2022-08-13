@@ -16,4 +16,6 @@
 (s/defn with-correlation-id
   [http-request-handler-fn]
   (s/fn [request-context]
-    (binding [])))
+    (binding [*correlation-id* (-> (current-correlation-id request-context)
+                                   correlation-id-appended)]
+      (http-request-handler-fn request-context))))
