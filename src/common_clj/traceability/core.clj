@@ -3,10 +3,15 @@
 
 (def ^:dynamic *correlation-id* nil)
 
-(s/defn current-correlation-id :- (s/maybe s/Str)
+(s/defn ^:private current-correlation-id :- (s/maybe s/Str)
   [http-request-handler-fn]
   (-> (:headers http-request-handler-fn)
       (get-in "x-correlation-id" "DEFAULT")))
+
+(s/defn correlation-id-appended :- s/Str
+  [correlation-id]
+  (-> (str correlation-id "." (random-uuid))
+      clojure.string/upper-case))
 
 (s/defn with-correlation-id
   [http-request-handler-fn]
