@@ -3,16 +3,15 @@
 
 (def ^:dynamic *correlation-id* nil)
 
-;TODO: Add missing unit test for that fn
 (s/defn current-correlation-id-from-request-context :- (s/maybe s/Str)
   [request-context]
   (-> (:headers request-context)
       (get "x-correlation-id" "DEFAULT")
       clojure.string/upper-case))
 
-;TODO: Add missing unit test for that fn
+;TODO: Add check for empty strings for correlation-id input args (Should trow a exception)
 (s/defn correlation-id-appended :- s/Str
-  [correlation-id]
+  [correlation-id :- s/Str]
   (-> (str correlation-id "." (random-uuid))
       clojure.string/upper-case))
 
