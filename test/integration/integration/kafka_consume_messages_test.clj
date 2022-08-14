@@ -5,9 +5,11 @@
             [common-clj.component.helper.core :as component.helper]
             [common-clj.component.kafka.consumer :as component.consumer]
             [common-clj.component.kafka.producer :as component.producer]
+            [common-clj.traceability.core :as common-traceability]
             [matcher-combinators.test :refer [match?]]
             [schema.core :as s]
-            [schema.test :as s-test])
+            [schema.test :as s-test]
+            [clojure.tools.logging :as log])
   (:import (clojure.lang ExceptionInfo)))
 
 (def test-state (atom nil))

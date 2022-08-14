@@ -11,7 +11,8 @@
             [overtone.at-at :as at-at]
             [plumbing.core :as plumbing]
             [schema.core :as s]
-            [taoensso.timbre :as timbre])
+            [taoensso.timbre :as timbre]
+            [common-clj.traceability.core :as common-traceability])
   (:import (java.time Duration)
            (org.apache.kafka.clients.consumer KafkaConsumer)
            (org.apache.kafka.common.serialization StringDeserializer)))
@@ -58,7 +59,10 @@
                                                           {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
                                                       (try
                                                         (s/validate schema (:payload data))
-                                                        (handler (:payload data) components)
+                                                        (binding [common-traceability/*correlation-id* (-> data :meta :correlation-id
+                                                                                                           (or (common-traceability/current-correlation-id))
+                                                                                                           common-traceability/correlation-id-appended)]
+                                                          (handler (:payload data) components))
                                                         (catch Exception e
                                                           (do (log/error e)
                                                               (when (-> components :config :dead-letter-queue-service-integration-enabled)
@@ -135,7 +139,10 @@
                                        {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
                                    (try
                                      (s/validate schema (:payload data))
-                                     (handler (:payload data) components)
+                                     (binding [common-traceability/*correlation-id* (-> data :meta :correlation-id
+                                                                                        (or (common-traceability/current-correlation-id))
+                                                                                        common-traceability/correlation-id-appended)]
+                                       (handler (:payload data) components))
                                      (catch Exception e
                                        (do (log/error e)
                                            (when (-> components :config :dead-letter-queue-service-integration-enabled)

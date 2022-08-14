@@ -3,5 +3,4 @@
 
 (s/defschema KafkaMessage
   {:topic s/Keyword
-   :data  {:payload {s/Keyword (s/maybe s/Any)}
-           :meta    {:correlation-id s/Str}}})
+   :data  {:payload {s/Keyword (s/maybe s/Any)}}})
