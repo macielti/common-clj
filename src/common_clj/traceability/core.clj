@@ -7,7 +7,8 @@
 (s/defn current-correlation-id-from-request-context :- (s/maybe s/Str)
   [request-context]
   (-> (:headers request-context)
-      (get-in "x-correlation-id" "DEFAULT")))
+      (get "x-correlation-id" "DEFAULT")
+      clojure.string/upper-case))
 
 ;TODO: Add missing unit test for that fn
 (s/defn correlation-id-appended :- s/Str
