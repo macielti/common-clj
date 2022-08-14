@@ -53,5 +53,5 @@
       (d/transact (:connection datomic) [{:test/id resource-id}])
       (is (= {:status 200
               :body   {:id (str resource-id)}}
-             (aux.http/request-test-endpoints (str "/resource-existence-check-interceptor-test/" resource-id) service-fn))))
+             (aux.http/request-test-endpoints (str "/resource-existence-check-interceptor-test/" resource-id) nil service-fn))))
     (component/stop-system system)))

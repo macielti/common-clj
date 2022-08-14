@@ -36,21 +36,21 @@
     (testing "that we can request the defined endpoints"
       (is (= {:status 200
               :body   {:test-2 "ok"}}
-             (aux.http/request-test-endpoints "/test-2" service-fn))))
+             (aux.http/request-test-endpoints "/test-2" nil service-fn))))
     (testing "that we can access components content from request func handlers if we need to"
       (is (= {:status 200
               :body   {:datomic-uri "datomic:mem://example-test"
                        :test        "ok"}}
-             (aux.http/request-test-endpoints "/test" service-fn))))
+             (aux.http/request-test-endpoints "/test" nil service-fn))))
     (testing "that we can catch and present friendly error messages using the error interceptor"
       (is (= {:status 418
               :body   {:error   "unknown"
                        :message "I'm not a teapot"
                        :detail  "Just chilling"}}
-             (aux.http/request-test-endpoints "/throw-info-exception" service-fn)))
+             (aux.http/request-test-endpoints "/throw-info-exception" nil service-fn)))
       (is (= {:status 500
               :body   {:detail  "Internal Server Error"
                        :error   "unexpected-server-error"
                        :message "Internal Server Error"}}
-             (aux.http/request-test-endpoints "/throw-simple-exception" service-fn))))
+             (aux.http/request-test-endpoints "/throw-simple-exception" nil service-fn))))
     (component/stop-system system)))
