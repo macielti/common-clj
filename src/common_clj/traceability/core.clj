@@ -3,10 +3,14 @@
 
 (def ^:dynamic *correlation-id* nil)
 
+(s/defn current-correlation-id :- s/Str
+  []
+  (or *correlation-id* "DEFAULT"))
+
 (s/defn current-correlation-id-from-request-context :- (s/maybe s/Str)
   [request-context]
   (-> (:headers request-context)
-      (get "x-correlation-id" "DEFAULT")
+      (get "x-correlation-id" (current-correlation-id))
       clojure.string/upper-case))
 
 (s/defn correlation-id-appended :- s/Str
@@ -15,7 +19,6 @@
   (-> (str correlation-id "." (random-uuid))
       clojure.string/upper-case))
 
-;TODO: Add missing integration test for that fn
 (s/defn with-correlation-id
   [http-request-handler-fn]
   (s/fn [request-context]
