@@ -15,4 +15,6 @@
 (s/deftest correlation-id-appended-test
   (mfn/providing [(random-uuid) #uuid "7835733a-83e1-46d1-94e4-7b84fb601d64"]
                  (is (= "MOCK.TEST.7835733A-83E1-46D1-94E4-7B84FB601D64"
-                        (common-traceability/correlation-id-appended "MOCK.TEST")))))
+                        (common-traceability/correlation-id-appended "MOCK.TEST"))))
+
+  (is (thrown? AssertionError (common-traceability/correlation-id-appended ""))))
