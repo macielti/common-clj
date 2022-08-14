@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [16.19.18] - 2022-08-14
+
+### Added
+
+- Added implementation of `X-Correlation-Id` header for tracking http requests made between microservices. To use it
+  wrap the http-handler function with `common-clj.traceability/with-correlation-id`.
+
 ## [16.18.18] - 2022-08-03
 
 ### Added
@@ -316,7 +323,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v16.18.18...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v16.19.18...HEAD
+
+[16.19.18]: https://github.com/macielti/common-clj/compare/v16.18.18...v16.19.18
 
 [16.18.18]: https://github.com/macielti/common-clj/compare/v15.18.18...v16.18.18
 

@@ -4,8 +4,11 @@
 
 (defn request-test-endpoints
   [path
+   headers
    service-fn]
-  (let [{:keys [body status]} (test/response-for service-fn :get path)]
+  (let [{:keys [body status]} (test/response-for service-fn
+                                                 :get path
+                                                 :headers headers)]
     {:status status
      :body   (json/decode body true)}))
 
