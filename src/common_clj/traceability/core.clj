@@ -9,7 +9,6 @@
       (get "x-correlation-id" "DEFAULT")
       clojure.string/upper-case))
 
-;TODO: Add check for empty strings for correlation-id input args (Should trow a exception)
 (s/defn correlation-id-appended :- s/Str
   [correlation-id :- s/Str]
   {:pre [(not-empty correlation-id)]}
