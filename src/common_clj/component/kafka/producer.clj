@@ -8,6 +8,7 @@
   (:import (org.apache.kafka.clients.producer KafkaProducer ProducerRecord)
            (org.apache.kafka.common.serialization StringSerializer)))
 
+;TODO: add option to receive additional meta message data
 (defmulti produce!
           (fn [_ {:keys [current-env]}]
             current-env))
@@ -15,12 +16,13 @@
 (s/defmethod produce! :prod
              [{:keys [topic data]} :- component.kafka.models/KafkaMessage
               {:keys [kafka-producer]}]
-             (let [data' (assoc data :meta {:correlation-id (common-traceability/current-correlation-id)})]
+             (let [data' (if (-> data :meta :correlation-id)
+                           data
+                           (-> (assoc data :meta {:correlation-id (common-traceability/current-correlation-id)})))]
                (-> kafka-producer
                    (.send (ProducerRecord. (name topic) (json/encode data')))
                    .get)))
 
-;TODO: Add integration test for the correlation-id scenarios (without, and with one)
 (s/defmethod produce! :test
              [{:keys [topic data]} :- component.kafka.models/KafkaMessage
               {:keys [produced-messages]}]

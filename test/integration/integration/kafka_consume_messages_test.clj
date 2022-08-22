@@ -5,11 +5,9 @@
             [common-clj.component.helper.core :as component.helper]
             [common-clj.component.kafka.consumer :as component.consumer]
             [common-clj.component.kafka.producer :as component.producer]
-            [common-clj.traceability.core :as common-traceability]
             [matcher-combinators.test :refer [match?]]
             [schema.core :as s]
-            [schema.test :as s-test]
-            [clojure.tools.logging :as log])
+            [schema.test :as s-test])
   (:import (clojure.lang ExceptionInfo)))
 
 (def test-state (atom nil))
@@ -62,6 +60,7 @@
 
     (component/stop system)))
 
+;TODO: The dead-letter should carry on the previous correlation-id
 (s-test/deftest kafka-consumer-component-test-wrong-schema
   (let [system (component/start system-test)
         producer (component.helper/get-component-content :producer system)]
@@ -78,13 +77,15 @@
 
       (testing "that we produced a message to the DLQ service"
         (is (= [{:topic :consumer-topic-test
-                 :data  {:payload {:wrong-keyword "just a simple test"}}}
+                 :data  {:payload {:wrong-keyword "just a simple test"}
+                         :meta    {:correlation-id "DEFAULT"}}}
                 {:topic :create-dead-letter
                  :data  {:payload {:service "TEST_SERVICE"
                                    :topic   "CONSUMER_TOPIC_TEST"
                                    :exceptionInfo
                                    "clojure.lang.ExceptionInfo: Value does not match schema: {:test missing-required-key, :wrong-keyword disallowed-key} {:type :schema.core/error, :schema {:test java.lang.String}, :value {:wrong-keyword \"just a simple test\"}, :error {:test missing-required-key, :wrong-keyword disallowed-key}}"
-                                   :payload "{\"wrong-keyword\":\"just a simple test\"}"}}}]
+                                   :payload "{\"wrong-keyword\":\"just a simple test\"}"}
+                         :meta    {:correlation-id nil}}}]
                (component.producer/produced-messages producer)))))
     (component/stop system)))
 
@@ -124,6 +125,7 @@
 
       (testing "that we produced a message to the DLQ service"
         (is (= [{:topic :consumer-topic-test
-                 :data  {:payload {:wrong-keyword "just a simple test"}}}]
+                 :data  {:payload {:wrong-keyword "just a simple test"}
+                         :meta    {:correlation-id "DEFAULT"}}}]
                (component.producer/produced-messages producer)))))
     (component/stop system)))
