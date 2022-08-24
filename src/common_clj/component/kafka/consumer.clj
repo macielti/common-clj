@@ -45,9 +45,7 @@
                                                         :topic         (camel-snake-kebab/->SCREAMING_SNAKE_CASE_STRING topic)
                                                         :exceptionInfo exception-info
                                                         :payload       (json/encode (:payload data))}
-                                              :meta    {:correlation-id (-> data :meta :correlation-id
-                                                                            (or (common-traceability/current-correlation-id))
-                                                                            common-traceability/correlation-id-appended)}}}
+                                              :meta    {:correlation-id (common-traceability/current-correlation-id)}}}
                                      producer))
 
 (def kafka-consumer!

@@ -7,7 +7,8 @@
             [common-clj.component.kafka.producer :as component.producer]
             [matcher-combinators.test :refer [match?]]
             [schema.core :as s]
-            [schema.test :as s-test])
+            [schema.test :as s-test]
+            [common-clj.traceability.core :as common-traceability])
   (:import (clojure.lang ExceptionInfo)))
 
 (def test-state (atom nil))
@@ -65,9 +66,10 @@
   (let [system (component/start system-test)
         producer (component.helper/get-component-content :producer system)]
 
-    (component.producer/produce! {:topic :consumer-topic-test
-                                  :data  {:payload {:wrong-keyword "just a simple test"}}}
-                                 producer)
+    (binding [common-traceability/*correlation-id* "DEFAULT.TEST"]
+      (component.producer/produce! {:topic :consumer-topic-test
+                                    :data  {:payload {:wrong-keyword "just a simple test"}}}
+                                   producer))
     (Thread/sleep 5000)
 
     (testing "that we can't consume a message with wrong payload for consumer schema"
@@ -78,14 +80,14 @@
       (testing "that we produced a message to the DLQ service"
         (is (= [{:topic :consumer-topic-test
                  :data  {:payload {:wrong-keyword "just a simple test"}
-                         :meta    {:correlation-id "DEFAULT"}}}
+                         :meta    {:correlation-id "DEFAULT.TEST"}}}
                 {:topic :create-dead-letter
                  :data  {:payload {:service "TEST_SERVICE"
                                    :topic   "CONSUMER_TOPIC_TEST"
                                    :exceptionInfo
                                    "clojure.lang.ExceptionInfo: Value does not match schema: {:test missing-required-key, :wrong-keyword disallowed-key} {:type :schema.core/error, :schema {:test java.lang.String}, :value {:wrong-keyword \"just a simple test\"}, :error {:test missing-required-key, :wrong-keyword disallowed-key}}"
                                    :payload "{\"wrong-keyword\":\"just a simple test\"}"}
-                         :meta    {:correlation-id nil}}}]
+                         :meta    {:correlation-id "DEFAULT"}}}]
                (component.producer/produced-messages producer)))))
     (component/stop system)))
 

@@ -17,9 +17,9 @@
 
 (def ^:private system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.json" :test :json)
-   :producer (component/using (component.producer/new-mock-producer) [:config])
-   :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])))
+    :config (component.config/new-config "resources/config_test.json" :test :json)
+    :producer (component/using (component.producer/new-mock-producer) [:config])
+    :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])))
 
 (s-test/deftest kafka-producer-component-test
   (let [system (component/start system-test)
@@ -30,7 +30,8 @@
                                  producer)
 
     (testing "that we can use kafka producer to send messages"
-      (is (= [{:data  {:payload {:test "just a simple test"}}
+      (is (= [{:data  {:payload {:test "just a simple test"}
+                       :meta    {:correlation-id "DEFAULT"}}
                :topic :consumer-topic-test}]
              (component.producer/produced-messages producer))))
     (component/stop system)))

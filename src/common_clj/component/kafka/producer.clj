@@ -4,11 +4,11 @@
             [common-clj.component.kafka.adapters :as component.kafka.adapters]
             [common-clj.component.kafka.models :as component.kafka.models]
             [common-clj.traceability.core :as common-traceability]
-            [schema.core :as s])
+            [schema.core :as s]
+            [taoensso.timbre :as log])
   (:import (org.apache.kafka.clients.producer KafkaProducer ProducerRecord)
            (org.apache.kafka.common.serialization StringSerializer)))
 
-;TODO: add option to receive additional meta message data
 (defmulti produce!
           (fn [_ {:keys [current-env]}]
             current-env))
