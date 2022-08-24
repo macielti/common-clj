@@ -2,16 +2,16 @@
   (:require [clojure.test :refer :all]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
+            [common-clj.component.helper.core :as component.helper]
+            [common-clj.component.kafka.consumer :as component.consumer]
+            [common-clj.component.kafka.producer :as component.producer]
             [common-clj.component.routes :as component.routes]
             [common-clj.component.service :as component.service]
-            [schema.test :as s]
-            [schema.core :as s-schema]
-            [common-clj.component.helper.core :as component.helper]
-            [integration.aux.http :as aux.http]
             [common-clj.traceability.core :as common-traceability]
+            [integration.aux.http :as aux.http]
             [mockfn.macros :as mfn]
-            [common-clj.component.kafka.consumer :as component.consumer]
-            [common-clj.component.kafka.producer :as component.producer]))
+            [schema.core :as s-schema]
+            [schema.test :as s]))
 
 (def test-state (atom nil))
 
@@ -36,11 +36,11 @@
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)
-    :routes (component/using (component.routes/new-routes routes-example) [:config])
-    :producer (component/using (component.producer/new-mock-producer) [:config])
-    :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])
-    :service (component/using (component.service/new-service) [:config :routes :producer])))
+   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :routes (component/using (component.routes/new-routes routes-example) [:config])
+   :producer (component/using (component.producer/new-mock-producer) [:config])
+   :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])
+   :service (component/using (component.service/new-service) [:config :routes :producer])))
 
 (s/deftest correlation-id-default-test
   (mfn/providing [(random-uuid) #uuid "1b9c8e2e-b7b8-4d25-a4fa-16bc3bb34b9a"]
