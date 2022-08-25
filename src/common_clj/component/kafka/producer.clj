@@ -3,6 +3,7 @@
             [com.stuartsierra.component :as component]
             [common-clj.component.kafka.adapters :as component.kafka.adapters]
             [common-clj.component.kafka.models :as component.kafka.models]
+            [common-clj.traceability.core :as common-traceability]
             [schema.core :as s])
   (:import (org.apache.kafka.clients.producer KafkaProducer ProducerRecord)
            (org.apache.kafka.common.serialization StringSerializer)))
@@ -14,14 +15,18 @@
 (s/defmethod produce! :prod
   [{:keys [topic data]} :- component.kafka.models/KafkaMessage
    {:keys [kafka-producer]}]
-  (-> kafka-producer
-      (.send (ProducerRecord. (name topic) (json/encode data)))
-      .get))
+  (let [data' (if (-> data :meta :correlation-id)
+                data
+                (-> (assoc data :meta {:correlation-id (common-traceability/current-correlation-id)})))]
+    (-> kafka-producer
+        (.send (ProducerRecord. (name topic) (json/encode data')))
+        .get)))
 
 (s/defmethod produce! :test
   [{:keys [topic data]} :- component.kafka.models/KafkaMessage
    {:keys [produced-messages]}]
-  (swap! produced-messages conj (ProducerRecord. (name topic) (json/encode data))))
+  (let [data' (assoc data :meta {:correlation-id (common-traceability/current-correlation-id)})]
+    (swap! produced-messages conj (ProducerRecord. (name topic) (json/encode data')))))
 
 (defn produced-messages
   [{:keys [produced-messages]}]

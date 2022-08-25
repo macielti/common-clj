@@ -7,4 +7,5 @@
   [record]
   (let [message (json/decode (.value record) true)]
     {:topic (keyword (.topic record))
-     :data  {:payload (:payload message)}}))
+     :data  {:payload (:payload message)
+             :meta    (:meta message)}}))

@@ -2,9 +2,7 @@
   (:require [clojure.test :refer [is testing]]
             [common-clj.time.parser.core :as time.parser.core]
             [schema.test :as s])
-  (:import (java.time LocalDate LocalDateTime OffsetDateTime)
-           (java.time.format DateTimeFormatter)
-           (java.util Date)))
+  (:import (java.time LocalDate)))
 
 (def date (LocalDate/of 1998 12 26))
 (def today (LocalDate/now))

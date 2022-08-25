@@ -1,6 +1,6 @@
 (ns common-clj.test.helper.time
-  (:require [schema.core :as s]
-            [common-clj.time.parser.core :as time.parser]))
+  (:require [common-clj.time.parser.core :as time.parser]
+            [schema.core :as s]))
 
 (s/defn valid-iso-8601? :- s/Bool
   [date :- s/Str]

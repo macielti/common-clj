@@ -30,7 +30,8 @@
                                  producer)
 
     (testing "that we can use kafka producer to send messages"
-      (is (= [{:data  {:payload {:test "just a simple test"}}
+      (is (= [{:data  {:payload {:test "just a simple test"}
+                       :meta    {:correlation-id "DEFAULT"}}
                :topic :consumer-topic-test}]
              (component.producer/produced-messages producer))))
     (component/stop system)))
