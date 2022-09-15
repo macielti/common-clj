@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [17.20.18] - 2022-09-14
+
+### Changed
+
+- Now we have the API as public by default by setting the `::http/allowed-origins` from the system map
+  as `(constantly true)` like `"*"`.
+
 ## [16.20.18] - 2022-08-25
 
 ### Added
@@ -330,7 +337,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v16.20.18...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v17.20.18...HEAD
+
+[17.20.18]: https://github.com/macielti/common-clj/compare/v16.20.18...v17.20.18
 
 [16.20.18]: https://github.com/macielti/common-clj/compare/v16.19.18...v16.20.18
 

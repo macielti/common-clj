@@ -9,6 +9,7 @@
   (start [component]
     (let [{{{:keys [host port]} :service} :config} config
           service-map {::http/routes (:routes routes)
+                       ::http/allowed-origins (constantly true)
                        ::http/host   host
                        ::http/port   port
                        ::http/type   :jetty
