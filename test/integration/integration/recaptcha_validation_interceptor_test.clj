@@ -9,6 +9,8 @@
             [integration.aux.http :as aux.http]
             [common-clj.io.interceptors.auth :as io.interceptors.auth]))
 
+;TODO: Check if we called the right external endpoints passing the right params (need a http component that maintain a history of requests that were made during test)
+
 (def ^:private routes-example [["/recaptcha-validation-interceptor-test" :get [io.interceptors.auth/recaptcha-validation-interceptor
                                                                                (constantly {:status 200 :body nil})]
                                 :route-name :recaptcha-validation-interceptor-test]])
