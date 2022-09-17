@@ -45,4 +45,11 @@
                        :message "Not able to check the success completion of the reCAPTCHA challenge"
                        :detail  {:error "not-able-to-perform-recaptcha-validation"}}}
              (aux.http/request-test-endpoints "/recaptcha-validation-interceptor-test" {} service-fn))))
+
+    (testing "we can't request the endpoint passing the 'X-Recaptcha-Token' header with a not valid response token"
+      (is (= {:status 400
+              :body   {:error   "not-able-to-perform-recaptcha-validation"
+                       :message "Not able to check the success completion of the reCAPTCHA challenge"
+                       :detail  {:error "not-able-to-perform-recaptcha-validation"}}}
+             (aux.http/request-test-endpoints "/recaptcha-validation-interceptor-test" {"X-Recaptcha-Token" "random-stuff"} service-fn))))
     (component/stop-system system)))
