@@ -1,0 +1,4 @@
+{:test {:datomic-uri            "datomic:mem://example"
+        :service                {:host "0.0.0.0"
+                                 :port 8000}
+        :recaptcha-secret-token "ednaldo-pereira"}}
