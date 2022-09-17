@@ -5,6 +5,8 @@
             [common-clj.error.core :as common-error]
             [clj-http.client :as client]))
 
+;TODO: Add adapter function and schemas
+
 (s/defn ^:private validate-recaptcha-token!
   [response-token :- s/Str
    secret-token :- s/Str]
@@ -13,6 +15,8 @@
                                                                                      "response" response-token}})
       :body
       (json/decode true)))
+
+;TODO: Add unit tests and expected input schema
 
 (s/defn valid-recaptcha-response-check? :- s/Bool
   [{:keys [success score]}]
