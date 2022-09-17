@@ -12,6 +12,7 @@
             [cheshire.core :as json]))
 
 ;TODO: Check if we called the right external endpoints passing the right params (need a http component that maintain a history of requests that were made during test)
+;TODO: Make this integration tests not hit the actual google servers (add mock for every external http request)
 
 (def ^:private routes-example [["/recaptcha-validation-interceptor-test" :get [io.interceptors.auth/recaptcha-validation-interceptor
                                                                                (constantly {:status 200 :body nil})]
@@ -41,6 +42,7 @@
 
 (def valid-recaptcha-token-response "valid-recaptcha-token-response")
 
+;TODO: Add test case with a valid recaptcha response token but a too low score
 (schema-test/deftest recaptcha-validation-interceptor-enabled-test
   (http.fake/with-fake-routes
     {"https://www.google.com/recaptcha/api/siteverify?secret=ednaldo-pereira&response=valid-recaptcha-token-response" {:post (constantly {:status 200
