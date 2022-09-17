@@ -7,7 +7,7 @@
 
 ;TODO: Add adapter function and schemas
 
-(s/defn ^:private validate-recaptcha-token!
+(s/defn ^:private validate-recaptcha-v3-token!
   [response-token :- s/Str
    secret-token :- s/Str]
   (-> (client/post "https://www.google.com/recaptcha/api/siteverify" {:accept       :json
@@ -18,21 +18,21 @@
 
 ;TODO: Add unit tests and expected input schema
 ;TODO: Maybe in the future, we should be able to receive the expected minimal threshold value for score
-(s/defn valid-recaptcha-response-check? :- s/Bool
+(s/defn valid-recaptcha-v3-response-check? :- s/Bool
   [{:keys [success score]}]
   (and success
        (> score 0.7)))
 
 
-(def recaptcha-validation-interceptor
+(def recaptcha-v3-validation-interceptor
   (pedestal.interceptor/interceptor
     {:name  ::recaptcha-validation-interceptor
      :enter (fn [{{:keys [components headers]} :request :as context}]
               (let [recaptcha-response-token (get headers "x-recaptcha-token" "missing")
                     recaptcha-secret-token (some-> components :config :recaptcha-secret-token)
                     recaptcha-result-check (when recaptcha-secret-token
-                                             (-> (validate-recaptcha-token! recaptcha-response-token recaptcha-secret-token)
-                                                 valid-recaptcha-response-check?))]
+                                             (-> (validate-recaptcha-v3-token! recaptcha-response-token recaptcha-secret-token)
+                                                 valid-recaptcha-v3-response-check?))]
                 (when (and recaptcha-secret-token (not recaptcha-result-check))
                   (common-error/http-friendly-exception 400
                                                         "not-able-to-perform-recaptcha-validation"
