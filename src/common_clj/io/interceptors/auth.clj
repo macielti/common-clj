@@ -33,5 +33,5 @@
                   (common-error/http-friendly-exception 400
                                                         "not-able-to-perform-recaptcha-validation"
                                                         "Not able to check the success completion of the reCAPTCHA challenge"
-                                                        {:error :error})))
+                                                        {:error :not-able-to-perform-recaptcha-validation})))
               context)}))
