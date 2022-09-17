@@ -9,7 +9,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Google reCAPTCHA interceptor. Now you can easily add server side reCAPTCHA validations, just add
   the `common-clj.io.interceptors.auth/recaptcha-validation-interceptor` to the list of interceptors while handling
-  requests for http endpoints.
+  requests for http endpoints and add the `:recaptcha-secret-token` to the config file.
 
 ## [17.20.18] - 2022-09-14
 
