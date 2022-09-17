@@ -6,7 +6,7 @@
 
   :plugins [[lein-codox "0.10.8"]
             [lein-cloverage "1.2.3"]
-            [com.github.clojure-lsp/lein-clojure-lsp "1.3.5"]]
+            [com.github.clojure-lsp/lein-clojure-lsp "1.3.13"]]
 
   :codox {:metadata    {:doc "Just common Clojure code that I use across projects."}
           :output-path "docs"}
@@ -19,10 +19,10 @@
                  [morse "0.4.3"]
                  [overtone/at-at "1.2.0"]
                  [clj-test-containers "0.6.0"]
-                 [datalevin "0.6.11"]
+                 [datalevin "0.6.18"]
                  [org.apache.kafka/kafka-clients "2.8.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
-                 [nubank/state-flow "5.14.1"]
+                 [nubank/state-flow "5.14.2"]
                  [clj-http-fake "1.0.3"]
                  [medley "1.4.0"]
                  [telegrambot-lib "1.4.0"]
@@ -30,7 +30,7 @@
                  [io.pedestal/pedestal.service "0.5.10"]
                  [io.pedestal/pedestal.interceptor "0.5.10"]
                  [prismatic/schema-generators "0.1.4"]
-                 [nubank/matcher-combinators "3.5.0"]
+                 [nubank/matcher-combinators "3.5.1"]
                  [com.datomic/datomic-free "0.9.5697"]
                  [io.pedestal/pedestal.jetty "0.5.10"]
                  [io.pedestal/pedestal.route "0.5.10"]
@@ -38,7 +38,7 @@
                  [siili/humanize "0.1.1"]
                  [prismatic/plumbing "0.6.0"]
                  [camel-snake-kebab "0.4.3"]
-                 [prismatic/schema "1.2.1"]
+                 [prismatic/schema "1.4.0"]
                  [buddy/buddy-sign "3.4.333"]
                  [cheshire "5.11.0"]]
 
