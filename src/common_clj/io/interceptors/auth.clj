@@ -4,20 +4,21 @@
             [io.pedestal.interceptor :as pedestal.interceptor]
             [common-clj.error.core :as common-error]
             [clj-http.client :as client]
-            [common-clj.schema.core :as common-schema]))
+            [common-clj.schema.core :as common-schema]
+            [plumbing.core :as plumbing]))
 
 (s/defschema GoogleRecaptchaV3ResponseTokenValidationResultWireIn
-  (common-schema/loose-schema {:success s/Bool
-                               :score   Double}))
+  (common-schema/loose-schema {:success                s/Bool
+                               (s/optional-key :score) Double}))
 
 (s/defschema GoogleRecaptchaV3ResponseTokenValidationResult
-  {:validation-result/success s/Bool
-   :validation-result/score   Double})
+  {:validation-result/success                s/Bool
+   (s/optional-key :validation-result/score) Double})
 
 (s/defn wire->google-recaptcha-v3-response-token-validation-result :- GoogleRecaptchaV3ResponseTokenValidationResult
   [{:keys [success score]} :- GoogleRecaptchaV3ResponseTokenValidationResultWireIn]
-  {:validation-result/success success
-   :validation-result/score   score})
+  (plumbing/assoc-when {:validation-result/success success}
+                       :validation-result/score score))
 
 
 (s/defn ^:private validate-recaptcha-v3-token! :- GoogleRecaptchaV3ResponseTokenValidationResult

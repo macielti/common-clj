@@ -14,6 +14,7 @@
   :exclusions [log4j]
 
   :dependencies [[org.clojure/clojure "1.11.1"]
+                 [hashp "0.2.1"]
                  [com.attendify/schema-refined "0.3.0-alpha4"]
                  [nubank/mockfn "0.7.0"]
                  [morse "0.4.3"]
@@ -41,6 +42,8 @@
                  [prismatic/schema "1.4.0"]
                  [buddy/buddy-sign "3.4.333"]
                  [cheshire "5.11.0"]]
+
+  :injections [(require 'hashp.core)]
 
   :resource-paths ["resources" "test/resources/"]
 
