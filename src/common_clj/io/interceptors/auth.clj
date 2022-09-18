@@ -8,11 +8,11 @@
 
 (s/defschema GoogleRecaptchaV3ResponseTokenValidationResultWireIn
   (common-schema/loose-schema {:success s/Bool
-                               :score   Float}))
+                               :score   Double}))
 
 (s/defschema GoogleRecaptchaV3ResponseTokenValidationResult
   {:validation-result/success s/Bool
-   :validation-result/score   Float})
+   :validation-result/score   Double})
 
 ;TODO: Add unit test
 (s/defn wire->google-recaptcha-v3-response-token-validation-result :- GoogleRecaptchaV3ResponseTokenValidationResult
