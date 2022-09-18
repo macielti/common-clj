@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [17.21.19] - 2022-09-18
+
+### Fixed
+
+- Just refactoring code and cleaning code. Also finishing some unfinished work.
+
 ## [17.21.18] - 2022-09-17
 
 ### Added
@@ -346,7 +352,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v17.21.18...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v17.21.19...HEAD
+
+[17.21.19]: https://github.com/macielti/common-clj/compare/v17.21.18...v17.21.19
 
 [17.21.18]: https://github.com/macielti/common-clj/compare/v17.20.18...v17.21.18
 
