@@ -28,7 +28,8 @@
                                                                       :query-params {"secret"   secret-token
                                                                                      "response" response-token}})
       :body
-      (json/decode true)))
+      (json/decode true)
+      wire->google-recaptcha-v3-response-token-validation-result))
 
 ;TODO: Add unit tests and expected input schema
 ;TODO: Maybe in the future, we should be able to receive the expected minimal threshold value for score
