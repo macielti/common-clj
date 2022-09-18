@@ -3,9 +3,17 @@
             [cheshire.core :as json]
             [io.pedestal.interceptor :as pedestal.interceptor]
             [common-clj.error.core :as common-error]
-            [clj-http.client :as client]))
+            [clj-http.client :as client]
+            [common-clj.schema.core :as common-schema]))
 
-;TODO: Add adapter function and schemas
+(s/defschema GoogleRecaptchaV3ResponseTokenValidationResultWireIn
+  (common-schema/loose-schema {:success s/Bool
+                               :score   Float}))
+
+(s/defschema GoogleRecaptchaV3ResponseTokenValidationResult
+  {:validation-result/success s/Bool
+   :validation-result/score   Float})
+
 
 (s/defn ^:private validate-recaptcha-v3-token!
   [response-token :- s/Str
