@@ -30,7 +30,6 @@
       (json/decode true)
       wire->google-recaptcha-v3-response-token-validation-result))
 
-;TODO: Add unit tests
 ;TODO: Maybe in the future, we should be able to receive the expected minimal threshold value for score
 (s/defn valid-recaptcha-v3-response-check? :- s/Bool
   [{:validation-result/keys [success score]} :- GoogleRecaptchaV3ResponseTokenValidationResult]
