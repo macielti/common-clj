@@ -21,4 +21,6 @@
   (testing "that we can interpretation the Google reCAPTCHA v3 response token validation result"
     (is (true? (io.interceptors.auth/valid-recaptcha-v3-response-check? internal)))
     (is (false? (io.interceptors.auth/valid-recaptcha-v3-response-check? (assoc internal :validation-result/success false))))
-    (is (false? (io.interceptors.auth/valid-recaptcha-v3-response-check? (assoc internal :validation-result/score 0.6))))))
+    (is (false? (io.interceptors.auth/valid-recaptcha-v3-response-check? (assoc internal :validation-result/score 0.6))))
+    (is (false? (io.interceptors.auth/valid-recaptcha-v3-response-check? (assoc internal :validation-result/score 0.6
+                                                                                         :validation-result/success false))))))
