@@ -9,7 +9,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Fixed
 
-- Just refactoring code and cleaning code. Also finishing some unfinished work.
+- Just cleaning and refactoring code. Also finishing some unfinished work.
 
 ## [17.21.18] - 2022-09-17
 
