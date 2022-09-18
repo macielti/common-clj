@@ -3,23 +3,37 @@
             [cheshire.core :as json]
             [io.pedestal.interceptor :as pedestal.interceptor]
             [common-clj.error.core :as common-error]
-            [clj-http.client :as client]))
+            [clj-http.client :as client]
+            [common-clj.schema.core :as common-schema]
+            [plumbing.core :as plumbing]))
 
-;TODO: Add adapter function and schemas
+(s/defschema GoogleRecaptchaV3ResponseTokenValidationResultWireIn
+  (common-schema/loose-schema {:success                s/Bool
+                               (s/optional-key :score) Double}))
 
-(s/defn ^:private validate-recaptcha-v3-token!
+(s/defschema GoogleRecaptchaV3ResponseTokenValidationResult
+  {:validation-result/success                s/Bool
+   (s/optional-key :validation-result/score) Double})
+
+(s/defn wire->google-recaptcha-v3-response-token-validation-result :- GoogleRecaptchaV3ResponseTokenValidationResult
+  [{:keys [success score]} :- GoogleRecaptchaV3ResponseTokenValidationResultWireIn]
+  (plumbing/assoc-when {:validation-result/success success}
+                       :validation-result/score score))
+
+
+(s/defn ^:private validate-recaptcha-v3-token! :- GoogleRecaptchaV3ResponseTokenValidationResult
   [response-token :- s/Str
    secret-token :- s/Str]
   (-> (client/post "https://www.google.com/recaptcha/api/siteverify" {:accept       :json
                                                                       :query-params {"secret"   secret-token
                                                                                      "response" response-token}})
       :body
-      (json/decode true)))
+      (json/decode true)
+      wire->google-recaptcha-v3-response-token-validation-result))
 
-;TODO: Add unit tests and expected input schema
 ;TODO: Maybe in the future, we should be able to receive the expected minimal threshold value for score
 (s/defn valid-recaptcha-v3-response-check? :- s/Bool
-  [{:keys [success score]}]
+  [{:validation-result/keys [success score]} :- GoogleRecaptchaV3ResponseTokenValidationResult]
   (and success
        (> score 0.7)))
 
