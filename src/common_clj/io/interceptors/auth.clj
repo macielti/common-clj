@@ -14,8 +14,14 @@
   {:validation-result/success s/Bool
    :validation-result/score   Float})
 
+;TODO: Add unit test
+(s/defn wire->google-recaptcha-v3-response-token-validation-result :- GoogleRecaptchaV3ResponseTokenValidationResult
+  [{:keys [success score]} :- GoogleRecaptchaV3ResponseTokenValidationResultWireIn]
+  {:validation-result/success success
+   :validation-result/score   score})
 
-(s/defn ^:private validate-recaptcha-v3-token!
+
+(s/defn ^:private validate-recaptcha-v3-token! :- GoogleRecaptchaV3ResponseTokenValidationResult
   [response-token :- s/Str
    secret-token :- s/Str]
   (-> (client/post "https://www.google.com/recaptcha/api/siteverify" {:accept       :json
