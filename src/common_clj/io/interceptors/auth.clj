@@ -34,7 +34,7 @@
 ;TODO: Add unit tests and expected input schema
 ;TODO: Maybe in the future, we should be able to receive the expected minimal threshold value for score
 (s/defn valid-recaptcha-v3-response-check? :- s/Bool
-  [{:keys [success score]}]
+  [{:validation-result/keys [success score]} :- GoogleRecaptchaV3ResponseTokenValidationResult]
   (and success
        (> score 0.7)))
 
