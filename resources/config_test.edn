@@ -1,1 +1,4 @@
-{:prod {:bootstrap-server "http://localhost:9092"}}
+{:prod {:bootstrap-server "http://localhost:9092"
+        {:service-authentication {:auth-server-url "https://example.com"
+                                  :username    "service-name"
+                                  :password    "random-password"}}}}
