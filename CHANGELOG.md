@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [17.22.19] - 2022-09-21
+
+### Added
+
+- Added `http` component responsible for service authentication, so we can expect authenticated http requests between
+  microservices.
+
 ## [17.21.19] - 2022-09-18
 
 ### Fixed
