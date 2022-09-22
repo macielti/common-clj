@@ -5,8 +5,7 @@
             [clj-http.client :as client])
   (:import (org.apache.http.message BasicHeader)))
 
-(s/defn ^:private authenticate-service! :- {:connection-manager s/Any
-                                            :http-client        s/Any}
+(s/defn ^:private authenticate-service!
   [auth-server-base-url :- s/Str
    username :- s/Str
    password :- s/Str]
@@ -22,13 +21,16 @@
                                                                        (.setDefaultHeaders builder
                                                                                            (:http-builder-fns request)))]
                                                 :default-headers    [(BasicHeader. "Authorization" token)]})]
-    {:connection-manager connection-manager
-     :http-client        http-client}))
+    http-client))
 
 (defrecord HTTP [config]
   component/Lifecycle
   (start [component]
-    (let [{{{:keys [auth-server username password]} :service-authentication} :config} config]))
+    (let [{{{:keys [auth-server-base-url username password]} :service-authentication} :config} config]
+      (assoc component :http {:http-client (authenticate-service! auth-server-base-url username password)})))
 
   (stop [component]
     (assoc component :http nil)))
+
+(defn new-http []
+  (->HTTP {}))
