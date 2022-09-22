@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [17.22.19] - 2022-09-21
+
+### Added
+
+- Added `http` component responsible for service authentication, so we can expect authenticated http requests between
+  microservices.
+
 ## [17.21.19] - 2022-09-18
 
 ### Fixed
@@ -352,7 +359,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v17.21.19...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v17.22.19...HEAD
+
+[17.22.19]: https://github.com/macielti/common-clj/compare/v17.21.19...v17.22.19
 
 [17.21.19]: https://github.com/macielti/common-clj/compare/v17.21.18...v17.21.19
 
