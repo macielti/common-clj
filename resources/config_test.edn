@@ -1,4 +1,10 @@
-{:prod {:bootstrap-server "http://localhost:9092"
-        {:service-authentication {:auth-server-base-url "https://example.com"
-                                  :username             "service-name"
-                                  :password             "random-password"}}}}
+{:prod {:bootstrap-server       "http://localhost:9092"
+        :service-authentication {:auth-server-base-url "https://example.com"
+                                 :username             "service-name"
+                                 :password             "random-password"}}
+ :test {:bootstrap-server       "http://localhost:9092"
+        :service                {:host "0.0.0.0"
+                                 :port 8000}
+        :service-authentication {:auth-server-base-url "https://example.com"
+                                 :username             "service-name"
+                                 :password             "random-password"}}}
