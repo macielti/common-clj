@@ -25,10 +25,7 @@
 (def mocked-http-responses
   {"https://example.com/users/auth"
    {:post (constantly {:status 200
-                       :body   (json/encode {:token "random-token"})})}
-   "https://example.com/users/contacts"
-   {:get (constantly {:status 200
-                      :body   ""})}})
+                       :body   (json/encode {:token "random-token"})})}})
 
 (s/deftest http-component-test
   (http.fake/with-fake-routes mocked-http-responses
@@ -44,4 +41,5 @@
                (-> (client/get (format "http://localhost:%s/test" service-port) {:headers {"Authorization" (:authorization http)}})
                    :body
                    (json/decode true)
-                   :authorization)))))))
+                   :authorization))))
+      (component/stop-system system))))
