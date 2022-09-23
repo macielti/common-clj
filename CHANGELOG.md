@@ -5,6 +5,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Adapt from Kafka records to clj message for consumed messages kafka consumer helper function.
+
 ## [17.22.19] - 2022-09-21
 
 ### Added
