@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [18.22.19] - 2022-09-23
+
+### Fixed
+
+- Adapt from Kafka records to clj message for consumed messages kafka consumer helper
+  function (`common-clj.component.kafka.consumer/consumed-messages`).
+
 ## [17.22.19] - 2022-09-21
 
 ### Added
@@ -359,7 +366,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v17.22.19...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v18.22.19...HEAD
+
+[18.22.19]: https://github.com/macielti/common-clj/compare/v17.22.19...v18.22.19
 
 [17.22.19]: https://github.com/macielti/common-clj/compare/v17.21.19...v17.22.19
 
