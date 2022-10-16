@@ -25,6 +25,7 @@
                (swap! requests conj request-map)
                (request-fn url payload)))
 
+;TODO: Maybe in the future this can already incorporate the :http component so we have inter service authentication by default
 (defrecord HttpClient [config]
   component/Lifecycle
   (start [component]
