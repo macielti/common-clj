@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "18.22.19"
+(defproject net.clojars.macielti/common-clj "18.23.19"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -6,7 +6,7 @@
 
   :plugins [[lein-codox "0.10.8"]
             [lein-cloverage "1.2.3"]
-            [com.github.clojure-lsp/lein-clojure-lsp "1.3.13"]]
+            [com.github.clojure-lsp/lein-clojure-lsp "1.3.14"]]
 
   :codox {:metadata    {:doc "Just common Clojure code that I use across projects."}
           :output-path "docs"}
@@ -19,8 +19,8 @@
                  [nubank/mockfn "0.7.0"]
                  [morse "0.4.3"]
                  [overtone/at-at "1.2.0"]
-                 [clj-test-containers "0.6.0"]
-                 [datalevin "0.6.19"]
+                 [clj-test-containers "0.7.3"]
+                 [datalevin "0.6.22"]
                  [org.apache.kafka/kafka-clients "2.8.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
                  [nubank/state-flow "5.14.2"]
@@ -39,7 +39,7 @@
                  [siili/humanize "0.1.1"]
                  [prismatic/plumbing "0.6.0"]
                  [camel-snake-kebab "0.4.3"]
-                 [prismatic/schema "1.4.0"]
+                 [prismatic/schema "1.4.1"]
                  [buddy/buddy-sign "3.4.333"]
                  [cheshire "5.11.0"]]
 
