@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [18.23.20] - 2022-10-16
+
+### Added
+
+- Added `:http-client` component, so we can have more flexibility on integration tests assertions. Like having the
+  possibility of assert that an HTTP request was made to a service/URI.
+
 ## [18.22.19] - 2022-09-23
 
 ### Fixed
@@ -366,7 +373,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v18.22.19...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v18.23.20...HEAD
+
+[18.23.20]: https://github.com/macielti/common-clj/compare/v18.22.19...v18.23.20
 
 [18.22.19]: https://github.com/macielti/common-clj/compare/v17.22.19...v18.22.19
 

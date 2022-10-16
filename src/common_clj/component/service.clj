@@ -4,28 +4,29 @@
             [io.pedestal.http :as http]
             [plumbing.core :as plumbing]))
 
-(defrecord Service [routes config datomic producer]
+(defrecord Service [routes config datomic producer http-client]
   component/Lifecycle
   (start [component]
     (let [{{{:keys [host port]} :service} :config} config
-          service-map {::http/routes (:routes routes)
+          service-map {::http/routes          (:routes routes)
                        ::http/allowed-origins (constantly true)
-                       ::http/host   host
-                       ::http/port   port
-                       ::http/type   :jetty
-                       ::http/join?  false}
-          components  (plumbing/assoc-when {}
-                                           :producer (:producer producer)
-                                           :config (:config config)
-                                           :datomic (:datomic datomic))]
+                       ::http/host            host
+                       ::http/port            port
+                       ::http/type            :jetty
+                       ::http/join?           false}
+          components (plumbing/assoc-when {}
+                                          :producer (:producer producer)
+                                          :config (:config config)
+                                          :datomic (:datomic datomic)
+                                          :http-client (:http-client http-client))]
       (assoc component :service (http/start (-> service-map
                                                 http/default-interceptors
                                                 (update ::http/interceptors concat (io.interceptors/common-interceptors
-                                                                                    components))
+                                                                                     components))
                                                 http/create-server)))))
   (stop [component]
     (http/stop (:service component))
     (assoc component :service nil)))
 
 (defn new-service []
-  (->Service {} {} {} {}))
+  (->Service {} {} {} {} {}))
