@@ -27,11 +27,11 @@
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram-consumer config] :as components}]
   (let [{:consumer/keys [handler error-handler] :as consumer} (telegram.adapters.message/update->consumer update consumers)
-        token     (-> config :telegram :token)
+        token (-> config :telegram :token)
         update-id (-> update :update_id)
-        chat-id   (-> update :message :chat :id)
-        context   {:update     update
-                   :components components}]
+        chat-id (-> update :message :chat :id)
+        context {:update     update
+                 :components components}]
     (when (and handler update update-id)
       (try
         (chain/execute context
@@ -42,12 +42,12 @@
           (if error-handler
             (error-handler e components)
             (component.telegram.producer/produce! chat-id (parser/render-resource
-                                                           (format "%s/error_processing_message_command.mustache"
-                                                                   (-> config :telegram :message-template-dir))) token)))))
+                                                            (format "%s/error_processing_message_command.mustache"
+                                                                    (-> config :telegram :message-template-dir))) token)))))
     (when-not handler
       (component.telegram.producer/produce! chat-id (parser/render-resource
-                                                     (format "%s/command_not_found.mustache"
-                                                             (-> config :telegram :message-template-dir))) token))
+                                                      (format "%s/command_not_found.mustache"
+                                                              (-> config :telegram :message-template-dir))) token))
     (commit-update-as-consumed! update-id telegram-consumer)))
 
 (s/defn ^:private consumer-job!
@@ -61,12 +61,12 @@
   component/Lifecycle
   (start [component]
     (let [{{:keys [telegram] :as config-content} :config} config
-          bot        (telegram-bot/create (:token telegram))
+          bot (telegram-bot/create (:token telegram))
           components (medley/assoc-some {}
                                         :datomic (:datomic datomic)
                                         :config config-content
                                         :telegram-consumer bot)
-          pool       (at-at/mk-pool)]
+          pool (at-at/mk-pool)]
       (at-at/interspaced 100 (partial consumer-job! consumers components) pool)
       (assoc component :telegram-consumer {:bot    bot
                                            :poller pool})))
@@ -78,3 +78,5 @@
 (defn new-telegram-consumer
   [consumers]
   (map->TelegramConsumer {:consumers consumers}))
+
+
