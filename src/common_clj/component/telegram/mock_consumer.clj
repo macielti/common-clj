@@ -1,20 +1,40 @@
 (ns common-clj.component.telegram.mock-consumer
-  (:require [clostache.parser :as parser]
-            [com.stuartsierra.component :as component]
+  (:require [com.stuartsierra.component :as component]
             [common-clj.component.telegram.adapters.update :as telegram.adapters.message]
             [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
-            [common-clj.component.telegram.producer :as component.telegram.producer]
             [io.pedestal.interceptor :as interceptor]
             [io.pedestal.interceptor.chain :as chain]
             [medley.core :as medley]
             [overtone.at-at :as at-at]
             [schema.core :as s]
-            [telegrambot-lib.core :as telegram-bot]))
+            [telegrambot-lib.core :as telegram-bot]
+            [common-clj.component.telegram.consumer :as component.telegram.consumer]))
+
+(s/defn commit-update-as-consumed!
+  [offset :- s/Int
+   telegram-bot]
+  (telegram-bot/get-updates telegram-bot {:offset (+ offset 1)}))
+
+(s/defn consume-update!
+  [update
+   consumers :- component.telegram.models.consumer/Consumers
+   {:keys [telegram-consumer] :as components}]
+  (let [{:consumer/keys [handler] :as consumer} (telegram.adapters.message/update->consumer update consumers)
+        update-id (-> update :update_id)
+        context {:update     update
+                 :components components}]
+    (when (and handler update update-id)
+      (try
+        (chain/execute context
+                       (concat (component.telegram.consumer/interceptors-by-consumer consumer consumers)
+                               [(interceptor/interceptor {:name  :handler-interceptor
+                                                          :enter handler})]))))
+    (commit-update-as-consumed! update-id telegram-consumer)))
 
 (s/defn ^:private consumer-job!
   [consumers
    {:keys [telegram-consumer] :as components}]
-  (when-let [updates (-> (telegram-bot/get-updates telegram-consumer) :result)]
+  (when-let [updates @(:incoming-updates telegram-consumer)]
     (doseq [update updates]
       (consume-update! update consumers components))))
 
