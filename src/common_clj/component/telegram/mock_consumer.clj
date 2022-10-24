@@ -7,34 +7,38 @@
             [medley.core :as medley]
             [overtone.at-at :as at-at]
             [schema.core :as s]
-            [telegrambot-lib.core :as telegram-bot]
             [common-clj.component.telegram.consumer :as component.telegram.consumer]))
 
 (s/defn commit-update-as-consumed!
-  [offset :- s/Int
-   telegram-bot]
-  (telegram-bot/get-updates telegram-bot {:offset (+ offset 1)}))
+  [update
+   {:keys [consumed-updates]}]
+  (swap! consumed-updates conj update))
 
 (s/defn consume-update!
   [update
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram-consumer] :as components}]
   (let [{:consumer/keys [handler] :as consumer} (telegram.adapters.message/update->consumer update consumers)
-        update-id (-> update :update_id)
         context {:update     update
                  :components components}]
-    (when (and handler update update-id)
+    (when (and handler update)
       (try
         (chain/execute context
                        (concat (component.telegram.consumer/interceptors-by-consumer consumer consumers)
                                [(interceptor/interceptor {:name  :handler-interceptor
                                                           :enter handler})]))))
-    (commit-update-as-consumed! update-id telegram-consumer)))
+    (commit-update-as-consumed! update telegram-consumer)))
+
+(s/defn ^:private not-consumed-incoming-updates
+  [incoming-updates
+   consumed-updates]
+  (clojure.set/difference incoming-updates consumed-updates))
 
 (s/defn ^:private consumer-job!
   [consumers
    {:keys [telegram-consumer] :as components}]
-  (when-let [updates @(:incoming-updates telegram-consumer)]
+  (when-let [updates (not-consumed-incoming-updates @(:incoming-updates telegram-consumer)
+                                                    @(:consumed-updates telegram-consumer))]
     (doseq [update updates]
       (consume-update! update consumers components))))
 
