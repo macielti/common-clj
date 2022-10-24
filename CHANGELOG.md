@@ -5,6 +5,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Added `MockTelegramConsumer` component, so we can test Telegram bot updates consumers.
+
 ## [18.23.20] - 2022-10-16
 
 ### Added
@@ -176,7 +180,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 ### Added
 
 - Added time util function `now-datetime` that enables us to mock the usage of the java.util.Date class. Make
-  integration tests more easy to write.
+  integration tests easier to write.
 
 ## [9.13.10] - 2022-02-09
 

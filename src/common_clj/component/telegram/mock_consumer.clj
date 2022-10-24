@@ -59,3 +59,7 @@
 
   (stop [{:keys [telegram-consumer]}]
     (at-at/stop-and-reset-pool! (:pool telegram-consumer))))
+
+(defn new-mock-telegram-consumer
+  [consumers]
+  (->MockTelegramConsumer {} {} consumers))
