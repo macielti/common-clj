@@ -9,7 +9,8 @@
             [medley.core :as medley]
             [overtone.at-at :as at-at]
             [schema.core :as s]
-            [telegrambot-lib.core :as telegram-bot]))
+            [telegrambot-lib.core :as telegram-bot]
+            [taoensso.timbre :as log]))
 
 (s/defn ^:private commit-update-as-consumed!
   [offset :- s/Int
@@ -147,3 +148,8 @@
 (defn new-mock-telegram-consumer
   [consumers]
   (->MockTelegramConsumer {} {} consumers))
+
+(s/defn insert-incoming-update!
+  [update
+   telegram-consumer]
+  (swap! (:incoming-updates telegram-consumer) conj update))
