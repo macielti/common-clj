@@ -7,7 +7,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Added
 
-- Added `MockTelegramConsumer` component, so we can test Telegram bot updates consumers.
+- Added `MockTelegramConsumer` component along with some helpers functions so you can easily write integration tests for
+  telegram bots.
 
 ## [18.23.20] - 2022-10-16
 
