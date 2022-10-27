@@ -7,6 +7,11 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [18.24.21] - 2022-10-16
 
+### Fixed
+
+- Now `TelegramConsumer` is more resilient to errors wire consuming updates from Telegram API. Before that the Thread
+  was dying when facing a error, but now the Thread is treating and logging the error.
+
 ### Added
 
 - Added `MockTelegramConsumer` component along with some helpers functions so you can easily write integration tests for
