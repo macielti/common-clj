@@ -5,6 +5,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [18.24.21] - 2022-10-16
+
 ### Added
 
 - Added `MockTelegramConsumer` component along with some helpers functions so you can easily write integration tests for
@@ -378,9 +380,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v18.23.20...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v18.24.21...HEAD
 
-[18.23.20]: https://github.com/macielti/common-clj/compare/v18.22.19...v18.23.20
+[18.24.21]: https://github.com/macielti/common-clj/compare/v18.23.20...v18.24.21
 
 [18.22.19]: https://github.com/macielti/common-clj/compare/v17.22.19...v18.22.19
 
