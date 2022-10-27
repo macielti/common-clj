@@ -6,6 +6,8 @@
             [schema.test :as s]
             [common-clj.component.helper.core :as component.helper]))
 
+;TODO: Add test scenario that uses interceptors
+
 (def test-state (atom nil))
 
 (defn test-consumer!
