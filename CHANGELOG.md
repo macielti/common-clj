@@ -5,6 +5,18 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [18.24.21] - 2022-10-27
+
+### Fixed
+
+- Now `TelegramConsumer` is more resilient to errors wire consuming updates from Telegram API. Before that the Thread
+  was dying when facing a error, but now the Thread is treating and logging the error.
+
+### Added
+
+- Added `MockTelegramConsumer` component along with some helpers functions so you can easily write integration tests for
+  telegram bots.
+
 ## [18.23.20] - 2022-10-16
 
 ### Added
@@ -176,7 +188,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 ### Added
 
 - Added time util function `now-datetime` that enables us to mock the usage of the java.util.Date class. Make
-  integration tests more easy to write.
+  integration tests easier to write.
 
 ## [9.13.10] - 2022-02-09
 
@@ -373,9 +385,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v18.23.20...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v18.24.21...HEAD
 
-[18.23.20]: https://github.com/macielti/common-clj/compare/v18.22.19...v18.23.20
+[18.24.21]: https://github.com/macielti/common-clj/compare/v18.23.20...v18.24.21
 
 [18.22.19]: https://github.com/macielti/common-clj/compare/v17.22.19...v18.22.19
 
