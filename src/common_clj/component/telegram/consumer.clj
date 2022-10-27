@@ -10,7 +10,8 @@
             [overtone.at-at :as at-at]
             [schema.core :as s]
             [telegrambot-lib.core :as telegram-bot]
-            [taoensso.timbre :as log]))
+            [taoensso.timbre :as log])
+  (:import (clojure.lang ExceptionInfo)))
 
 (s/defn ^:private commit-update-as-consumed!
   [offset :- s/Int
@@ -138,7 +139,10 @@
                                         :datomic (:datomic datomic)
                                         :config (:config config))]
 
-      (at-at/interspaced 100 (partial consumer-job! consumers components) pool)
+      (at-at/interspaced 100 (fn []
+                               (try (consumer-job! consumers components)
+                                    (catch ExceptionInfo ex
+                                      (log/error ex)))) pool)
 
       (assoc component :telegram-consumer telegram-consumer-component)))
 
