@@ -113,7 +113,10 @@
                                         :config config-content
                                         :telegram-consumer bot)
           pool (at-at/mk-pool)]
-      (at-at/interspaced 100 (partial consumer-job! consumers components) pool)
+      (at-at/interspaced 100 (fn []
+                               (try (consumer-job! consumers components)
+                                    (catch ExceptionInfo ex
+                                      (log/error ex)))) pool)
       (assoc component :telegram-consumer {:bot         bot
                                            :poller      pool
                                            :current-env (:current-env config-content)})))
