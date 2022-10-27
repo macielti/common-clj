@@ -5,7 +5,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
-## [18.24.21] - 2022-10-16
+## [18.24.21] - 2022-10-27
 
 ### Fixed
 
