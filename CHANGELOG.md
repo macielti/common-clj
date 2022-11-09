@@ -9,8 +9,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Fixed
 
-- Now `TelegramConsumer` is more resilient to errors wire consuming updates from Telegram API. Before that the Thread
-  was dying when facing a error, but now the Thread is treating and logging the error.
+- Now `TelegramConsumer` is more resilient to errors while consuming updates from Telegram API. Before this fix the
+  Thread was dying when facing a error, but now the Thread is treating and logging the error.
 
 ### Added
 

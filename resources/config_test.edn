@@ -5,6 +5,8 @@
  :test {:bootstrap-server       "http://localhost:9092"
         :service                {:host "0.0.0.0"
                                  :port 8000}
+        :topics [:common-clj.test-queue
+                 :common-clj.second-queue-test]
         :service-authentication {:auth-server-base-url "https://example.com"
                                  :username             "service-name"
                                  :password             "random-password"}}}
