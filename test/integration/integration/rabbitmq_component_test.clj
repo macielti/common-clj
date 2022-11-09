@@ -23,10 +23,9 @@
   (let [system (component/start system-components)
         rabbitmq (component.helper/get-component-content :rabbitmq system)]
 
-    (lq/declare (:channel rabbitmq) "test.nothing" {:exclusive false :auto-delete false})
+    (component.rabbitmq/produce! {:topic :common-clj.test-queue
+                                  :data  {:payload {:test "just a simple test"}}} rabbitmq)
 
-    (lc/subscribe (:channel rabbitmq) "test.nothing" message-handler {:auto-ack true})
-
-    (lb/publish (:channel rabbitmq) "" "test.nothing" "Hello!")
+    (lc/subscribe (:channel rabbitmq) "common-clj.test-queue" message-handler {:auto-ack true})
 
     (component/stop-system system)))
