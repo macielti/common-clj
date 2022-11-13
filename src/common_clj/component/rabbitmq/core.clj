@@ -52,6 +52,10 @@
   (lb/publish (:channel rabbitmq) "" (name topic) (json/encode data))
   (swap! produced-messages conj message))
 
+(s/defn produced-messages :- [Message]
+  [{:keys [produced-messages]}]
+  @produced-messages)
+
 (s/defn ^:private create-queues
   [queue-topics :- [s/Str]
    channel]
