@@ -51,8 +51,8 @@
 (defrecord RabbitMQ [config consumers]
   component/Lifecycle
   (start [this]
-    (let [{:keys [topics]} (:config config)
-          connection (rmq/connect)
+    (let [{:keys [topics rabbitmq]} (:config config)
+          connection (rmq/connect rabbitmq)
           channel (lch/open connection)
           components (plumbing/assoc-when {} :config (:config config))]
 
