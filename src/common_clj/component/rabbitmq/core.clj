@@ -25,7 +25,7 @@
   (let [{:keys [handler schema]} (get consumers topic)]
     (fn [_channel _meta ^bytes data]
       (let [{:keys [payload]} (-> (String. data "UTF-8")
-                        (json/parse-string true))]
+                                  (json/parse-string true))]
         (s/validate schema payload)
         (handler payload components)))))
 
@@ -37,10 +37,20 @@
   (doseq [topic topics]
     (lc/subscribe channel (name topic) (topic->handler topic consumers components) {:auto-ack true})))
 
-(s/defn produce!
+(defmulti produce!
+  (fn [_message {:keys [current-env]}]
+    current-env))
+
+(s/defmethod produce! :prod
   [{:keys [topic data]} :- Message
    rabbitmq]
   (lb/publish (:channel rabbitmq) "" (name topic) (json/encode data)))
+
+(s/defmethod produce! :test
+  [{:keys [topic data] :as message} :- Message
+   {:keys [produced-messages] :as rabbitmq}]
+  (lb/publish (:channel rabbitmq) "" (name topic) (json/encode data))
+  (swap! produced-messages conj message))
 
 (s/defn ^:private create-queues
   [queue-topics :- [s/Str]
@@ -51,7 +61,7 @@
 (defrecord RabbitMQ [config consumers]
   component/Lifecycle
   (start [this]
-    (let [{:keys [topics rabbitmq]} (:config config)
+    (let [{:keys [topics rabbitmq current-env]} (:config config)
           connection (rmq/connect rabbitmq)
           channel (lch/open connection)
           components (plumbing/assoc-when {} :config (:config config))]
@@ -61,8 +71,10 @@
 
       (load-consumers! topics consumers channel components)
 
-      (assoc this :rabbitmq {:connection connection
-                             :channel    channel})))
+      (assoc this :rabbitmq {:connection        connection
+                             :current-env       current-env
+                             :channel           channel
+                             :produced-messages (atom [])})))
 
   (stop [{:keys [rabbitmq] :as this}]
     (rmq/close (:channel rabbitmq))

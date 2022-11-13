@@ -54,9 +54,8 @@
   component/Lifecycle
 
   (start [this]
-    (let [produced-messages (atom [])]
-      (assoc this :producer {:produced-messages produced-messages
-                             :current-env       (-> config :config :current-env)})))
+    (assoc this :producer {:produced-messages (atom [])
+                           :current-env       (-> config :config :current-env)}))
 
   (stop [this]
     (assoc this :producer nil)))

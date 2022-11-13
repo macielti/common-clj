@@ -26,7 +26,7 @@
   {:consumer-topic-test {:schema  TestMessagePayload
                          :handler test-topic-consumer}})
 
-(def ^:private routes-example [["/correlation-id-test" :get (common-traceability/with-correlation-id (fn [{{:keys [producer]} :components}]
+(def routes-example [["/correlation-id-test" :get (common-traceability/with-correlation-id (fn [{{:keys [producer]} :components}]
                                                                                                        (component.producer/produce! {:topic :consumer-topic-test
                                                                                                                                      :data  {:payload {:test (common-traceability/current-correlation-id)}}}
                                                                                                                                     producer)
@@ -34,7 +34,7 @@
                                                                                                         :body   {:correlation-id (common-traceability/current-correlation-id)}}))
                                 :route-name :test]])
 
-(def ^:private system-test
+(def system-test
   (component/system-map
    :config (component.config/new-config "resources/config_test.json" :test :json)
    :routes (component/using (component.routes/new-routes routes-example) [:config])

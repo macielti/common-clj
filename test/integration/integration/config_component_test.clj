@@ -7,24 +7,11 @@
 
 (def system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.json" :test :json)))
+    :config (component.config/new-config "resources/config_test.json" :test :json)))
 
 (def system-prod
   (component/system-map
-   :config (component.config/new-config "resources/config_test.json" :prod :json)))
-
-(s/deftest config-component-test
-  (let [system            (component/start system-test)
-        system-after-stop (component/stop-system system)]
-    (testing "that we can start the config component"
-      (is (true? (boolean (component.helper/get-component-content :config system)))))
-
-    (testing "that we can stop the config component"
-      (testing "that the stopped component exists"
-        (is (true? (-> (get-in system-after-stop [:config])
-                       (contains? :config)))))
-      (testing "that the component was stopped"
-        (is (false? (boolean (component.helper/get-component-content :config system-after-stop))))))))
+    :config (component.config/new-config "resources/config_test.json" :prod :json)))
 
 (s/deftest config-component-content-test
   (testing "that we can get config content from config component"
