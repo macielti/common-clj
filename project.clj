@@ -31,7 +31,7 @@
                  [io.pedestal/pedestal.service "0.5.10"]
                  [io.pedestal/pedestal.interceptor "0.5.10"]
                  [prismatic/schema-generators "0.1.4"]
-                 [nubank/matcher-combinators "3.5.1"]
+                 [nubank/matcher-combinators "3.6.0"]
                  [com.datomic/datomic-free "0.9.5697"]
                  [io.pedestal/pedestal.jetty "0.5.10"]
                  [io.pedestal/pedestal.route "0.5.10"]
