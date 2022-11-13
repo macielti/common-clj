@@ -3,15 +3,16 @@
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.rabbitmq.core :as component.rabbitmq]
-            [schema.test :as s]
+            [schema.core :as s]
+            [schema.test]
             [common-clj.component.helper.core :as component.helper]))
 
 (defn message-handler
-  [ch {:keys [content-type delivery-tag type] :as meta} ^bytes payload]
-  (println (format "[consumer] Received a message: %s, delivery tag: %d, content type: %s, type: %s"
-                   (String. payload "UTF-8") delivery-tag content-type type)))
+  [payload
+   components]
+  (println (format "[consumer] Received a message: %s" payload)))
 
-(def consumers {:common-clj.test-queue {:schema nil
+(def consumers {:common-clj.test-queue {:schema {:test s/Str}
                                         :handler message-handler}})
 
 (def system-components
@@ -19,7 +20,7 @@
     :config (component.config/new-config "resources/config_test.edn" :test :edn)
     :rabbitmq (component/using (component.rabbitmq/new-rabbitmq consumers) [:config])))
 
-(s/deftest rabbitmq-component-test
+(schema.test/deftest rabbitmq-component-test
   (let [system (component/start system-components)
         rabbitmq (component.helper/get-component-content :rabbitmq system)]
 

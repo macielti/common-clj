@@ -6,7 +6,8 @@
             [langohr.basic :as lb]
             [schema.core :as s]
             [langohr.consumers :as lc]
-            [cheshire.core :as json]))
+            [cheshire.core :as json]
+            [plumbing.core :as plumbing]))
 
 (s/defschema Consumers
   {s/Keyword {:schema  s/Any
@@ -17,12 +18,24 @@
    :data  {:payload               {s/Keyword (s/maybe s/Any)}
            (s/optional-key :meta) {(s/optional-key :correlation-id) s/Str}}})
 
+(s/defn topic->handler
+  [topic :- s/Keyword
+   consumers :- Consumers
+   components]
+  (let [{:keys [handler schema]} (get consumers topic)]
+    (fn [_channel _meta ^bytes data]
+      (let [{:keys [payload]} (-> (String. data "UTF-8")
+                        (json/parse-string true))]
+        (s/validate schema payload)
+        (handler payload components)))))
+
 (s/defn ^:private load-consumers!
   [topics :- [s/Keyword]
    consumers :- Consumers
-   channel]
+   channel
+   components]
   (doseq [topic topics]
-    (lc/subscribe channel (name topic) (-> (get consumers topic) :handler) {:auto-ack true})))
+    (lc/subscribe channel (name topic) (topic->handler topic consumers components) {:auto-ack true})))
 
 (s/defn produce!
   [{:keys [topic data]} :- Message
@@ -40,12 +53,13 @@
   (start [this]
     (let [{:keys [topics]} (:config config)
           connection (rmq/connect)
-          channel (lch/open connection)]
+          channel (lch/open connection)
+          components (plumbing/assoc-when {} :config (:config config))]
 
       (-> (map name topics)
           (create-queues channel))
 
-      (load-consumers! topics consumers channel)
+      (load-consumers! topics consumers channel components)
 
       (assoc this :rabbitmq {:connection connection
                              :channel    channel})))
