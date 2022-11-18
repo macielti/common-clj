@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "18.24.21"
+(defproject net.clojars.macielti/common-clj "19.24.21"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -6,7 +6,7 @@
 
   :plugins [[lein-codox "0.10.8"]
             [lein-cloverage "1.2.3"]
-            [com.github.clojure-lsp/lein-clojure-lsp "1.3.14"]]
+            [com.github.clojure-lsp/lein-clojure-lsp "1.3.15"]]
 
   :codox {:metadata    {:doc "Just common Clojure code that I use across projects."}
           :output-path "docs"}
@@ -14,12 +14,12 @@
   :exclusions [log4j]
 
   :dependencies [[org.clojure/clojure "1.11.1"]
-                 [hashp "0.2.1"]
+                 [hashp "0.2.2"]
                  [com.attendify/schema-refined "0.3.0-alpha4"]
                  [nubank/mockfn "0.7.0"]
                  [morse "0.4.3"]
                  [overtone/at-at "1.2.0"]
-                 [clj-test-containers "0.7.3"]
+                 [clj-test-containers "0.7.4"]
                  [datalevin "0.6.22"]
                  [org.apache.kafka/kafka-clients "2.8.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
@@ -31,7 +31,7 @@
                  [io.pedestal/pedestal.service "0.5.10"]
                  [io.pedestal/pedestal.interceptor "0.5.10"]
                  [prismatic/schema-generators "0.1.4"]
-                 [nubank/matcher-combinators "3.5.1"]
+                 [nubank/matcher-combinators "3.6.0"]
                  [com.datomic/datomic-free "0.9.5697"]
                  [io.pedestal/pedestal.jetty "0.5.10"]
                  [io.pedestal/pedestal.route "0.5.10"]
