@@ -103,12 +103,13 @@
     (doseq [update updates]
       (consume-update! update consumers components))))
 
-(defrecord TelegramConsumer [config datomic consumers]
+(defrecord TelegramConsumer [config http-client datomic consumers]
   component/Lifecycle
   (start [component]
     (let [{{:keys [telegram] :as config-content} :config} config
           bot (telegram-bot/create (:token telegram))
           components (medley/assoc-some {}
+                                        :http-client (:http-client http-client)
                                         :datomic (:datomic datomic)
                                         :config config-content
                                         :telegram-consumer bot)
@@ -127,10 +128,10 @@
 
 (defn new-telegram-consumer
   [consumers]
-  (map->TelegramConsumer {:consumers consumers}))
+  (->TelegramConsumer {} {} {} consumers))
 
 
-(defrecord MockTelegramConsumer [config datomic consumers]
+(defrecord MockTelegramConsumer [config http-client datomic consumers]
   component/Lifecycle
   (start [component]
     (let [pool (at-at/mk-pool)
@@ -139,6 +140,7 @@
                                        :current-env      (-> config :config :current-env)
                                        :pool             pool}
           components (medley/assoc-some {:telegram-consumer telegram-consumer-component}
+                                        :http-client (:http-client http-client)
                                         :datomic (:datomic datomic)
                                         :config (:config config))]
 
@@ -154,7 +156,7 @@
 
 (defn new-mock-telegram-consumer
   [consumers]
-  (->MockTelegramConsumer {} {} consumers))
+  (->MockTelegramConsumer {} {} {} consumers))
 
 (s/defn insert-incoming-update!
   [update
