@@ -5,6 +5,18 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [19.25.22] - 2022-11-22
+
+### Added
+
+- Now Telegram Consumer component logs the exception when it faces errors while consuming a command.
+- Added Http Client to list of components that we can use on Telegram command handlers (consumers).
+
+### Removed
+
+- Removed Telegram Producer component, now you should use `(morse-api/send-text token chat-id message-text)` to send
+  telegram messages.
+
 ## [18.24.21] - 2022-10-27
 
 ### Fixed
@@ -385,7 +397,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v18.24.21...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v19.25.22...HEAD
+
+[19.25.22]: https://github.com/macielti/common-clj/compare/v18.24.21...v19.25.22
 
 [18.24.21]: https://github.com/macielti/common-clj/compare/v18.23.20...v18.24.21
 
