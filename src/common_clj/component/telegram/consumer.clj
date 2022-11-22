@@ -54,9 +54,10 @@
         (catch Exception e
           (if error-handler
             (error-handler e components)
-            (morse-api/send-text token chat-id (parser/render-resource
-                                                 (format "%s/error_processing_message_command.mustache"
-                                                         (-> config :telegram :message-template-dir))))))))
+            (do (log/error e)
+                (morse-api/send-text token chat-id (parser/render-resource
+                                                     (format "%s/error_processing_message_command.mustache"
+                                                             (-> config :telegram :message-template-dir)))))))))
     (when-not handler
       (morse-api/send-text token chat-id (parser/render-resource
                                            (format "%s/command_not_found.mustache"
