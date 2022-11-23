@@ -4,18 +4,25 @@
             [common-clj.component.config :as component.config]
             [common-clj.component.telegram.consumer :as component.telegram.consumer]
             [schema.test :as s]
-            [common-clj.component.helper.core :as component.helper]))
-
-;TODO: Add test scenario that uses interceptors
+            [common-clj.component.helper.core :as component.helper]
+            [io.pedestal.interceptor :as interceptor]))
 
 (def test-state (atom nil))
+(def interceptor-test-state (atom nil))
+
+(def test-interceptor (interceptor/interceptor {:name  :test-interceptor
+                                                :enter (fn [context]
+                                                         (reset! interceptor-test-state (:update context))
+                                                         context)}))
 
 (defn test-consumer!
   [{:keys [update]}]
   (reset! test-state update))
 
 (def consumers
-  {:message {:test {:consumer/handler test-consumer!}}})
+  {:interceptors [test-interceptor]
+   :message      {:test {:consumer/interceptors [:test-interceptor]
+                         :consumer/handler      test-consumer!}}})
 
 (def system-test
   (component/system-map
@@ -31,7 +38,12 @@
       (Thread/sleep 5000)
       (is (= {:message {:text "/test param1 param2"}}
              @test-state))
-      (reset! test-state nil))
+
+      (is (= {:message {:text "/test param1 param2"}}
+             @interceptor-test-state))
+
+      (reset! test-state nil)
+      (reset! interceptor-test-state nil))
 
     (testing "Not recognized telegram bot command is not consumed"
       (component.telegram.consumer/insert-incoming-update! {:message {:text "/wring-command param1 param2"}} telegram-consumer)
