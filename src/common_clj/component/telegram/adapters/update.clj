@@ -5,34 +5,44 @@
             [schema.core :as s]))
 
 (defmulti update->consumer-key
-          (s/fn [_
-                 consumer-type :- s/Keyword]
-            consumer-type))
+  (s/fn [_
+         consumer-type :- s/Keyword]
+    consumer-type))
 
 (s/defmethod update->consumer-key :message :- s/Keyword
-             [{:keys [message]}
-              _]
-             (let [{:keys [text]} message]
-               (-> (re-find #"\S*" text)
-                   (str/replace #"\/" "")
-                   str/lower-case
-                   keyword)))
+  [{:keys [message]}
+   _]
+  (let [{:keys [text]} message]
+    (-> (re-find #"\S*" text)
+        (str/replace #"\/" "")
+        str/lower-case
+        keyword)))
 
 (s/defmethod update->consumer-key :callback-query :- s/Keyword
-             [{:keys [callback_query]}
-              _]
-             (let [{:keys [data]} callback_query]
-               (some-> (try (json/parse-string data true)
-                            (catch Exception _ nil))
-                       :handler
-                       keyword)))
+  [{:keys [callback_query]}
+   _]
+  (let [{:keys [data]} callback_query]
+    (some-> (try (json/parse-string data true)
+                 (catch Exception _ nil))
+            :handler
+            keyword)))
+
+(s/defmethod update->consumer-key :edited-message :- s/Keyword
+  [{:keys [edited_message]}
+   _]
+  (let [{:keys [text]} edited_message]
+    (-> (re-find #"\S*" text)
+        (str/replace #"\/" "")
+        str/lower-case
+        keyword)))
 
 (s/defn update->consumer
-  [{:keys [message callback_query] :as update}
+  [{:keys [message callback_query edited_message] :as update}
    consumers :- component.telegram.models.consumer/Consumers]
   (let [consumer-type (cond
                         message :message
-                        callback_query :callback-query)
+                        callback_query :callback-query
+                        edited_message :edited-message)
         consumer-key (update->consumer-key update consumer-type)]
     (some-> (get consumers consumer-type)
             (get consumer-key)

@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [19.26.30] - 2022-11-26
+
+### Fixed
+
+- `TelegramConsumer` was breaking while consuming updates for edited messages. Now it's fixed.
+
 ## [19.25.22] - 2022-11-22
 
 ### Added
@@ -397,7 +403,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v19.25.22...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v19.26.30...HEAD
+
+[19.26.30]: https://github.com/macielti/common-clj/compare/v19.25.22...v19.26.30
 
 [19.25.22]: https://github.com/macielti/common-clj/compare/v18.24.21...v19.25.22
 

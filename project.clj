@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "19.25.22"
+(defproject net.clojars.macielti/common-clj "19.26.30"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
