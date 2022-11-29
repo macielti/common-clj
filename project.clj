@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "19.26.30"
+(defproject net.clojars.macielti/common-clj "19.26.32"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -23,7 +23,7 @@
                  [datalevin "0.6.22"]
                  [org.apache.kafka/kafka-clients "2.8.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
-                 [nubank/state-flow "5.14.2"]
+                 [nubank/state-flow "5.14.3"]
                  [clj-http-fake "1.0.3"]
                  [medley "1.4.0"]
                  [telegrambot-lib "1.4.0"]
@@ -31,7 +31,7 @@
                  [io.pedestal/pedestal.service "0.5.10"]
                  [io.pedestal/pedestal.interceptor "0.5.10"]
                  [prismatic/schema-generators "0.1.4"]
-                 [nubank/matcher-combinators "3.6.0"]
+                 [nubank/matcher-combinators "3.7.0"]
                  [com.datomic/datomic-free "0.9.5697"]
                  [io.pedestal/pedestal.jetty "0.5.10"]
                  [io.pedestal/pedestal.route "0.5.10"]
