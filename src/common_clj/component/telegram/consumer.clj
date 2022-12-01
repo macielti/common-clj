@@ -42,8 +42,9 @@
   (let [{:consumer/keys [handler error-handler] :as consumer} (telegram.adapters.message/update->consumer update consumers)
         token (-> config :telegram :token)
         update-id (-> update :update_id)
-        chat-id (or  (-> update :message :chat :id)
-                     (-> update :edited_message :chat :id))
+        chat-id (or (-> update :message :chat :id)
+                    (-> update :edited_message :chat :id)
+                    (-> update :callback_query :message :chat :id))
         context {:update     update
                  :components components}]
     (when (and handler update update-id)

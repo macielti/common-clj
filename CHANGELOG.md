@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [19.26.32] - 2022-11-29
+
+### Fixed
+
+- Fixed Telegram consumer for callback query update consumption. Before the fix the consumer wasn't able to retrieve
+  the `chat-id` from the update.
+
 ## [19.26.30] - 2022-11-26
 
 ### Fixed
@@ -403,7 +410,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v19.26.30...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v19.26.32...HEAD
+
+[19.26.32]: https://github.com/macielti/common-clj/compare/v19.26.30...v19.26.32
 
 [19.26.30]: https://github.com/macielti/common-clj/compare/v19.25.22...v19.26.30
 
