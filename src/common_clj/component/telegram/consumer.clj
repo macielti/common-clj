@@ -10,7 +10,8 @@
             [schema.core :as s]
             [telegrambot-lib.core :as telegram-bot]
             [taoensso.timbre :as log]
-            [morse.api :as morse-api])
+            [morse.api :as morse-api]
+            [morse.api :as api])
   (:import (clojure.lang ExceptionInfo)))
 
 (s/defn ^:private commit-update-as-consumed!
@@ -165,3 +166,16 @@
   [update
    telegram-consumer]
   (swap! (:incoming-updates telegram-consumer) conj update))
+
+(defrecord TelegramWebhookConsumer [config http-client datomic]
+  component/Lifecycle
+  (start [component]
+    (let [{{:keys [telegram]} :config} config]
+      (api/set-webhook (:token telegram) (:webhook-url telegram))
+      component))
+
+  (stop [_]))
+
+(defn new-telegram-webhook-consumer
+  []
+  (->TelegramWebhookConsumer {} {} {}))
