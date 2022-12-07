@@ -167,15 +167,16 @@
    telegram-consumer]
   (swap! (:incoming-updates telegram-consumer) conj update))
 
-(defrecord TelegramWebhookConsumer [config http-client datomic]
+(defrecord TelegramWebhookConsumer [config http-client datomic consumers]
   component/Lifecycle
   (start [component]
     (let [{{:keys [telegram]} :config} config]
       (api/set-webhook (:token telegram) (:webhook-url telegram))
-      component))
+      (assoc component :telegram-webhook-consumer {:consumers consumers})))
 
-  (stop [_]))
+  (stop [component]
+    (dissoc component :telegram-webhook-consumer)))
 
 (defn new-telegram-webhook-consumer
-  []
-  (->TelegramWebhookConsumer {} {} {}))
+  [consumers]
+  (->TelegramWebhookConsumer {} {} {} consumers))
