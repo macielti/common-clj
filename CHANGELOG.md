@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [19.27.32] - 2022-12-07
+
+### Added
+
+- Added `TelegramWebhookConsumer` to have one more way of integrating with telegram bot api.
+
 ## [19.26.32] - 2022-11-29
 
 ### Fixed
@@ -410,7 +416,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v19.26.32...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v19.27.32...HEAD
+
+[19.27.32]: https://github.com/macielti/common-clj/compare/v19.26.32...v19.27.32
 
 [19.26.32]: https://github.com/macielti/common-clj/compare/v19.26.30...v19.26.32
 

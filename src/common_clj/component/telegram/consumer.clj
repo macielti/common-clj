@@ -30,13 +30,13 @@
   (let [interceptor-groups (group-by :name interceptors)]
     (map #(-> (get interceptor-groups %) first) (:consumer/interceptors consumer))))
 
-(defmulti ^:private consume-update!
+(defmulti consume-update!
   (fn [_update
        _consumers
        {:keys [config] :as _components}]
     (:current-env config)))
 
-(s/defmethod ^:private consume-update! :prod
+(s/defmethod consume-update! :prod
   [update
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram-consumer config] :as components}]
@@ -67,7 +67,7 @@
                                                    (-> config :telegram :message-template-dir)))))
     (commit-update-as-consumed! update-id telegram-consumer)))
 
-(s/defmethod ^:private consume-update! :test
+(s/defmethod consume-update! :test
   [update
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram-consumer] :as components}]
@@ -167,16 +167,16 @@
    telegram-consumer]
   (swap! (:incoming-updates telegram-consumer) conj update))
 
-(defrecord TelegramWebhookConsumer [config http-client datomic consumers]
+(defrecord TelegramWebhookConsumer [config http-client datomic]
   component/Lifecycle
   (start [component]
     (let [{{:keys [telegram]} :config} config]
       (api/set-webhook (:token telegram) (:webhook-url telegram))
-      (assoc component :telegram-webhook-consumer {:consumers consumers})))
+      component))
 
-  (stop [component]
-    (dissoc component :telegram-webhook-consumer)))
+  (stop [_]
+    _))
 
 (defn new-telegram-webhook-consumer
-  [consumers]
-  (->TelegramWebhookConsumer {} {} {} consumers))
+  []
+  (->TelegramWebhookConsumer {} {} {}))
