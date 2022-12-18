@@ -1,17 +1,20 @@
 (ns common-clj.component.telegram.consumer
-  (:require [clostache.parser :as parser]
-            [com.stuartsierra.component :as component]
-            [common-clj.component.telegram.adapters.update :as telegram.adapters.message]
-            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
-            [io.pedestal.interceptor :as interceptor]
-            [io.pedestal.interceptor.chain :as chain]
-            [medley.core :as medley]
-            [overtone.at-at :as at-at]
-            [schema.core :as s]
-            [telegrambot-lib.core :as telegram-bot]
-            [taoensso.timbre :as log]
-            [morse.api :as morse-api]
-            [morse.api :as api])
+  (:require
+    [cheshire.core :as json]
+    [clostache.parser :as parser]
+    [com.stuartsierra.component :as component]
+    [io.pedestal.test :as test]
+    [common-clj.component.telegram.adapters.update :as telegram.adapters.message]
+    [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
+    [io.pedestal.interceptor :as interceptor]
+    [io.pedestal.interceptor.chain :as chain]
+    [medley.core :as medley]
+    [overtone.at-at :as at-at]
+    [schema.core :as s]
+    [telegrambot-lib.core :as telegram-bot]
+    [taoensso.timbre :as log]
+    [morse.api :as morse-api]
+    [morse.api :as api])
   (:import (clojure.lang ExceptionInfo)))
 
 (s/defn ^:private commit-update-as-consumed!
@@ -31,68 +34,68 @@
     (map #(-> (get interceptor-groups %) first) (:consumer/interceptors consumer))))
 
 (defmulti consume-update!
-  (fn [_update
-       _consumers
-       {:keys [config] :as _components}]
-    (:current-env config)))
+          (fn [_update
+               _consumers
+               {:keys [config] :as _components}]
+            (:current-env config)))
 
 (s/defmethod consume-update! :prod
-  [update
-   consumers :- component.telegram.models.consumer/Consumers
-   {:keys [telegram-consumer config] :as components}]
-  (let [{:consumer/keys [handler error-handler] :as consumer} (telegram.adapters.message/update->consumer update consumers)
-        token (-> config :telegram :token)
-        update-id (-> update :update_id)
-        chat-id (or (-> update :message :chat :id)
-                    (-> update :edited_message :chat :id)
-                    (-> update :callback_query :message :chat :id))
-        context {:update     update
-                 :components components}]
-    (when (and handler update update-id)
-      (try
-        (chain/execute context
-                       (concat (interceptors-by-consumer consumer consumers)
-                               [(interceptor/interceptor {:name  :handler-interceptor
-                                                          :enter handler})]))
-        (catch Exception e
-          (if error-handler
-            (error-handler e components)
-            (do (log/error e)
-                (morse-api/send-text token chat-id (parser/render-resource
-                                                     (format "%s/error_processing_message_command.mustache"
-                                                             (-> config :telegram :message-template-dir)))))))))
-    (when-not handler
-      (morse-api/send-text token chat-id (parser/render-resource
-                                           (format "%s/command_not_found.mustache"
-                                                   (-> config :telegram :message-template-dir)))))
-    (commit-update-as-consumed! update-id telegram-consumer)))
+             [update
+              consumers :- component.telegram.models.consumer/Consumers
+              {:keys [telegram-consumer config] :as components}]
+             (let [{:consumer/keys [handler error-handler] :as consumer} (telegram.adapters.message/update->consumer update consumers)
+                   token (-> config :telegram :token)
+                   update-id (-> update :update_id)
+                   chat-id (or (-> update :message :chat :id)
+                               (-> update :edited_message :chat :id)
+                               (-> update :callback_query :message :chat :id))
+                   context {:update     update
+                            :components components}]
+               (when (and handler update update-id)
+                 (try
+                   (chain/execute context
+                                  (concat (interceptors-by-consumer consumer consumers)
+                                          [(interceptor/interceptor {:name  :handler-interceptor
+                                                                     :enter handler})]))
+                   (catch Exception e
+                     (if error-handler
+                       (error-handler e components)
+                       (do (log/error e)
+                           (morse-api/send-text token chat-id (parser/render-resource
+                                                                (format "%s/error_processing_message_command.mustache"
+                                                                        (-> config :telegram :message-template-dir)))))))))
+               (when-not handler
+                 (morse-api/send-text token chat-id (parser/render-resource
+                                                      (format "%s/command_not_found.mustache"
+                                                              (-> config :telegram :message-template-dir)))))
+               (commit-update-as-consumed! update-id telegram-consumer)))
 
 (s/defmethod consume-update! :test
-  [update
-   consumers :- component.telegram.models.consumer/Consumers
-   {:keys [telegram-consumer] :as components}]
-  (let [{:consumer/keys [handler] :as consumer} (telegram.adapters.message/update->consumer update consumers)
-        context {:update     update
-                 :components components}]
-    (when (and handler update)
-      (try
-        (chain/execute context
-                       (concat (interceptors-by-consumer consumer consumers)
-                               [(interceptor/interceptor {:name  :handler-interceptor
-                                                          :enter handler})]))))
-    (mock-commit-update-as-consumed! update telegram-consumer)))
+             [update
+              consumers :- component.telegram.models.consumer/Consumers
+              {:keys [telegram-consumer] :as components}]
+             (let [{:consumer/keys [handler] :as consumer} (telegram.adapters.message/update->consumer update consumers)
+                   context {:update     update
+                            :components components}]
+               (when (and handler update)
+                 (try
+                   (chain/execute context
+                                  (concat (interceptors-by-consumer consumer consumers)
+                                          [(interceptor/interceptor {:name  :handler-interceptor
+                                                                     :enter handler})]))))
+               (mock-commit-update-as-consumed! update telegram-consumer)))
 
 (defmulti ^:private consumer-job!
-  (fn [_consumers
-       {:keys [config] :as _components}]
-    (:current-env config)))
+          (fn [_consumers
+               {:keys [config] :as _components}]
+            (:current-env config)))
 
 (s/defmethod ^:private consumer-job! :prod
-  [consumers
-   {:keys [telegram-consumer] :as components}]
-  (when-let [updates (-> (telegram-bot/get-updates telegram-consumer) :result)]
-    (doseq [update updates]
-      (consume-update! update consumers components))))
+             [consumers
+              {:keys [telegram-consumer] :as components}]
+             (when-let [updates (-> (telegram-bot/get-updates telegram-consumer) :result)]
+               (doseq [update updates]
+                 (consume-update! update consumers components))))
 
 (s/defn ^:private not-consumed-incoming-updates
   [incoming-updates
@@ -100,12 +103,12 @@
   (clojure.set/difference incoming-updates consumed-updates))
 
 (s/defmethod ^:private consumer-job! :test
-  [consumers
-   {:keys [telegram-consumer] :as components}]
-  (when-let [updates (not-consumed-incoming-updates @(:incoming-updates telegram-consumer)
-                                                    @(:consumed-updates telegram-consumer))]
-    (doseq [update updates]
-      (consume-update! update consumers components))))
+             [consumers
+              {:keys [telegram-consumer] :as components}]
+             (when-let [updates (not-consumed-incoming-updates @(:incoming-updates telegram-consumer)
+                                                               @(:consumed-updates telegram-consumer))]
+               (doseq [update updates]
+                 (consume-update! update consumers components))))
 
 (defrecord TelegramConsumer [config http-client datomic consumers]
   component/Lifecycle
@@ -180,3 +183,11 @@
 (defn new-telegram-webhook-consumer
   []
   (->TelegramWebhookConsumer {} {} {}))
+
+(s/defn consume-update-via-webhook
+  [update
+   path
+   service-fn]
+  (let [{:keys [body status]} (test/response-for service-fn :post path)]
+    {:status status
+     :body   (json/decode body true)}))
