@@ -9,9 +9,11 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Added
 
-- Add integration test for Telegram Bot update consumption via web hook endpoint.
-- Add `component.telegram.consumer/consume-update-via-webhook` function, so you can easily mock Telegram Bot command
+- Added integration test for Telegram Bot update consumption via web hook endpoint.
+- Added `component.telegram.consumer/consume-update-via-webhook` function, so you can easily mock Telegram Bot command
   messages update consumption via webhook http endpoint.
+- Added a function to generate telegram bot handler http request hooker
+  endpoint `fn` `component.telegram.consumer/telegram-bot-webhook-endpoint-handler-fn`.
 
 ## [19.27.32] - 2022-12-07
 
