@@ -195,3 +195,11 @@
                                                  :body (json/encode update))]
     {:status status
      :body   (json/decode body true)}))
+
+(s/defn telegram-bot-webhook-endpoint-handler-fn
+  [consumers]
+  (fn telegram-bot-handler
+    [{update     :json-params
+      components :components}]
+    (consume-update! update consumers components)
+    {:status 200}))
