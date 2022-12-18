@@ -188,6 +188,9 @@
   [update
    path
    service-fn]
-  (let [{:keys [body status]} (test/response-for service-fn :post path)]
+  (let [{:keys [body status]} (test/response-for service-fn
+                                                 :post path
+                                                 :headers {"Content-Type" "application/json"}
+                                                 :body (json/encode update))]
     {:status status
      :body   (json/decode body true)}))
