@@ -56,11 +56,8 @@
 
     (component/stop system)))
 
-(def routes [["/api/handler" :post [(fn telegram-bot-handler
-                                      [{update     :json-params
-                                        components :components}]
-                                      (component.telegram.consumer/consume-update! update consumers components)
-                                      {:status 200})] :route-name :telegram-bot-handler]])
+(def routes [["/api/handler" :post [(component.telegram.consumer/telegram-bot-webhook-endpoint-handler-fn consumers)]
+              :route-name :telegram-bot-handler]])
 
 (def system-test-using-telegram-webhook-consumer
   (component/system-map
