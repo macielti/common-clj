@@ -83,7 +83,8 @@
                                   (concat (interceptors-by-consumer consumer consumers)
                                           [(interceptor/interceptor {:name  :handler-interceptor
                                                                      :enter handler})]))))
-               (mock-commit-update-as-consumed! update telegram-consumer)))
+               (when (:consumed-updates telegram-consumer)
+                 (mock-commit-update-as-consumed! update telegram-consumer))))
 
 (defmulti ^:private consumer-job!
           (fn [_consumers
