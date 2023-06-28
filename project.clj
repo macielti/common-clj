@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "19.27.33"
+(defproject net.clojars.macielti/common-clj "19.27.34"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -20,7 +20,7 @@
                  [morse "0.4.3"]
                  [overtone/at-at "1.2.0"]
                  [clj-test-containers "0.7.4"]
-                 [datalevin "0.6.22"]
+                 [datalevin "0.8.16"]
                  [org.apache.kafka/kafka-clients "2.8.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
                  [nubank/state-flow "5.14.3"]

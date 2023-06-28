@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [19.27.34] - 2023-06-28
+
+### Fixed
+
+- Upgrade `datalevin` dependency version.
+
 ## [19.27.33] - 2022-12-18
 
 ### Added
@@ -426,7 +432,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v19.27.33...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v19.27.34...HEAD
+
+[19.27.34]: https://github.com/macielti/common-clj/compare/v19.27.33...v19.27.34
 
 [19.27.33]: https://github.com/macielti/common-clj/compare/v19.27.32...v19.27.33
 
