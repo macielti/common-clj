@@ -9,7 +9,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Fixed
 
-- Upgrade `datalevin` dependency version.
+- Upgrade `datalevin` dependency version from `0.6.22` to `0.8.16`.
 
 ## [19.27.33] - 2022-12-18
 
