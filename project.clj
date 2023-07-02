@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "19.27.34"
+(defproject net.clojars.macielti/common-clj "19.27.35"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -21,16 +21,16 @@
                  [overtone/at-at "1.2.0"]
                  [clj-test-containers "0.7.4"]
                  [datalevin "0.8.16"]
-                 [org.apache.kafka/kafka-clients "2.8.0"]
+                 [org.apache.kafka/kafka-clients "3.4.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
-                 [nubank/state-flow "5.14.3"]
+                 [nubank/state-flow "5.14.4"]
                  [clj-http-fake "1.0.3"]
                  [medley "1.4.0"]
-                 [telegrambot-lib "1.4.0"]
+                 [telegrambot-lib "2.5.0"]
                  [overtone/at-at "1.2.0"]
                  [io.pedestal/pedestal.service "0.5.10"]
                  [io.pedestal/pedestal.interceptor "0.5.10"]
-                 [prismatic/schema-generators "0.1.4"]
+                 [prismatic/schema-generators "0.1.5"]
                  [nubank/matcher-combinators "3.7.0"]
                  [com.datomic/datomic-free "0.9.5697"]
                  [io.pedestal/pedestal.jetty "0.5.10"]
@@ -57,5 +57,8 @@
             "clean-ns-fix" ["clojure-lsp" "clean-ns"]
             "format-fix"   ["clojure-lsp" "format"]
             "lint-fix"     ["do" ["clean-ns-fix"] ["format-fix"]]}
+
+  :jvm-opts ^:replace ["--add-opens=java.base/java.nio=ALL-UNNAMED"
+                       "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"]
 
   :repl-options {:init-ns common-clj.schema.core})

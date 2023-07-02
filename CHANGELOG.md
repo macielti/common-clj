@@ -5,6 +5,16 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [19.27.35] - 2023-07-02
+
+### Fixed
+
+- Upgrade `org.apache.kafka/kafka-clients` dependency version from `2.8.0` to `3.4.0`.
+- Upgrade `nubank/state-flow` dependency version from `5.14.3` to `5.14.4`.
+- Upgrade `telegrambot-lib` dependency version from `1.4.0` to `2.5.0`.
+- Upgrade `prismatic/schema-generators` dependency version from `0.1.4` to `0.1.5`.
+- Fix some problems with datalevin and had to set some jvm options.
+
 ## [19.27.34] - 2023-06-28
 
 ### Fixed
@@ -432,7 +442,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v19.27.34...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v19.27.35...HEAD
+
+[19.27.35]: https://github.com/macielti/common-clj/compare/v19.27.34...v19.27.35
 
 [19.27.34]: https://github.com/macielti/common-clj/compare/v19.27.33...v19.27.34
 
