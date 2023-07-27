@@ -5,6 +5,16 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [19.28.36] - 2023-07-27
+
+### Fixed
+
+- Fixed Datalevin component. There was a problem with the way that we fetch the database-uri configuration.
+
+### Added
+
+- Added configuration assert checks for Datalevin component, check if the `database-uri` config is properly provided.
+
 ## [19.28.35] - 2023-07-27
 
 ### Added
@@ -448,7 +458,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v19.28.35...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v19.28.36...HEAD
+
+[19.28.36]: https://github.com/macielti/common-clj/compare/v19.28.35...v19.28.36
 
 [19.28.35]: https://github.com/macielti/common-clj/compare/v19.27.35...v19.28.35
 
