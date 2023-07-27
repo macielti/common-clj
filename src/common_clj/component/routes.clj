@@ -1,7 +1,7 @@
 (ns common-clj.component.routes
   (:require [com.stuartsierra.component :as component]))
 
-(defrecord Routes [routes datomic config]
+(defrecord Routes [routes]
   component/Lifecycle
   (start [component]
     (assoc component :routes (into #{} routes)))

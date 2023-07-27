@@ -4,7 +4,7 @@
             [io.pedestal.http :as http]
             [plumbing.core :as plumbing]))
 
-(defrecord Service [routes config datomic producer http-client]
+(defrecord Service [routes config datomic datalevin producer http-client]
   component/Lifecycle
   (start [component]
     (let [{{{:keys [host port]} :service} :config} config
@@ -18,6 +18,7 @@
                                           :producer (:producer producer)
                                           :config (:config config)
                                           :datomic (:datomic datomic)
+                                          :datalevin (:datalevin datalevin)
                                           :http-client (:http-client http-client))]
       (assoc component :service (http/start (-> service-map
                                                 http/default-interceptors
@@ -29,4 +30,4 @@
     (assoc component :service nil)))
 
 (defn new-service []
-  (->Service {} {} {} {} {}))
+  (->Service {} {} {} {} {} {}))
