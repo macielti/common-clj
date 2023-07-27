@@ -5,11 +5,17 @@
 (defrecord Datalevin [config schema]
   component/Lifecycle
   (start [component]
-    (let [env (-> config :config :current-env)
+    (let [config-content (:config config)
+          env (-> config-content :current-env)
           database-uri (case env
                          :test (datalevin.util/tmp-dir (str "query-or-" (random-uuid)))
-                         :default (-> config :config :database-uri))
-          database (datalevin/get-conn database-uri schema)]
+                         (-> config :config :database-uri))
+          database (if database-uri
+                     (datalevin/get-conn database-uri schema)
+                     (throw (ex-info "'database-uri' Config property is not defined"
+                                     {:env            env
+                                      :config-content config-content
+                                      :database-uri   database-uri})))]
 
       (merge component {:datalevin database})))
 
