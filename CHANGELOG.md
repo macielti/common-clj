@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [19.28.35] - 2023-07-27
+
+### Added
+
+- Added Datalevin component along with interceptors.
+
 ## [19.27.35] - 2023-07-02
 
 ### Fixed
@@ -442,7 +448,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v19.27.35...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v19.28.35...HEAD
+
+[19.28.35]: https://github.com/macielti/common-clj/compare/v19.27.35...v19.28.35
 
 [19.27.35]: https://github.com/macielti/common-clj/compare/v19.27.34...v19.27.35
 

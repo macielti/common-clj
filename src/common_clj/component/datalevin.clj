@@ -1,27 +1,21 @@
 (ns common-clj.component.datalevin
-  (:require [clojure.java.io :as io]
-            [com.stuartsierra.component :as component]
-            [datalevin.core :as datalevin]
-            [schema.core :as s]))
+  (:require [com.stuartsierra.component :as component]
+            [datalevin.core :as datalevin]))
 
-(s/defn mocked-datalevin-component
-  [schema]
-  (let [database-uri "/tmp/datalevin"]
-    (try (io/delete-file (str database-uri "/data.mdb"))
-         (io/delete-file (str database-uri "/lock.mdb"))
-         (catch Exception _))
-    (datalevin/get-conn database-uri schema)))
-
-(defrecord Datalevin [config schemas]
+(defrecord Datalevin [config schema]
   component/Lifecycle
   (start [component]
-    (let [{{:keys [database-uri]} :config} config
-          database (datalevin/get-conn database-uri)]
-      (merge component {:database database})))
+    (let [env (-> config :config :current-env)
+          database-uri (case env
+                         :test (datalevin.util/tmp-dir (str "query-or-" (random-uuid)))
+                         :default (-> config :config :database-uri))
+          database (datalevin/get-conn database-uri schema)]
 
-  (stop [{:keys [database]}]
-    (datalevin/close database)))
+      (merge component {:datalevin database})))
+
+  (stop [{:keys [datalevin]}]
+    (datalevin/close datalevin)))
 
 (defn new-datalevin
-  [schemas]
-  (map->Datalevin {:schemas schemas}))
+  [schema]
+  (map->Datalevin {:schema schema}))
