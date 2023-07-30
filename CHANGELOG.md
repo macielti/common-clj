@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [19.29.36] - 2023-07-30
+
+### Added
+
+- Added RabbitMQ producer and consumer components.
+
 ## [19.28.36] - 2023-07-27
 
 ### Fixed
@@ -458,7 +464,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v19.28.36...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v19.29.36...HEAD
+
+[19.29.36]: https://github.com/macielti/common-clj/compare/v19.28.36...v19.29.36
 
 [19.28.36]: https://github.com/macielti/common-clj/compare/v19.28.35...v19.28.36
 
