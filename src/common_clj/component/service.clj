@@ -4,7 +4,7 @@
             [io.pedestal.http :as http]
             [plumbing.core :as plumbing]))
 
-(defrecord Service [routes config datomic datalevin producer http-client]
+(defrecord Service [routes config datomic datalevin rabbitmq-producer producer http-client]
   component/Lifecycle
   (start [component]
     (let [{{{:keys [host port]} :service} :config} config
@@ -14,9 +14,9 @@
                        ::http/port            port
                        ::http/type            :jetty
                        ::http/join?           false}
-          components (plumbing/assoc-when {}
+          components (plumbing/assoc-when {:config (:config config)}
                                           :producer (:producer producer)
-                                          :config (:config config)
+                                          :rabbitmq-producer (:rabbitmq-producer rabbitmq-producer)
                                           :datomic (:datomic datomic)
                                           :datalevin (:datalevin datalevin)
                                           :http-client (:http-client http-client))]
@@ -30,4 +30,4 @@
     (assoc component :service nil)))
 
 (defn new-service []
-  (->Service {} {} {} {} {} {}))
+  (->Service {} {} {} {} {} {} {}))
