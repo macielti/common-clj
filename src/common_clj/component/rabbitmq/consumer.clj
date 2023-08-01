@@ -5,7 +5,12 @@
             [langohr.core :as rmq]
             [langohr.queue :as lq]
             [langohr.consumers :as lc]
-            [plumbing.core :as plumbing]))
+            [plumbing.core :as plumbing]
+            [schema.core :as s])
+  (:import (clojure.lang IFn)))
+
+(s/defschema Consumers
+  {s/Keyword {:handler-fn IFn}})
 
 (defrecord Consumer [config datomic datalevin http-client rabbitmq-producer consumers]
   component/Lifecycle
@@ -20,6 +25,8 @@
                                           :datomic (:datomic datomic)
                                           :datalevin (:datalevin datalevin)
                                           :http-client (:http-client http-client))]
+
+      (s/validate Consumers consumers)
 
       (doseq [raw-topic topics
               :let [topic (keyword raw-topic)
