@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [19.30.36] - 2023-08-01
+
+### Added
+
+- Added schema validation for consumers config map for RabbitMQ consumer component.
+
 ## [19.29.36] - 2023-07-30
 
 ### Added
@@ -464,7 +470,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v19.29.36...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v19.30.36...HEAD
+
+[19.30.36]: https://github.com/macielti/common-clj/compare/v19.29.36...v19.30.36
 
 [19.29.36]: https://github.com/macielti/common-clj/compare/v19.28.36...v19.29.36
 
