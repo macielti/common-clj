@@ -6,11 +6,14 @@
             [langohr.queue :as lq]
             [langohr.consumers :as lc]
             [plumbing.core :as plumbing]
-            [schema.core :as s])
+            [schema.core :as s]
+            [taoensso.timbre :as log]
+            [common-clj.component.rabbitmq.producer :as component.rabbitmq.producer])
   (:import (clojure.lang IFn)))
 
 (s/defschema Consumers
-  {s/Keyword {:handler-fn IFn}})
+  {s/Keyword {:schema     s/Any
+              :handler-fn IFn}})
 
 (defrecord Consumer [config datomic datalevin http-client rabbitmq-producer consumers]
   component/Lifecycle
@@ -24,18 +27,32 @@
                                           :rabbitmq-producer (:rabbitmq-producer rabbitmq-producer)
                                           :datomic (:datomic datomic)
                                           :datalevin (:datalevin datalevin)
-                                          :http-client (:http-client http-client))]
+                                          :http-client (:http-client http-client))
+          service-name (:service-name config-content)]
 
       (s/validate Consumers consumers)
 
       (doseq [raw-topic topics
               :let [topic (keyword raw-topic)
                     consumer (topic consumers)
-                    handler-fn (:handler-fn consumer)]]
+                    handler-fn (:handler-fn consumer)
+                    schema (:schema consumer)]]
         (lq/declare channel raw-topic {:exclusive false :auto-delete false})
         (lc/subscribe channel raw-topic
-                      (fn [_channel _meta payload] (handler-fn {:components components
-                                                                :payload    (edn/read-string (String. payload "UTF-8"))}))
+                      (fn [_channel _meta payload]
+                        (try
+                          (s/validate schema (edn/read-string (String. payload "UTF-8")))
+                          (handler-fn {:components components
+                                       :payload    (edn/read-string (String. payload "UTF-8"))})
+                          (catch Exception e
+                            (do (log/error e)
+                                (when (-> components :config :dead-letter-queue-service-integration-enabled)
+                                  (component.rabbitmq.producer/produce! {:topic   :create-dead-letter
+                                                                         :payload {:service        service-name
+                                                                                   :topic          topic
+                                                                                   :exception-info (str e)
+                                                                                   :payload        (edn/read-string (String. payload "UTF-8"))}}
+                                                                        (:rabbitmq-producer components)))))))
                       {:auto-ack true}))
 
       (merge component {:rabbitmq-consumer {:connection connection

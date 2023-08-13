@@ -5,6 +5,14 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [20.30.36] - 2023-08-12
+
+### Added
+
+- Implemented integration of RabbitMQ consumer component with Dead Letter Queue
+  service [Wraith King](https://github.com/macielti/wraith-king).
+- Added schema validation for message payloads for RabbitMQ consumer component.
+
 ## [19.30.36] - 2023-08-01
 
 ### Added
@@ -470,7 +478,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v19.30.36...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v20.30.36...HEAD
+
+[19.30.36]: https://github.com/macielti/common-clj/compare/v19.30.36...v20.30.36
 
 [19.30.36]: https://github.com/macielti/common-clj/compare/v19.29.36...v19.30.36
 
