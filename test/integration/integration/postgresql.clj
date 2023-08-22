@@ -16,9 +16,9 @@
 (s/deftest postresql-component-test
   (let [system (component/start system-test)
         postgresql (component.helper/get-component-content :postgresql system)]
-    (jdbc/execute! postgresql ["INSERT INTO pessoa (apelido, nome, nascimento) VALUES (?, ?, ?)" "brunão" "nascimento" (instant/read-instant-timestamp "2000-10-01")])
+    (jdbc/execute! postgresql ["INSERT INTO pessoa (apelido, nome, nascimento) VALUES (?, ?, ?)" "brunão" "nascimento" (instant/read-instant-timestamp "2020-03-23T01:17Z")])
     (is (= [{:apelido    "brunão"
-             :nascimento #inst "2000-09-30T03:00:00.000-00:00"
+             :nascimento #inst "2020-03-22T03:00:00.000-00:00"
              :nome       "nascimento"}]
            (jdbc/execute! postgresql ["SELECT apelido, nascimento, nome FROM pessoa WHERE nome = ?" "nascimento"])))
     (jdbc/execute! postgresql ["DROP TABLE pessoa"])
