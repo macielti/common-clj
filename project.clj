@@ -42,7 +42,9 @@
                  [prismatic/schema "1.4.1"]
                  [buddy/buddy-sign "3.4.333"]
                  [com.novemberain/langohr "5.4.0"]
-                 [cheshire "5.11.0"]]
+                 [cheshire "5.11.0"]
+                 [org.postgresql/postgresql "42.6.0"]
+                 [com.github.seancorfield/next.jdbc "1.3.883"]]
 
   :injections [(require 'hashp.core)]
 
