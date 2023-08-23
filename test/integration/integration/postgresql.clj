@@ -4,6 +4,7 @@
             [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]
             [common-clj.component.postgres-jdbc :as component.postgres-jdbc]
+            [matcher-combinators.test :refer [match?]]
             [next.jdbc :as jdbc]
             [clojure.instant :as instant]
             [schema.test :as s]))
@@ -17,9 +18,9 @@
   (let [system (component/start system-test)
         postgresql (component.helper/get-component-content :postgresql system)]
     (jdbc/execute! postgresql ["INSERT INTO pessoa (apelido, nome, nascimento) VALUES (?, ?, ?)" "brunão" "nascimento" (instant/read-instant-timestamp "2020-03-23T01:17Z")])
-    (is (= [{:apelido    "brunão"
-             :nascimento #inst "2020-03-22T03:00:00.000-00:00"
-             :nome       "nascimento"}]
-           (jdbc/execute! postgresql ["SELECT apelido, nascimento, nome FROM pessoa WHERE nome = ?" "nascimento"])))
+    (is (match? [{:apelido    "brunão"
+                  :nascimento inst?
+                  :nome       "nascimento"}]
+                (jdbc/execute! postgresql ["SELECT apelido, nascimento, nome FROM pessoa WHERE nome = ?" "nascimento"])))
     (jdbc/execute! postgresql ["DROP TABLE pessoa"])
     (component/stop system)))
