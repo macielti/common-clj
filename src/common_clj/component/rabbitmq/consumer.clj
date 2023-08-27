@@ -15,7 +15,7 @@
   {s/Keyword {:schema     s/Any
               :handler-fn IFn}})
 
-(defrecord Consumer [config datomic datalevin http-client rabbitmq-producer consumers]
+(defrecord Consumer [config datomic datalevin postgresql http-client rabbitmq-producer consumers]
   component/Lifecycle
   (start [component]
     (let [config-content (:config config)
@@ -27,6 +27,7 @@
                                           :rabbitmq-producer (:rabbitmq-producer rabbitmq-producer)
                                           :datomic (:datomic datomic)
                                           :datalevin (:datalevin datalevin)
+                                          :postgresql (:postgresql postgresql)
                                           :http-client (:http-client http-client))
           service-name (:service-name config-content)]
 
@@ -63,4 +64,4 @@
     (rmq/close (:connection rabbitmq-consumer))))
 
 (defn new-consumer [consumers]
-  (->Consumer {} {} {} {} {} consumers))
+  (->Consumer {} {} {} {} {} {} consumers))
