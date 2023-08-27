@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [20.32.37] - 2023-08-27
+
+### Added
+
+- Implemented integration of PostgreSQL component with RabbitMQ consumer and Service component.
+
 ## [20.31.36] - 2023-08-22
 
 ### Added
@@ -484,7 +490,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v20.31.36...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v20.32.37...HEAD
+
+[20.32.37]: https://github.com/macielti/common-clj/compare/v20.31.36...v20.32.37
 
 [20.31.36]: https://github.com/macielti/common-clj/compare/v20.30.36...v20.31.36
 

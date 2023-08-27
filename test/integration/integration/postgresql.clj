@@ -3,7 +3,7 @@
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]
-            [common-clj.component.postgres-jdbc :as component.postgres-jdbc]
+            [common-clj.component.postgresql :as component.postgres-jdbc]
             [matcher-combinators.test :refer [match?]]
             [next.jdbc :as jdbc]
             [clojure.instant :as instant]
