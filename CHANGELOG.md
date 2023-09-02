@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [20.33.38] - 2023-09-02
+
+### Added
+
+- Implemented PostgreSQL utilities for writing tests.
+
 ## [20.32.37] - 2023-08-27
 
 ### Added
@@ -490,7 +496,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v20.32.37...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v20.33.38...HEAD
+
+[20.33.38]: https://github.com/macielti/common-clj/compare/v20.32.37...v20.33.38
 
 [20.32.37]: https://github.com/macielti/common-clj/compare/v20.31.36...v20.32.37
 
