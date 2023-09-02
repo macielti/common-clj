@@ -12,7 +12,7 @@
 (def system-test
   (component/system-map
     :config (component.config/new-config "resources/config_test.edn" :test :edn)
-    :postgresql (component/using (component.postgres-jdbc/new-postgresql) [:config])))
+    :postgresql (component/using (component.postgres-jdbc/new-mock-postgresql) [:config])))
 
 (s/deftest postresql-component-test
   (let [system (component/start system-test)
