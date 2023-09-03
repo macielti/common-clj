@@ -5,7 +5,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
-## [22.34.38] - 2023-09-03
+## [22.35.38] - 2023-09-03
 
 ### Added
 
@@ -508,9 +508,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v22.34.38...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v22.35.38...HEAD
 
-[22.34.38]: https://github.com/macielti/common-clj/compare/v21.34.38...v22.34.38
+[22.35.38]: https://github.com/macielti/common-clj/compare/v21.34.38...v22.35.38
 
 [21.34.38]: https://github.com/macielti/common-clj/compare/v20.33.38...v21.34.38
 
