@@ -5,18 +5,21 @@
             [schema.core :as s])
   (:import (org.testcontainers.containers GenericContainer PostgreSQLContainer)))
 
+(defn get-connection
+  [database-uri]
+  (-> (jdbc/get-connection {:jdbcUrl database-uri})
+      (jdbc/with-options {:builder-fn rs/as-unqualified-maps})))
+
 (defrecord PostgreSQL [config]
   component/Lifecycle
   (start [component]
     (let [config-content (:config config)
           postgresql-uri (-> config-content :postgresql-uri)
-          connection (-> (jdbc/get-connection {:jdbcUrl postgresql-uri})
-                         (jdbc/with-options {:builder-fn rs/as-unqualified-maps}))
           schema-sql (slurp "resources/schema.sql")]
 
-      (jdbc/execute! connection [schema-sql])
+      (jdbc/execute! (get-connection postgresql-uri) [schema-sql])
 
-      (assoc component :postgresql connection)))
+      (assoc component :postgresql postgresql-uri)))
 
   (stop [component]
     (assoc component :postgresql nil)))
@@ -40,14 +43,13 @@
   (start [component]
     (let [postgresql-container (doto (PostgreSQLContainer. "postgres:15-alpine")
                                  .start)
-          connection (-> (jdbc/get-connection {:jdbcUrl (str (.getJdbcUrl postgresql-container)
-                                                             "&user=test&password=test")})
-                         (jdbc/with-options {:builder-fn rs/as-unqualified-maps}))
+          postgresql-uri (str (.getJdbcUrl postgresql-container)
+                              "&user=test&password=test")
           schema-sql (slurp "resources/schema.sql")]
 
-      (jdbc/execute! connection [schema-sql])
+      (jdbc/execute! (get-connection postgresql-uri) [schema-sql])
 
-      (assoc component :postgresql connection
+      (assoc component :postgresql postgresql-uri
                        :postgresql-container postgresql-container)))
 
   (stop [component]

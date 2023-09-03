@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [22.34.38] - 2023-09-03
+
+### Added
+
+- Add a `get-connection` function for PostgreSQL component.
+
 ## [21.34.38] - 2023-09-02
 
 ### Added
@@ -502,9 +508,11 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v20.34.38...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v22.34.38...HEAD
 
-[21.34.38]: https://github.com/macielti/common-clj/compare/v20.33.38...v20.34.38
+[22.34.38]: https://github.com/macielti/common-clj/compare/v21.34.38...v22.34.38
+
+[21.34.38]: https://github.com/macielti/common-clj/compare/v20.33.38...v21.34.38
 
 [20.33.38]: https://github.com/macielti/common-clj/compare/v20.32.37...v20.33.38
 
