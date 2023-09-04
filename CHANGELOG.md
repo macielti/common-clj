@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [22.35.40] - 2023-09-04
+
+### Added
+
+- Add a lower threshold for Google's Recaptcha V3 interceptor, also log the result of the validations.
+
 ## [22.35.38] - 2023-09-03
 
 ### Added
@@ -508,7 +514,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v22.35.38...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v22.35.40...HEAD
+
+[22.35.40]: https://github.com/macielti/common-clj/compare/v22.35.38...v22.35.40
 
 [22.35.38]: https://github.com/macielti/common-clj/compare/v21.34.38...v22.35.38
 

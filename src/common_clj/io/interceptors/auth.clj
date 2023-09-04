@@ -5,7 +5,8 @@
             [common-clj.error.core :as common-error]
             [clj-http.client :as client]
             [common-clj.schema.core :as common-schema]
-            [plumbing.core :as plumbing]))
+            [plumbing.core :as plumbing]
+            [taoensso.timbre :as log]))
 
 (s/defschema GoogleRecaptchaV3ResponseTokenValidationResultWireIn
   (common-schema/loose-schema {:success                s/Bool
@@ -33,9 +34,10 @@
 
 ;TODO: Maybe in the future, we should be able to receive the expected minimal threshold value for score
 (s/defn valid-recaptcha-v3-response-check? :- s/Bool
-  [{:validation-result/keys [success score]} :- GoogleRecaptchaV3ResponseTokenValidationResult]
+  [{:validation-result/keys [success score] :as google-recaptcha-response} :- GoogleRecaptchaV3ResponseTokenValidationResult]
+  (log/info google-recaptcha-response)
   (and success
-       (> score 0.7)))
+       (>= score 0.5)))
 
 
 (def recaptcha-v3-validation-interceptor
