@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [22.38.40] - 2023-09-16
+
+### Added
+
+- Add functions to `common-clj.time.core` in order to deal with `LocalDateTime`.
+
 ## [22.35.40] - 2023-09-04
 
 ### Added
