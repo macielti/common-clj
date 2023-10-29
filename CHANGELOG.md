@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [22.39.40] - 2023-10-29
+
+### Added
+
+- Add `:jobs` component placeholder for telegram component. Now you can depend on the `jobs` component from telegram.
+
 ## [22.38.40] - 2023-09-16
 
 ### Added
@@ -520,7 +526,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v22.38.40...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v22.39.40...HEAD
+
+[22.35.41]: https://github.com/macielti/common-clj/compare/v22.38.40...v22.39.40
 
 [22.35.40]: https://github.com/macielti/common-clj/compare/v22.35.40...v22.38.40
 
