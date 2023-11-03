@@ -5,6 +5,7 @@
             [common-clj.component.datomic :as component.datomic]
             [common-clj.component.helper.core :as component.helper]
             [datomic.api :as d]
+            [datomic.client.api :as dl]
             [schema-generators.complete :as c]
             [schema.core :as s]
             [schema.test :as schema-test]))
@@ -47,9 +48,9 @@
 
 (def ^:private system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.json" :test :json)
-   :datomic (component/using (component.datomic/new-datomic schemas)
-                             [:config])))
+    :config (component.config/new-config "resources/config_test.json" :test :json)
+    :datomic (component/using (component.datomic/new-datomic schemas)
+                              [:config])))
 
 (schema-test/deftest datomic-component-test
   (let [system (component/start system-test)
@@ -78,3 +79,47 @@
 
         (testing "that we can't transact using a stopped datomic component"
           (is (thrown? Exception (query-user-by-id (:user/id user-test) connection))))))))
+
+(def system-test-datomic-local
+  (component/system-map
+    :config (component.config/new-config "resources/config_test.json" :test :json)
+    :datomic (component/using (component.datomic/new-datomic-local schemas) [:config])))
+
+(defn ^:private insert-an-user-datomic-local!
+  [user connection]
+  (dl/transact connection {:tx-data [user]}))
+
+(defn ^:private query-user-by-id-datomic-local
+  [user-id connection]
+  (-> (dl/q '[:find (pull ?e [:user/id :user/username])
+              :in $ ?user-id
+              :where [?e :user/id ?user-id]] (dl/db connection) user-id)
+      ffirst))
+
+(schema-test/deftest datomic-local-component-test
+  (let [system (component/start system-test-datomic-local)
+        connection (:connection (component.helper/get-component-content :datomic system))]
+
+    (testing "that we can start the datomic component completely"
+      (is (true? (boolean connection)))
+
+      (testing "that the schemas were transacted"
+        (insert-an-user-datomic-local! user-test connection)
+        (is (thrown? Exception (insert-an-user-datomic-local! user-test-2 connection))))
+
+      (testing "that can query data from the datomic database"
+        (is (= user-test
+               (query-user-by-id-datomic-local (:user/id user-test) connection)))))
+
+    (testing "that we can stop the datomic component completely"
+        (let [system-after-stop (component/stop-system system)]
+
+          (testing "that the stopped component exists"
+            (is (true? (-> (get-in system-after-stop [:datomic])
+                           (contains? :datomic)))))
+
+          (testing "that the component was stopped"
+            (is (false? (boolean (component.helper/get-component-content :datomic system-after-stop)))))
+
+          #_(testing "that we can't transact using a stopped datomic component"
+            (is (thrown? Exception (query-user-by-id-datomic-local (:user/id user-test) connection))))))))

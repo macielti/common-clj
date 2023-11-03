@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [22.40.40] - 2023-11-03
+
+### Added
+
+- Added DatomicLocal component.
+
 ## [22.39.40] - 2023-10-29
 
 ### Added
@@ -526,11 +532,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v22.39.40...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v22.40.40...HEAD
 
-[22.35.41]: https://github.com/macielti/common-clj/compare/v22.38.40...v22.39.40
+[22.40.40]: https://github.com/macielti/common-clj/compare/v22.39.40...v22.40.40
 
-[22.35.40]: https://github.com/macielti/common-clj/compare/v22.35.40...v22.38.40
+[22.39.40]: https://github.com/macielti/common-clj/compare/v22.38.40...v22.39.40
+
+[22.38.40]: https://github.com/macielti/common-clj/compare/v22.35.40...v22.38.40
 
 [22.35.40]: https://github.com/macielti/common-clj/compare/v22.35.38...v22.35.40
 

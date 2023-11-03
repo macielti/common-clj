@@ -8,6 +8,10 @@
     }
   },
   "test": {
+    "datomicLocal": {
+      "storageDir": "/tmp/datomic",
+      "dbName": "test"
+    },
     "serviceName": "test-service",
     "topics": [
       "consumer-topic-test"
