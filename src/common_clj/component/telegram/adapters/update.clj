@@ -2,7 +2,8 @@
   (:require [cheshire.core :as json]
             [clojure.string :as str]
             [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
-            [schema.core :as s]))
+            [schema.core :as s]
+            [taoensso.timbre :as log]))
 
 (defmulti update->consumer-key
   (s/fn [_
@@ -12,8 +13,8 @@
 (s/defmethod update->consumer-key :message :- s/Keyword
   [{:keys [message]}
    _]
-  (let [{:keys [text]} message]
-    (-> (re-find #"\S*" text)
+  (let [{:keys [text caption]} message]
+    (-> (re-find #"\S*" (or text caption))
         (str/replace #"\/" "")
         str/lower-case
         keyword)))
@@ -26,6 +27,11 @@
                  (catch Exception _ nil))
             :handler
             keyword)))
+(s/defmethod update->consumer-key :others :- s/Keyword
+  [update
+   _]
+  (log/info :unsupported-update-type update)
+  :others)
 
 (s/defmethod update->consumer-key :edited-message :- s/Keyword
   [{:keys [edited_message]}
@@ -42,13 +48,17 @@
   (let [consumer-type (cond
                         message :message
                         callback_query :callback-query
-                        edited_message :edited-message)
+                        edited_message :edited-message
+                        :else :others)
         consumer-key (update->consumer-key update consumer-type)]
-    (some-> (get consumers consumer-type)
-            (get consumer-key)
-            (assoc :consumer/type consumer-type))))
+    (when-not (= consumer-type :others)
+      (some-> (get consumers consumer-type)
+              (get consumer-key)
+              (assoc :consumer/type consumer-type)))))
 
 (s/defn update->chat-id :- s/Int
   [update]
-  (or (some-> update :message :chat :id)
-      (some-> update :callback_query :message :chat :id)))
+  (or (-> update :message :chat :id)
+      (-> update :edited_message :chat :id)
+      (-> update :callback_query :message :chat :id)
+      (-> update :my_chat_member :chat :id)))
