@@ -5,6 +5,16 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [23.40.40] - 2023-11-05
+
+### Removed
+
+- Removed `TelegramWebhookConsumer` component, now you should use `TelegramConsumer`.
+
+### Changed
+
+- Refactors to `TelegramConsumer` in order to be able to scale new features more easily.
+
 ## [22.40.40] - 2023-11-03
 
 ### Added
@@ -532,7 +542,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v22.40.40...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v23.40.40...HEAD
+
+[23.40.40]: https://github.com/macielti/common-clj/compare/v22.40.40...v23.40.40
 
 [22.40.40]: https://github.com/macielti/common-clj/compare/v22.39.40...v22.40.40
 
