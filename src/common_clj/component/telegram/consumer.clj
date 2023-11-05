@@ -1,9 +1,7 @@
 (ns common-clj.component.telegram.consumer
   (:require
-    [cheshire.core :as json]
     [clostache.parser :as parser]
     [com.stuartsierra.component :as component]
-    [io.pedestal.test :as test]
     [common-clj.component.telegram.adapters.update :as telegram.adapters.message]
     [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
     [io.pedestal.interceptor :as interceptor]
@@ -13,8 +11,7 @@
     [schema.core :as s]
     [telegrambot-lib.core :as telegram-bot]
     [taoensso.timbre :as log]
-    [morse.api :as morse-api]
-    [morse.api :as api])
+    [morse.api :as morse-api])
   (:import (clojure.lang ExceptionInfo)))
 
 (s/defn ^:private commit-update-as-consumed!
@@ -31,7 +28,7 @@
   [consumer
    {:keys [interceptors]}]
   (let [interceptor-groups (group-by :name interceptors)]
-    (map #(-> (get interceptor-groups %) first) (:consumer/interceptors consumer))))
+    (map #(-> (get interceptor-groups %) first) (:interceptors consumer))))
 
 (defmulti consume-update!
   (fn [_update
@@ -43,15 +40,12 @@
   [update
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram-consumer config] :as components}]
-  (let [{:consumer/keys [handler error-handler] :as consumer} (telegram.adapters.message/update->consumer update consumers)
+  (let [{:update/keys [chat-id id] :as update'} (telegram.adapters.message/wire->internal update)
+        {:keys [handler error-handler] :as consumer} (telegram.adapters.message/update->consumer update' consumers)
         token (-> config :telegram :token)
-        update-id (-> update :update_id)
-        chat-id (or (-> update :message :chat :id)
-                    (-> update :edited_message :chat :id)
-                    (-> update :callback_query :message :chat :id))
-        context {:update     update
+        context {:update     update'
                  :components components}]
-    (when (and handler update update-id)
+    (when (and handler update' id)
       (try
         (chain/execute context
                        (concat (interceptors-by-consumer consumer consumers)
@@ -68,14 +62,15 @@
       (morse-api/send-text token chat-id (parser/render-resource
                                            (format "%s/command_not_found.mustache"
                                                    (-> config :telegram :message-template-dir)))))
-    (commit-update-as-consumed! update-id telegram-consumer)))
+    (commit-update-as-consumed! id telegram-consumer)))
 
 (s/defmethod consume-update! :test
   [update
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram-consumer] :as components}]
-  (let [{:consumer/keys [handler] :as consumer} (telegram.adapters.message/update->consumer update consumers)
-        context {:update     update
+  (let [update' (telegram.adapters.message/wire->internal update)
+        {:keys [handler] :as consumer} (telegram.adapters.message/update->consumer update' consumers)
+        context {:update     update'
                  :components components}]
     (when (and handler update)
       (try
@@ -156,7 +151,7 @@
       (at-at/interspaced 100 (fn []
                                (try (consumer-job! consumers components)
                                     (catch ExceptionInfo ex
-                                      (log/error ex)))) pool)
+                                      (log/error #p ex)))) pool)
 
       (assoc component :telegram-consumer telegram-consumer-component)))
 
@@ -171,36 +166,3 @@
   [update
    telegram-consumer]
   (swap! (:incoming-updates telegram-consumer) conj update))
-
-(defrecord TelegramWebhookConsumer [config http-client datomic]
-  component/Lifecycle
-  (start [component]
-    (let [{{:keys [telegram]} :config} config]
-      (api/set-webhook (:token telegram) (:webhook-url telegram))
-      component))
-
-  (stop [_]
-    _))
-
-(defn new-telegram-webhook-consumer
-  []
-  (->TelegramWebhookConsumer {} {} {}))
-
-(s/defn consume-update-via-webhook
-  [update
-   path
-   service-fn]
-  (let [{:keys [body status]} (test/response-for service-fn
-                                                 :post path
-                                                 :headers {"Content-Type" "application/json"}
-                                                 :body (json/encode update))]
-    {:status status
-     :body   (json/decode body true)}))
-
-(s/defn telegram-bot-webhook-endpoint-handler-fn
-  [consumers]
-  (fn telegram-bot-handler
-    [{update     :json-params
-      components :components}]
-    (consume-update! update consumers components)
-    {:status 200}))
