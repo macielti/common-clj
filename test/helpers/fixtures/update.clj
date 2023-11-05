@@ -6,8 +6,9 @@
 
 (def update-with-test-command-call
   {:update_id update-id
-   :message   {:chat {:id chat-id}
-               :text "/test testing"}})
+   :message   {:entities [{:type "bot_command"}]
+               :chat     {:id chat-id}
+               :text     "/test testing"}})
 
 (def update-with-callback-query
   {:update_id      update-id

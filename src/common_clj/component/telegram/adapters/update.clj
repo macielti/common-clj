@@ -1,60 +1,16 @@
 (ns common-clj.component.telegram.adapters.update
   (:require [cheshire.core :as json]
-            [clojure.string :as str]
+            [clojure.string :as string]
             [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
+            [common-clj.component.telegram.models.update :as component.telegram.models.update]
             [schema.core :as s]
             [taoensso.timbre :as log]))
 
-(defmulti update->consumer-key
-  (s/fn [_
-         consumer-type :- s/Keyword]
-    consumer-type))
-
-(s/defmethod update->consumer-key :message :- s/Keyword
-  [{:keys [message]}
-   _]
-  (let [{:keys [text caption]} message]
-    (-> (re-find #"\S*" (or text caption))
-        (str/replace #"\/" "")
-        str/lower-case
-        keyword)))
-
-(s/defmethod update->consumer-key :callback-query :- s/Keyword
-  [{:keys [callback_query]}
-   _]
-  (let [{:keys [data]} callback_query]
-    (some-> (try (json/parse-string data true)
-                 (catch Exception _ nil))
-            :handler
-            keyword)))
-(s/defmethod update->consumer-key :others :- s/Keyword
-  [update
-   _]
-  (log/info :unsupported-update-type update)
-  :others)
-
-(s/defmethod update->consumer-key :edited-message :- s/Keyword
-  [{:keys [edited_message]}
-   _]
-  (let [{:keys [text]} edited_message]
-    (-> (re-find #"\S*" text)
-        (str/replace #"\/" "")
-        str/lower-case
-        keyword)))
-
-(s/defn update->consumer
-  [{:keys [message callback_query edited_message] :as update}
-   consumers :- component.telegram.models.consumer/Consumers]
-  (let [consumer-type (cond
-                        message :message
-                        callback_query :callback-query
-                        edited_message :edited-message
-                        :else :others)
-        consumer-key (update->consumer-key update consumer-type)]
-    (when-not (= consumer-type :others)
-      (some-> (get consumers consumer-type)
-              (get consumer-key)
-              (assoc :consumer/type consumer-type)))))
+(s/defn wire-update->type :- s/Keyword
+  [update]
+  (cond
+    (= (-> update :message :entities first :type) "bot_command") :bot-command
+    :else :others))
 
 (s/defn update->chat-id :- s/Int
   [update]
@@ -62,3 +18,40 @@
       (-> update :edited_message :chat :id)
       (-> update :callback_query :message :chat :id)
       (-> update :my_chat_member :chat :id)))
+
+(s/defn wire->internal :- component.telegram.models.update/Update
+  [{:keys [update_id message] :as update}]
+  {:update/id      update_id
+   :update/chat-id (update->chat-id update)
+   :update/type    (wire-update->type update)
+   :update/message (or (:caption message)
+                       (:text message))})
+
+(defmulti update->consumer-key
+  (s/fn [_
+         consumer-type :- s/Keyword]
+    consumer-type))
+
+(s/defmethod update->consumer-key :bot-command :- s/Keyword
+  [{:update/keys [message]} :- component.telegram.models.update/Update
+   _]
+  (-> (string/split message #" ")
+      first
+      (string/replace #"\/" "")
+      string/lower-case
+      keyword))
+
+(s/defmethod update->consumer-key :others :- s/Keyword
+  [update
+   _]
+  (log/info :unsupported-update-type update)
+  :others)
+
+(s/defn update->consumer
+  [{:update/keys [type] :as update} :- component.telegram.models.update/Update
+   consumers :- component.telegram.models.consumer/Consumers]
+  (let [consumer-key (update->consumer-key update type)]
+    (when-not (= type :others)
+      (some-> (get consumers type)
+              (get consumer-key)
+              (assoc :consumer/type type)))))
