@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [23.40.42] - 2023-11-06
+
+### Added
+
+- Add support to Telegram channels for `TelegramConsumer` component.
+
 ## [23.40.41] - 2023-11-06
 
 ### Fixed
@@ -552,7 +558,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v23.40.41...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v23.40.42...HEAD
+
+[23.40.42]: https://github.com/macielti/common-clj/compare/v23.40.41...v23.40.42
 
 [23.40.41]: https://github.com/macielti/common-clj/compare/v23.40.40...v23.40.41
 
