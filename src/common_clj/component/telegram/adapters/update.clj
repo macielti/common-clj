@@ -16,7 +16,8 @@
   [update]
   (cond
     (or (= (-> update :message :entities first :type) "bot_command")
-        (= (-> update :message :caption_entities first :type) "bot_command")) :bot-command
+        (= (-> update :message :caption_entities first :type) "bot_command")
+        (= (-> update :channel_post :entities first :type) "bot_command")) :bot-command
     :else :others))
 
 (s/defn update->chat-id :- s/Int
@@ -24,16 +25,22 @@
   (or (-> update :message :chat :id)
       (-> update :edited_message :chat :id)
       (-> update :callback_query :message :chat :id)
-      (-> update :my_chat_member :chat :id)))
+      (-> update :my_chat_member :chat :id)
+      (-> update :channel_post :chat :id)))
+
+(s/defn update->message-content :- s/Str
+  [update]
+  (or (-> update :message :caption)
+      (-> update :message :text)
+      (-> update :channel_post :text)))
 
 (s/defn wire->internal :- component.telegram.models.update/Update
-  [{:keys [update_id message] :as update}]
+  [{:keys [update_id] :as update}]
   (let [file-id (wire-update->file-id update)]
     (medley/assoc-some {:update/id      update_id
                         :update/chat-id (update->chat-id update)
                         :update/type    (wire-update->type update)
-                        :update/message (or (:caption message)
-                                            (:text message))}
+                        :update/message (update->message-content update)}
                        :update/file-id file-id)))
 
 (defmulti update->consumer-key
