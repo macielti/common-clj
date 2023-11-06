@@ -5,6 +5,16 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [23.40.41] - 2023-11-06
+
+### Fixed
+
+- Fixed TelegramConsumer component bug while inferring message type
+
+### Added
+
+- Add http-client functions in order to fetch files sent via Telegram bot command messages.
+
 ## [23.40.40] - 2023-11-05
 
 ### Removed
@@ -19,7 +29,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Added
 
-- Added DatomicLocal component.
+- Added `DatomicLocal` component.
 
 ## [22.39.40] - 2023-10-29
 
@@ -542,7 +552,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v23.40.40...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v23.40.41...HEAD
+
+[23.40.41]: https://github.com/macielti/common-clj/compare/v23.40.40...v23.40.41
 
 [23.40.40]: https://github.com/macielti/common-clj/compare/v22.40.40...v23.40.40
 

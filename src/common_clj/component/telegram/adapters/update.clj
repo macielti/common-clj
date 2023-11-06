@@ -1,15 +1,22 @@
 (ns common-clj.component.telegram.adapters.update
-  (:require [cheshire.core :as json]
-            [clojure.string :as string]
+  (:require [clojure.string :as string]
             [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
             [common-clj.component.telegram.models.update :as component.telegram.models.update]
+            [medley.core :as medley]
             [schema.core :as s]
             [taoensso.timbre :as log]))
+
+(s/defn wire-update->file-id :- (s/maybe s/Str)
+  [update]
+  (cond
+    (some-> update :message :photo last :file_id)
+    (-> update :message :photo last :file_id)))
 
 (s/defn wire-update->type :- s/Keyword
   [update]
   (cond
-    (= (-> update :message :entities first :type) "bot_command") :bot-command
+    (or (= (-> update :message :entities first :type) "bot_command")
+        (= (-> update :message :caption_entities first :type) "bot_command")) :bot-command
     :else :others))
 
 (s/defn update->chat-id :- s/Int
@@ -21,11 +28,13 @@
 
 (s/defn wire->internal :- component.telegram.models.update/Update
   [{:keys [update_id message] :as update}]
-  {:update/id      update_id
-   :update/chat-id (update->chat-id update)
-   :update/type    (wire-update->type update)
-   :update/message (or (:caption message)
-                       (:text message))})
+  (let [file-id (wire-update->file-id update)]
+    (medley/assoc-some {:update/id      update_id
+                        :update/chat-id (update->chat-id update)
+                        :update/type    (wire-update->type update)
+                        :update/message (or (:caption message)
+                                            (:text message))}
+                       :update/file-id file-id)))
 
 (defmulti update->consumer-key
   (s/fn [_

@@ -2,7 +2,8 @@
   (:require [schema.core :as s]))
 
 (s/defschema Update
-  {:update/id      s/Int
-   :update/chat-id s/Int
-   :update/type    s/Keyword
-   :update/message s/Str})
+  {:update/id                       s/Int
+   :update/chat-id                  s/Int
+   :update/type                     s/Keyword
+   :update/message                  s/Str
+   (s/optional-key :update/file-id) s/Str})
