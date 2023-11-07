@@ -40,7 +40,7 @@
   [update
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram-consumer config] :as components}]
-  (let [{:update/keys [chat-id id] :as update'} (telegram.adapters.message/wire->internal update)
+  (let [{:update/keys [chat-id id type] :as update'} (telegram.adapters.message/wire->internal update)
         {:keys [handler error-handler] :as consumer} (telegram.adapters.message/update->consumer update' consumers)
         token (-> config :telegram :token)
         context {:update     update'
@@ -58,7 +58,7 @@
                 (morse-api/send-text token chat-id (parser/render-resource
                                                      (format "%s/error_processing_message_command.mustache"
                                                              (-> config :telegram :message-template-dir)))))))))
-    (when-not handler
+    (when (and (not handler) (not= type :others))
       (morse-api/send-text token chat-id (parser/render-resource
                                            (format "%s/command_not_found.mustache"
                                                    (-> config :telegram :message-template-dir)))))

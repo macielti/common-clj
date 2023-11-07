@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [23.40.43] - 2023-11-07
+
+### Fixed
+
+- Fixed `TelegramConsumer` to stop sending Telegram Bot messages for not found commands if the message received was not a command.
+
 ## [23.40.42] - 2023-11-06
 
 ### Added
@@ -558,7 +564,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v23.40.42...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v23.40.43...HEAD
+
+[23.40.43]: https://github.com/macielti/common-clj/compare/v23.40.42...v23.40.43
 
 [23.40.42]: https://github.com/macielti/common-clj/compare/v23.40.41...v23.40.42
 
