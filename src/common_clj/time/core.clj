@@ -1,6 +1,6 @@
 (ns common-clj.time.core
   (:require [schema.core :as s])
-  (:import (java.time LocalDateTime ZoneOffset)
+  (:import (java.time LocalDate LocalDateTime ZoneOffset)
            (java.util Date TimeZone)))
 
 (s/defn ^:deprecated now-datetime :- Date
@@ -20,6 +20,12 @@
   (-> (.toInstant value)
       (.atZone (.toZoneId (TimeZone/getTimeZone "UTC")))
       .toLocalDateTime))
+
+(s/defn date->local-date :- LocalDate
+  [value :- Date]
+  (-> (.toInstant value)
+      (.atZone (.toZoneId (TimeZone/getTimeZone "UTC")))
+      .toLocalDate))
 
 (s/defn local-datetime->date :- Date
   [value]

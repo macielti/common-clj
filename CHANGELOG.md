@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [23.41.43] - 2023-11-10
+
+## Added
+
+- Add `common-clj.time.core/date->local-date` function in oder to be able to convert `Date` to `LocalDate`
+
 ## [23.40.43] - 2023-11-07
 
 ### Fixed
