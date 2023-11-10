@@ -4,7 +4,8 @@
             [mockfn.macros :as mfn]
             [schema.test :as s]
             [matcher-combinators.test :refer [match?]])
-  (:import (java.util Date)))
+  (:import (java.time LocalDate)
+           (java.util Date)))
 
 (s/deftest now-datetime-test
   (testing "that we can generate a datetime now"
@@ -26,3 +27,8 @@
   (testing "that we can convert LocalDateTime to Date"
     (is (match? inst?
                 (time/local-datetime->date (time/now))))))
+
+(s/deftest date-to-local-date-test
+  (testing "that we can convert a Date to LocalDate"
+    (is (match? #(= (type %) LocalDate)
+                (time/date->local-date (Date.))))))
