@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [23.41.44] - 2023-11-11
+
+## Added
+
+- Add `common-clj.keyword.core/un-namespaced` function in oder to be able to convert namespaced keywords.
+- Add `common-clj.schema.core/un-namespaced` function in oder to be able to convert namespaced schemas.
+
 ## [23.41.44] - 2023-11-10
 
 ## Added
@@ -15,7 +22,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Fixed
 
-- Fixed `TelegramConsumer` to stop sending Telegram Bot messages for not found commands if the message received was not a command.
+- Fixed `TelegramConsumer` to stop sending Telegram Bot messages for not found commands if the message received was not
+  a command.
 
 ## [23.40.42] - 2023-11-06
 
@@ -570,7 +578,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v23.41.44...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v23.42.44...HEAD
+
+[23.42.44]: https://github.com/macielti/common-clj/compare/v23.41.44...v23.42.44
 
 [23.41.44]: https://github.com/macielti/common-clj/compare/v23.40.43...v23.41.44
 

@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "23.41.44"
+(defproject net.clojars.macielti/common-clj "23.42.44"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -46,7 +46,8 @@
                  [org.testcontainers/postgresql "1.17.6"]
                  [org.postgresql/postgresql "42.6.0"]
                  [com.github.seancorfield/next.jdbc "1.3.883"]
-                 [com.datomic/local "1.0.267"]]
+                 [com.datomic/local "1.0.267"]
+                 [metosin/schema-tools "0.13.1"]]
 
   :injections [(require 'hashp.core)]
 
