@@ -5,7 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
-## [23.41.44] - 2023-11-11
+## [23.42.45] - 2023-11-11
+
+## Fixed
+
+- Removed call to `#p`. This should be used only on debugging process.
+
+## [23.42.44] - 2023-11-11
 
 ## Added
 
@@ -578,7 +584,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v23.42.44...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v23.42.45...HEAD
+
+[23.42.45]: https://github.com/macielti/common-clj/compare/v23.42.44...v23.42.45
 
 [23.42.44]: https://github.com/macielti/common-clj/compare/v23.41.44...v23.42.44
 

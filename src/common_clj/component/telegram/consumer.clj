@@ -151,7 +151,7 @@
       (at-at/interspaced 100 (fn []
                                (try (consumer-job! consumers components)
                                     (catch ExceptionInfo ex
-                                      (log/error #p ex)))) pool)
+                                      (log/error ex)))) pool)
 
       (assoc component :telegram-consumer telegram-consumer-component)))
 
