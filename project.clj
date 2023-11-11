@@ -46,7 +46,8 @@
                  [org.testcontainers/postgresql "1.17.6"]
                  [org.postgresql/postgresql "42.6.0"]
                  [com.github.seancorfield/next.jdbc "1.3.883"]
-                 [com.datomic/local "1.0.267"]]
+                 [com.datomic/local "1.0.267"]
+                 [metosin/schema-tools "0.13.1"]]
 
   :injections [(require 'hashp.core)]
 

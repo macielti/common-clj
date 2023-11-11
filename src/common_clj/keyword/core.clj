@@ -7,3 +7,8 @@
   (-> k
       ->kebab-case
       keyword))
+
+(s/defn un-namespaced :- s/Keyword
+  [x :- s/Keyword]
+  (-> (name x)
+      keyword))

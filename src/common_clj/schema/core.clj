@@ -1,6 +1,8 @@
 (ns common-clj.schema.core
   (:require [clojure.walk :as walk]
-            [schema.core :as s])
+            [schema-tools.walk :as st-walk]
+            [schema.core :as s]
+            [common-clj.keyword.core :as common-keyword])
   (:import (clojure.lang PersistentArrayMap)))
 
 (defn loose-schema
@@ -11,3 +13,11 @@
                     (assoc % s/Keyword s/Any)
                     %)
                  schema))
+
+(s/defn un-namespaced :- s/Schema
+  "Recursively un-namespace schemas"
+  [schema :- s/Schema]
+  (st-walk/postwalk (fn [x]
+                      (if (keyword? x)
+                        (common-keyword/un-namespaced x)
+                        x)) schema))

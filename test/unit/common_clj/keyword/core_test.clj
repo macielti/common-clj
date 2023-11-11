@@ -7,3 +7,10 @@
   (testing "that loweCamelCase strings can be converted to kebab case"
     (is (= :datomic-uri
            (keyword.core/str->keyword-kebab-case "datomicUri")))))
+
+(s/deftest un-namespaced-test
+  (testing "GIVEN a namespaced keword WHEN we unamespace it THEN It should be un-namespaced"
+    (is (= :ok
+           (keyword.core/un-namespaced :test/ok)))
+    (is (= :deeper
+           (keyword.core/un-namespaced :test.ok/deeper)))))
