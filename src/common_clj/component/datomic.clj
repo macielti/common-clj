@@ -1,7 +1,8 @@
 (ns common-clj.component.datomic
   (:require [com.stuartsierra.component :as component]
             [datomic.api :as d]
-            [datomic.client.api :as dl]))
+            [datomic.client.api :as dl]
+            [schema.core :as s]))
 
 (defn mocked-datomic [datomic-schemas]
   (let [datomic-uri "datomic:mem://mocked"
@@ -40,8 +41,12 @@
 (defrecord DatomicLocal [config schemas]
   component/Lifecycle
   (start [component]
-    (let [storage-dir (-> config :config :datomic-local :storage-dir)
-          db-name (-> config :config :datomic-local :db-name)
+    (let [config' (:config config)
+          current-env (:current-env config')
+          storage-dir (-> (:datomic-local config') :storage-dir)
+          db-name (case current-env
+                    :prod (-> (:datomic-local config') :db-name)
+                    :test (str (random-uuid)))
           client (dl/client {:server-type :datomic-local
                              :storage-dir storage-dir
                              :system      "prod"})
