@@ -5,11 +5,17 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [23.44.46] - 2023-11-14
+
+## Added
+
+- Add `Prometheus` component to `TelegramConsumer` possible dependencies.
+
 ## [23.43.46] - 2023-11-14
 
 ## Added
 
-- Add Prometheus component in order to expose metrics to agentless monitoring for Prometheus in Grafana Cloud.
+- Add `Prometheus` component in order to expose metrics to agentless monitoring for Prometheus in Grafana Cloud.
 
 ## [23.42.46] - 2023-11-12
 
@@ -597,7 +603,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v23.43.46...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v23.44.46...HEAD
+
+[23.44.46]: https://github.com/macielti/common-clj/compare/v23.43.46...v23.44.46
 
 [23.43.46]: https://github.com/macielti/common-clj/compare/v23.42.46...v23.43.46
 
