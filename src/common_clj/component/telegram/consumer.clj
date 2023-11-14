@@ -106,7 +106,7 @@
     (doseq [update updates]
       (consume-update! update consumers components))))
 
-(defrecord TelegramConsumer [config http-client datomic jobs consumers]
+(defrecord TelegramConsumer [config http-client prometheus datomic jobs consumers]
   component/Lifecycle
   (start [component]
     (let [{{:keys [telegram] :as config-content} :config} config
@@ -116,7 +116,8 @@
                                         :datomic (:datomic datomic)
                                         :config config-content
                                         :telegram-consumer bot
-                                        :jobs (:jobs jobs))
+                                        :jobs (:jobs jobs)
+                                        :prometheus (:prometheus prometheus))
           pool (at-at/mk-pool)]
       (at-at/interspaced 100 (fn []
                                (try (consumer-job! consumers components)
@@ -132,7 +133,7 @@
 
 (defn new-telegram-consumer
   [consumers]
-  (->TelegramConsumer {} {} {} {} consumers))
+  (->TelegramConsumer {} {} {} {} {} consumers))
 
 
 (defrecord MockTelegramConsumer [config http-client datomic consumers]
