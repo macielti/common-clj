@@ -9,13 +9,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## Added
 
-- Add Prometheus component to TelegramConsumer possible dependencies.
+- Add `Prometheus` component to `TelegramConsumer` possible dependencies.
 
 ## [23.43.46] - 2023-11-14
 
 ## Added
 
-- Add Prometheus component in order to expose metrics to agentless monitoring for Prometheus in Grafana Cloud.
+- Add `Prometheus` component in order to expose metrics to agentless monitoring for Prometheus in Grafana Cloud.
 
 ## [23.42.46] - 2023-11-12
 
