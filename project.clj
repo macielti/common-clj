@@ -48,7 +48,8 @@
                  [com.github.seancorfield/next.jdbc "1.3.883"]
                  [com.datomic/local "1.0.267"]
                  [metosin/schema-tools "0.13.1"]
-                 [clj-commons/iapetos "0.1.13"]]
+                 [clj-commons/iapetos "0.1.13"]
+                 [clj-rate-limiter "0.1.5"]]
 
   :injections [(require 'hashp.core)]
 
