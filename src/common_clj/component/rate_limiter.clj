@@ -1,11 +1,18 @@
 (ns common-clj.component.rate-limiter
   (:require [com.stuartsierra.component :as component]
-            [clj-rate-limiter.core :as r]))
+            [clj-rate-limiter.core :as r]
+            [schema.core :as s])
+  (:import (clj_rate_limiter.core MemoryRateLimiterFactory)))
+
+(s/defschema RateLimitersDefinition
+  {s/Keyword MemoryRateLimiterFactory})
 
 (defrecord RateLimiter [rate-limiters-definition]
   component/Lifecycle
   (start [component]
     (let [rate-limiter (atom {})]
+
+      (s/validate RateLimitersDefinition rate-limiters-definition)
 
       (doseq [rate-limiter-key (keys rate-limiters-definition)
               :let [rate-limiter-config (get rate-limiters-definition rate-limiter-key)]]
