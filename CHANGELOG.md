@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [23.45.46] - 2023-11-18
+
+## Added
+
+- Add `RateLimiter` component, and now you can use it with interceptors in oder to apply rate limit on service
+  endpoints.
+
 ## [23.44.46] - 2023-11-14
 
 ## Added
@@ -603,7 +610,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v23.44.46...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v23.45.46...HEAD
+
+[23.45.46]: https://github.com/macielti/common-clj/compare/v23.44.46...v23.45.46
 
 [23.44.46]: https://github.com/macielti/common-clj/compare/v23.43.46...v23.44.46
 
