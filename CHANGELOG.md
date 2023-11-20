@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [23.45.47] - 2023-11-20
+
+## Fixed
+
+- Fixed logs not showing up on terminal
+
 ## [23.45.46] - 2023-11-18
 
 ## Added
@@ -610,7 +616,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v23.45.46...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v23.45.47...HEAD
+
+[23.45.47]: https://github.com/macielti/common-clj/compare/v23.45.46...v23.45.47
 
 [23.45.46]: https://github.com/macielti/common-clj/compare/v23.44.46...v23.45.46
 
