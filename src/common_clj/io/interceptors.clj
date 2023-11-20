@@ -1,12 +1,13 @@
 (ns common-clj.io.interceptors
-  (:require [clojure.tools.logging :as log]
-            [common-clj.error.core :as common-error]
-            [humanize.schema :as h]
-            [io.pedestal.http :as http]
-            [io.pedestal.http.body-params :as body-params]
-            [io.pedestal.interceptor :as pedestal.interceptor]
-            [io.pedestal.interceptor.error :as error]
-            [schema.core :as s])
+  (:require
+    [common-clj.error.core :as common-error]
+    [humanize.schema :as h]
+    [io.pedestal.http :as http]
+    [io.pedestal.http.body-params :as body-params]
+    [io.pedestal.interceptor :as pedestal.interceptor]
+    [io.pedestal.interceptor.error :as error]
+    [schema.core :as s]
+    [taoensso.timbre :as log])
   (:import (clojure.lang ExceptionInfo)))
 
 (def error-handler-interceptor
