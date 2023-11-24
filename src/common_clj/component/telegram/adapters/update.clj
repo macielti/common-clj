@@ -17,7 +17,8 @@
   (cond
     (or (= (-> update :message :entities first :type) "bot_command")
         (= (-> update :message :caption_entities first :type) "bot_command")
-        (= (-> update :channel_post :entities first :type) "bot_command")) :bot-command
+        (= (-> update :channel_post :entities first :type) "bot_command")
+        (:callback_query update)) :bot-command
     :else :others))
 
 (s/defn update->chat-id :- s/Int
@@ -32,7 +33,8 @@
   [update]
   (or (-> update :message :caption)
       (-> update :message :text)
-      (-> update :channel_post :text)))
+      (-> update :channel_post :text)
+      (-> update :callback_query :data)))
 
 (s/defn wire->internal :- component.telegram.models.update/Update
   [{:keys [update_id] :as update}]

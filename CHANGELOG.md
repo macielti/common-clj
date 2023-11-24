@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [23.46.47] - 2023-11-24
+
+## Added
+
+- Add handler for Telegram bot callback queries. Now the data from the callback query is treated as a bot command.
+
 ## [23.45.47] - 2023-11-20
 
 ## Fixed
@@ -616,7 +622,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v23.45.47...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v23.46.47...HEAD
+
+[23.46.47]: https://github.com/macielti/common-clj/compare/v23.45.47...v23.46.47
 
 [23.45.47]: https://github.com/macielti/common-clj/compare/v23.45.46...v23.45.47
 
