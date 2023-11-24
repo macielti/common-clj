@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [23.46.47] - 2023-11-24
+
+## Added
+
+- Add handler for Telegram bot callback queries. Now the data from the callback query is treated as a bot command.
+
 ## [23.45.47] - 2023-11-20
 
 ## Fixed
