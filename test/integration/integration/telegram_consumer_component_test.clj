@@ -20,9 +20,8 @@
   (reset! test-state update))
 
 (def consumers
-  {:interceptors [test-interceptor]
-   :bot-command  {:test {:interceptors [:test-interceptor]
-                         :handler      test-consumer!}}})
+  {:bot-command {:test {:interceptors [test-interceptor]
+                        :handler      test-consumer!}}})
 
 (def system-test
   (component/system-map

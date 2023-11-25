@@ -41,14 +41,14 @@
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram-consumer config] :as components}]
   (let [{:update/keys [chat-id id type] :as update'} (telegram.adapters.message/wire->internal update)
-        {:keys [handler error-handler] :as consumer} (telegram.adapters.message/update->consumer update' consumers)
+        {:keys [handler interceptors error-handler] :as consumer} (telegram.adapters.message/update->consumer update' consumers)
         token (-> config :telegram :token)
         context {:update     update'
                  :components components}]
     (when (and handler update' id)
       (try
         (chain/execute context
-                       (concat (interceptors-by-consumer consumer consumers)
+                       (concat interceptors
                                [(interceptor/interceptor {:name  :handler-interceptor
                                                           :enter handler})]))
         (catch Exception e
@@ -69,13 +69,13 @@
    consumers :- component.telegram.models.consumer/Consumers
    {:keys [telegram-consumer] :as components}]
   (let [update' (telegram.adapters.message/wire->internal update)
-        {:keys [handler] :as consumer} (telegram.adapters.message/update->consumer update' consumers)
+        {:keys [handler interceptors] :as consumer} (telegram.adapters.message/update->consumer update' consumers)
         context {:update     update'
                  :components components}]
     (when (and handler update)
       (try
         (chain/execute context
-                       (concat (interceptors-by-consumer consumer consumers)
+                       (concat interceptors
                                [(interceptor/interceptor {:name  :handler-interceptor
                                                           :enter handler})]))))
     (when (:consumed-updates telegram-consumer)
