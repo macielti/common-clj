@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [24.46.47] - 2023-11-25
+
+### Changed
+
+- Refactors to `TelegramConsumer` in order to define command interceptors in a way that allows a more reusable and
+  extendable code.
+
 ## [23.46.47] - 2023-11-24
 
 ## Added
@@ -622,7 +629,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v23.46.47...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v24.46.47...HEAD
+
+[24.46.47]: https://github.com/macielti/common-clj/compare/v23.46.47...v24.46.47
 
 [23.46.47]: https://github.com/macielti/common-clj/compare/v23.45.47...v23.46.47
 
