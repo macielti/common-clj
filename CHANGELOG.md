@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [24.47.47] - 2023-11-26
+
+## Added
+
+- Add Telegram producer component in order to make easier to write integration tests for telegram bots.
+
 ## [24.46.47] - 2023-11-25
 
 ### Changed
@@ -629,7 +635,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v24.46.47...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v24.47.47...HEAD
+
+[24.47.47]: https://github.com/macielti/common-clj/compare/v24.46.47...v24.47.47
 
 [24.46.47]: https://github.com/macielti/common-clj/compare/v23.46.47...v24.46.47
 
