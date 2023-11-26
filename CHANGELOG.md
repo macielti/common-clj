@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [24.47.47] - 2023-11-26
+
+## Added
+
+- Add Telegram producer component in order to make easier to write integration tests for telegram bots.
+
 ## [24.46.47] - 2023-11-25
 
 ### Changed
