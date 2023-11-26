@@ -4,7 +4,7 @@
             [io.pedestal.http :as http]
             [plumbing.core :as plumbing]))
 
-(defrecord Service [routes config datomic datalevin postgresql rabbitmq-producer producer http-client prometheus rate-limiter]
+(defrecord Service [routes config datomic datalevin postgresql rabbitmq-producer producer http-client prometheus rate-limiter telegram-producer]
   component/Lifecycle
   (start [component]
     (let [{{{:keys [host port]} :service} :config} config
@@ -22,7 +22,8 @@
                                           :postgresql (:postgresql postgresql)
                                           :http-client (:http-client http-client)
                                           :prometheus (:prometheus prometheus)
-                                          :rate-limiter (:rate-limiter rate-limiter))]
+                                          :rate-limiter (:rate-limiter rate-limiter)
+                                          :telegram-producer (:telegram-producer telegram-producer))]
       (assoc component :service (http/start (-> service-map
                                                 http/default-interceptors
                                                 (update ::http/interceptors concat (io.interceptors/common-interceptors
@@ -33,4 +34,4 @@
     (assoc component :service nil)))
 
 (defn new-service []
-  (->Service {} {} {} {} {} {} {} {} {} {}))
+  (->Service {} {} {} {} {} {} {} {} {} {} {}))
