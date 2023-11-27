@@ -106,7 +106,7 @@
     (doseq [update updates]
       (consume-update! update consumers components))))
 
-(defrecord TelegramConsumer [config http-client prometheus datomic jobs consumers]
+(defrecord TelegramConsumer [config http-client prometheus datomic jobs consumers telegram-producer]
   component/Lifecycle
   (start [component]
     (let [{{:keys [telegram] :as config-content} :config} config
@@ -117,7 +117,8 @@
                                         :config config-content
                                         :telegram-consumer bot
                                         :jobs (:jobs jobs)
-                                        :prometheus (:prometheus prometheus))
+                                        :prometheus (:prometheus prometheus)
+                                        :telegram-producer (:telegram-producer telegram-producer))
           pool (at-at/mk-pool)]
       (at-at/interspaced 100 (fn []
                                (try (consumer-job! consumers components)
@@ -133,10 +134,10 @@
 
 (defn new-telegram-consumer
   [consumers]
-  (->TelegramConsumer {} {} {} {} {} consumers))
+  (->TelegramConsumer {} {} {} {} {} {} consumers))
 
 
-(defrecord MockTelegramConsumer [config http-client datomic consumers]
+(defrecord MockTelegramConsumer [config http-client datomic telegram-producer consumers]
   component/Lifecycle
   (start [component]
     (let [pool (at-at/mk-pool)
@@ -147,7 +148,8 @@
           components (medley/assoc-some {:telegram-consumer telegram-consumer-component}
                                         :http-client (:http-client http-client)
                                         :datomic (:datomic datomic)
-                                        :config (:config config))]
+                                        :config (:config config)
+                                        :telegram-producer (:telegram-producer telegram-producer))]
 
       (at-at/interspaced 100 (fn []
                                (try (consumer-job! consumers components)
@@ -161,7 +163,7 @@
 
 (defn new-mock-telegram-consumer
   [consumers]
-  (->MockTelegramConsumer {} {} {} consumers))
+  (->MockTelegramConsumer {} {} {} {} consumers))
 
 (s/defn insert-incoming-update!
   [update
