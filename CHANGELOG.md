@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [24.48.47] - 2023-11-27
+
+## Added
+
+- Add TelegramProducer component as dependency for TelegramConsumer component.
+
 ## [24.47.47] - 2023-11-26
 
 ## Added
