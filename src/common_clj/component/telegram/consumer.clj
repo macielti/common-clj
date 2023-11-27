@@ -137,7 +137,7 @@
   (->TelegramConsumer {} {} {} {} {} {} consumers))
 
 
-(defrecord MockTelegramConsumer [config http-client datomic consumers telegram-producer]
+(defrecord MockTelegramConsumer [config http-client datomic telegram-producer consumers]
   component/Lifecycle
   (start [component]
     (let [pool (at-at/mk-pool)
