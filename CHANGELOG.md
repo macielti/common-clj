@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [24.49.47] - 2023-11-28
+
+## Added
+
+- Add schema model for `TelegramProducer` component.
+
 ## [24.48.47] - 2023-11-27
 
 ## Added
@@ -641,7 +647,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v24.48.47...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v24.49.47...HEAD
+
+[24.49.47]: https://github.com/macielti/common-clj/compare/v24.48.47...v24.49.47
 
 [24.48.47]: https://github.com/macielti/common-clj/compare/v24.47.47...v24.48.47
 
