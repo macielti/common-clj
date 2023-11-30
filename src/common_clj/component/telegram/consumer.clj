@@ -106,7 +106,7 @@
     (doseq [update updates]
       (consume-update! update consumers components))))
 
-(defrecord TelegramConsumer [config http-client prometheus datomic jobs consumers telegram-producer]
+(defrecord TelegramConsumer [config http-client prometheus datomic jobs telegram-producer consumers]
   component/Lifecycle
   (start [component]
     (let [{{:keys [telegram] :as config-content} :config} config

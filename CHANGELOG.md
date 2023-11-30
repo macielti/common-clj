@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [24.49.48] - 2023-11-30
+
+## Fixed
+
+- Fixed bug on `TelegramConsumer` component.
+
 ## [24.49.47] - 2023-11-28
 
 ## Added
@@ -647,7 +653,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v24.49.47...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v24.49.48...HEAD
+
+[24.49.48]: https://github.com/macielti/common-clj/compare/v24.49.47...v24.49.48
 
 [24.49.47]: https://github.com/macielti/common-clj/compare/v24.48.47...v24.49.47
 
