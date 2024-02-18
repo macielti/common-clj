@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [25.49.48] - 2024-02-18
+
+## Changed
+
+- Changed implementation of PostgreSQL component to use connection pooling.
+
 ## [24.49.48] - 2023-11-30
 
 ## Fixed

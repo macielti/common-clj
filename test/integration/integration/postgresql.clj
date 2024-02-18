@@ -16,11 +16,14 @@
 
 (s/deftest postresql-component-test
   (let [system (component/start system-test)
-        postgresql (component.helper/get-component-content :postgresql system)
-        conn (component.postgresql/get-connection postgresql)]
-    (jdbc/execute! conn ["INSERT INTO pessoa (apelido, nome, nascimento) VALUES (?, ?, ?)" "brunão" "nascimento" (instant/read-instant-timestamp "2020-03-23T01:17Z")])
-    (is (match? [{:apelido    "brunão"
-                  :nascimento inst?
-                  :nome       "nascimento"}]
-                (jdbc/execute! conn ["SELECT apelido, nascimento, nome FROM pessoa WHERE nome = ?" "nascimento"])))
+        postgresql-pool (component.helper/get-component-content :postgresql system)]
+    (jdbc/execute! postgresql-pool ["INSERT INTO pessoa (apelido, nome, nascimento)
+                                     VALUES (?, ?, ?)"
+                                    "brunão" "nascimento" (instant/read-instant-timestamp "2020-03-23T01:17Z")])
+    (is (match? [{:pessoa/apelido    "brunão"
+                  :pessoa/nascimento inst?
+                  :pessoa/nome       "nascimento"}]
+                (jdbc/execute! postgresql-pool ["SELECT apelido, nascimento, nome
+                                                 FROM pessoa
+                                                 WHERE nome = ?" "nascimento"])))
     (component/stop system)))

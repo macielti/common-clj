@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "24.49.48"
+(defproject net.clojars.macielti/common-clj "25.49.48"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -14,6 +14,7 @@
   :exclusions [log4j]
 
   :dependencies [[org.clojure/clojure "1.11.1"]
+                 [clojure.jdbc/clojure.jdbc-c3p0 "0.3.4"]
                  [hashp "0.2.2"]
                  [com.attendify/schema-refined "0.3.0-alpha4"]
                  [nubank/mockfn "0.7.0"]
