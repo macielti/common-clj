@@ -1,7 +1,6 @@
 (ns common-clj.auth.core
   (:require [buddy.sign.jwt :as jwt]
-            [clj-time.coerce :as c]
-            [clj-time.core :as t]
+            [java-time.api :as jt]
             [schema.core :as s]))
 
 (s/defn ->token :- s/Str
@@ -9,5 +8,6 @@
    jwt-secret :- s/Str]
   (jwt/sign map
             jwt-secret
-            {:exp (-> (t/plus (t/now) (t/days 1))
-                      c/to-timestamp)}))
+            {:exp (-> (jt/local-date-time (jt/zone-id "UTC"))
+                      (jt/plus (jt/days 1))
+                      (jt/sql-timestamp))}))

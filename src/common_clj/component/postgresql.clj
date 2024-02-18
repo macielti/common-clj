@@ -29,7 +29,7 @@
 (defn new-postgresql []
   (->PostgreSQL {}))
 
-(s/defn connection-pool-for-unit-tests
+(s/defn posgresql-component-for-unit-tests
   [schema-sql-path :- s/Str]
   (let [postgresql-container (doto (PostgreSQLContainer. "postgres:16-alpine")
                                .start)

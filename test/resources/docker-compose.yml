@@ -5,10 +5,3 @@ services:
     image: rabbitmq:3-management
     ports:
       - "5672:5672"
-
-  postgres:
-    image: postgres
-    environment:
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
