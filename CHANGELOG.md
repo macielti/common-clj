@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [25.49.48] - 2024-02-18
+
+## Changed
+
+- Changed implementation of PostgreSQL component to use connection pooling.
+
 ## [24.49.48] - 2023-11-30
 
 ## Fixed
@@ -653,7 +659,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v24.49.48...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v25.49.48...HEAD
+
+[25.49.48]: https://github.com/macielti/common-clj/compare/v24.49.48...v25.49.48
 
 [24.49.48]: https://github.com/macielti/common-clj/compare/v24.49.47...v24.49.48
 
