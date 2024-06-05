@@ -106,7 +106,7 @@
     (doseq [update updates]
       (consume-update! update consumers components))))
 
-(defrecord TelegramConsumer [config http-client prometheus datomic jobs telegram-producer consumers]
+(defrecord TelegramConsumer [config http-client prometheus datomic datalevin jobs telegram-producer consumers]
   component/Lifecycle
   (start [component]
     (let [{{:keys [telegram] :as config-content} :config} config
@@ -114,6 +114,7 @@
           components (medley/assoc-some {}
                                         :http-client (:http-client http-client)
                                         :datomic (:datomic datomic)
+                                        :datalevin (:datalevin datalevin)
                                         :config config-content
                                         :telegram-consumer bot
                                         :jobs (:jobs jobs)
@@ -134,10 +135,10 @@
 
 (defn new-telegram-consumer
   [consumers]
-  (->TelegramConsumer {} {} {} {} {} {} consumers))
+  (->TelegramConsumer {} {} {} {} {} {} {} consumers))
 
 
-(defrecord MockTelegramConsumer [config http-client datomic telegram-producer consumers]
+(defrecord MockTelegramConsumer [config http-client datomic datalevin telegram-producer consumers]
   component/Lifecycle
   (start [component]
     (let [pool (at-at/mk-pool)
@@ -148,6 +149,7 @@
           components (medley/assoc-some {:telegram-consumer telegram-consumer-component}
                                         :http-client (:http-client http-client)
                                         :datomic (:datomic datomic)
+                                        :datalevin (:datalevin datalevin)
                                         :config (:config config)
                                         :telegram-producer (:telegram-producer telegram-producer))]
 
@@ -163,7 +165,7 @@
 
 (defn new-mock-telegram-consumer
   [consumers]
-  (->MockTelegramConsumer {} {} {} {} consumers))
+  (->MockTelegramConsumer {} {} {} {} {} consumers))
 
 (s/defn insert-incoming-update!
   [update
