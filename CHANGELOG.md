@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [25.50.48] - 2024-06-05
+
+## Added
+
+- Add support to Datalevin on Telegram consumer component.
+
 ## [25.49.48] - 2024-02-18
 
 ## Changed
@@ -659,7 +665,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v25.49.48...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v25.50.48...HEAD
+
+[25.50.48]: https://github.com/macielti/common-clj/compare/v25.49.48...v25.50.48
 
 [25.49.48]: https://github.com/macielti/common-clj/compare/v24.49.48...v25.49.48
 
