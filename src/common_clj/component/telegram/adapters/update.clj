@@ -36,13 +36,23 @@
       (-> update :channel_post :text)
       (-> update :callback_query :data)))
 
+(s/defn update->user
+  [update]
+  (let [from (or (some-> update :message :from)
+                 (some-> update :callback_query :from))]
+    (medley/assoc-some {:user/id (-> from :id)}
+                       :user/username (some-> from :username)
+                       :user/first-name (some-> from :first_name)
+                       :user/last-name (some-> from :last_name))))
+
 (s/defn wire->internal :- component.telegram.models.update/Update
   [{:keys [update_id] :as update}]
   (let [file-id (wire-update->file-id update)]
     (medley/assoc-some {:update/id      update_id
                         :update/chat-id (update->chat-id update)
                         :update/type    (wire-update->type update)
-                        :update/message (update->message-content update)}
+                        :update/message (update->message-content update)
+                        :update/user    (update->user update)}
                        :update/file-id file-id)))
 
 (defmulti update->consumer-key
