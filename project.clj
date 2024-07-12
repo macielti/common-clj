@@ -19,7 +19,7 @@
                  [hashp "0.2.2"]
                  [com.attendify/schema-refined "0.3.0-alpha5"]
                  [nubank/mockfn "0.7.0"]
-                 [morse "0.5.0"]
+                 [morse "0.4.3"]
                  [overtone/at-at "1.3.58"]
                  [clj-test-containers "0.7.4"]
                  [datalevin "0.9.8"]
