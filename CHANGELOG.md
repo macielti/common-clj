@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [25.51.49] - 2024-07-12
+
+## Changed
+
+- Updating project dependencies.
+
 ## [25.51.48] - 2024-06-06
 
 ## Added
@@ -671,7 +677,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v25.51.48...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v25.51.49...HEAD
+
+[25.51.49]: https://github.com/macielti/common-clj/compare/v25.51.48...v25.51.49
 
 [25.51.48]: https://github.com/macielti/common-clj/compare/v25.50.48...v25.51.48
 

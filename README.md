@@ -12,6 +12,8 @@ Add the following dependency to your project or build file:
 
 You can check for the last available version on [Clojars page](https://clojars.org/net.clojars.macielti/common-clj/).
 
+You can automatically upgrade the project dependencies by running: `lein antq`
+
 ## Documentation
 
 Tests are the best documentation! Better than nothing.
