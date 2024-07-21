@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [25.51.50] - 2024-07-12
+
+## Changed
+
+- Migrate from [prismatic/plumbing](https://clojars.org/prismatic/plumbing) to [medley](https://clojars.org/medley).
+
 ## [25.51.49] - 2024-07-12
 
 ## Changed
@@ -677,7 +683,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v25.51.49...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v25.51.50...HEAD
+
+[25.51.50]: https://github.com/macielti/common-clj/compare/v25.51.49...v25.51.50
 
 [25.51.49]: https://github.com/macielti/common-clj/compare/v25.51.48...v25.51.49
 

@@ -1,11 +1,11 @@
 (ns common-clj.io.interceptors.auth
-  (:require [schema.core :as s]
+  (:require [medley.core :as medley]
+            [schema.core :as s]
             [cheshire.core :as json]
             [io.pedestal.interceptor :as pedestal.interceptor]
             [common-clj.error.core :as common-error]
             [clj-http.client :as client]
             [common-clj.schema.core :as common-schema]
-            [plumbing.core :as plumbing]
             [taoensso.timbre :as log]))
 
 (s/defschema GoogleRecaptchaV3ResponseTokenValidationResultWireIn
@@ -18,8 +18,8 @@
 
 (s/defn wire->google-recaptcha-v3-response-token-validation-result :- GoogleRecaptchaV3ResponseTokenValidationResult
   [{:keys [success score]} :- GoogleRecaptchaV3ResponseTokenValidationResultWireIn]
-  (plumbing/assoc-when {:validation-result/success success}
-                       :validation-result/score score))
+  (medley/assoc-some {:validation-result/success success}
+                     :validation-result/score score))
 
 
 (s/defn ^:private validate-recaptcha-v3-token! :- GoogleRecaptchaV3ResponseTokenValidationResult
