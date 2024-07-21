@@ -5,7 +5,7 @@
             [langohr.core :as rmq]
             [langohr.queue :as lq]
             [langohr.consumers :as lc]
-            [plumbing.core :as plumbing]
+            [medley.core :as medley]
             [schema.core :as s]
             [taoensso.timbre :as log]
             [common-clj.component.rabbitmq.producer :as component.rabbitmq.producer])
@@ -23,12 +23,12 @@
           uri (-> config-content :rabbitmq-uri)
           connection (rmq/connect {:uri uri})
           channel (lch/open connection)
-          components (plumbing/assoc-when {:config (:config config)}
-                                          :rabbitmq-producer (:rabbitmq-producer rabbitmq-producer)
-                                          :datomic (:datomic datomic)
-                                          :datalevin (:datalevin datalevin)
-                                          :postgresql (:postgresql postgresql)
-                                          :http-client (:http-client http-client))
+          components (medley/assoc-some {:config (:config config)}
+                                        :rabbitmq-producer (:rabbitmq-producer rabbitmq-producer)
+                                        :datomic (:datomic datomic)
+                                        :datalevin (:datalevin datalevin)
+                                        :postgresql (:postgresql postgresql)
+                                        :http-client (:http-client http-client))
           service-name (:service-name config-content)]
 
       (s/validate Consumers consumers)

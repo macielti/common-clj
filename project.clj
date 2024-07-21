@@ -39,7 +39,6 @@
                  [com.datomic/datomic-free "0.9.5697"]
                  [com.stuartsierra/component "1.1.0"]
                  [siili/humanize "0.1.1"]
-                 [prismatic/plumbing "0.6.0"]
                  [camel-snake-kebab "0.4.3"]
                  [prismatic/schema "1.4.1"]
                  [buddy/buddy-sign "3.5.351"]
@@ -53,7 +52,8 @@
                  [clj-commons/iapetos "0.1.14"]
                  [clojure.java-time "1.4.2"]
                  [clj-rate-limiter "0.1.6-RC1"]
-                 [com.github.liquidz/antq "RELEASE"]]
+                 [com.github.liquidz/antq "RELEASE"]
+                 [dev.weavejester/medley "1.8.0"]]
 
   :injections [(require 'hashp.core)]
 

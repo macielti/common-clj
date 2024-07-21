@@ -9,8 +9,8 @@
             [common-clj.traceability.core :as common-traceability]
             [io.pedestal.interceptor :as interceptor]
             [io.pedestal.interceptor.chain :as chain]
+            [medley.core :as medley]
             [overtone.at-at :as at-at]
-            [plumbing.core :as plumbing]
             [schema.core :as s]
             [taoensso.timbre :as timbre])
   (:import (java.time Duration)
@@ -77,10 +77,10 @@
                           "key.deserializer"   StringDeserializer
                           "bootstrap.servers"  (get-in config [:config :bootstrap-server])
                           "group.id"           (get-in config [:config :service-name])}
-          components (plumbing/assoc-when {}
-                                          :producer (:producer producer)
-                                          :config (:config config)
-                                          :datomic (:datomic datomic))
+          components (medley/assoc-some {}
+                                        :producer (:producer producer)
+                                        :config (:config config)
+                                        :datomic (:datomic datomic))
           topics (get-in config [:config :topics])
           context {:consumer-props  consumer-props
                    :topics          topics
@@ -124,7 +124,7 @@
     (when-not (:producer producer)
       (throw (ex-info "MockKafkaConsumer depends on MockKafkaProducer"
                       {:error :mock-kafka-producer-component-not-provided})))
-    (let [components (plumbing/assoc-when {}
+    (let [components (medley/assoc-some {}
                                           :producer (:producer producer)
                                           :config (:config config)
                                           :datomic (:datomic datomic))
