@@ -5,7 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
-## [25.51.50] - 2024-07-12
+## [25.52.50] - 2024-07-21
+
+## Added
+
+- Add CronJob component.
+
+## [25.51.50] - 2024-07-21
 
 ## Changed
 
@@ -683,7 +689,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v25.51.50...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v25.52.50...HEAD
+
+[25.52.50]: https://github.com/macielti/common-clj/compare/v25.51.50...v25.52.50
 
 [25.51.50]: https://github.com/macielti/common-clj/compare/v25.51.49...v25.51.50
 

@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "25.51.50"
+(defproject net.clojars.macielti/common-clj "25.52.50"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -53,7 +53,8 @@
                  [clojure.java-time "1.4.2"]
                  [clj-rate-limiter "0.1.6-RC1"]
                  [com.github.liquidz/antq "RELEASE"]
-                 [dev.weavejester/medley "1.8.0"]]
+                 [dev.weavejester/medley "1.8.0"]
+                 [hara/io.scheduler "3.0.8"]]
 
   :injections [(require 'hashp.core)]
 
