@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [25.52.52] - 2024-07-25
+
+## Added
+
+- Add `LocalDateWire` schema extension.
+
 ## [25.52.51] - 2024-07-25
 
 ## Added
@@ -695,7 +701,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v25.52.51...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v25.52.52...HEAD
+
+[25.52.52]: https://github.com/macielti/common-clj/compare/v25.52.51...v25.52.52
 
 [25.52.51]: https://github.com/macielti/common-clj/compare/v25.52.50...v25.52.51
 
