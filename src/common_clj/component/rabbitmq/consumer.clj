@@ -65,4 +65,4 @@
     (rmq/close (:connection rabbitmq-consumer))))
 
 (defn new-consumer [consumers]
-  (->Consumer {} {} {} {} {} {} consumers))
+  (->Consumer {} {} {} {} {} {} {} consumers))
