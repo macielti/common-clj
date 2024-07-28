@@ -15,7 +15,7 @@
   {s/Keyword {:schema     s/Any
               :handler-fn IFn}})
 
-(defrecord Consumer [config datomic datalevin postgresql http-client rabbitmq-producer consumers]
+(defrecord Consumer [config datomic datalevin postgresql http-client prometheus rabbitmq-producer consumers]
   component/Lifecycle
   (start [component]
     (let [config-content (:config config)
@@ -28,7 +28,8 @@
                                         :datomic (:datomic datomic)
                                         :datalevin (:datalevin datalevin)
                                         :postgresql (:postgresql postgresql)
-                                        :http-client (:http-client http-client))
+                                        :http-client (:http-client http-client)
+                                        :prometheus (:prometheus prometheus))
           service-name (:service-name config-content)]
 
       (s/validate Consumers consumers)
