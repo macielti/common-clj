@@ -1,8 +1,8 @@
 (ns common-clj.component.prometheus
   (:require [com.stuartsierra.component :as component]
             [iapetos.core :as prometheus]
-            [schema.core :as s]
-            [iapetos.export :as export]))
+            [iapetos.export :as export]
+            [schema.core :as s]))
 
 (s/defn metrics
   [{headers                     :headers

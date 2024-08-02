@@ -1,17 +1,16 @@
 (ns integration.rate-limiter-component
-  (:require [clojure.test :refer [is testing]]
+  (:require [clj-rate-limiter.core :as r]
+            [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]
+            [common-clj.component.rate-limiter :as component.rate-limiter]
             [common-clj.component.routes :as component.routes]
             [common-clj.component.service :as component.service]
-            [common-clj.component.rate-limiter :as component.rate-limiter]
-            [clj-rate-limiter.core :as r]
+            [common-clj.error.core :as common-error]
             [integration.aux.http :as aux.http]
             [io.pedestal.interceptor :as pedestal.interceptor]
-            [common-clj.error.core :as common-error]
             [schema.test :as s]))
-
 
 (def rate-limiters-definition
   {:1-per-min (r/rate-limiter-factory :memory
@@ -23,27 +22,27 @@
 
 (def rate-limit-1-per-min-based-on-ip-interceptor
   (pedestal.interceptor/interceptor
-    {:name  ::rate-limit-1-per-sec-based-on-ip-interceptor
-     :enter (fn [{{:keys [components remote-addr]} :request :as context}]
-              (let [{:keys [rate-limiter]} components]
-                (when-not (r/allow? (get @rate-limiter :1-per-min) remote-addr)
-                  (common-error/http-friendly-exception 429
-                                                        "too-many-requests"
-                                                        "Too Many Requests"
-                                                        {:error :too-many-requests})))
-              context)}))
+   {:name  ::rate-limit-1-per-sec-based-on-ip-interceptor
+    :enter (fn [{{:keys [components remote-addr]} :request :as context}]
+             (let [{:keys [rate-limiter]} components]
+               (when-not (r/allow? (get @rate-limiter :1-per-min) remote-addr)
+                 (common-error/http-friendly-exception 429
+                                                       "too-many-requests"
+                                                       "Too Many Requests"
+                                                       {:error :too-many-requests})))
+             context)}))
 
 (def rate-limit-2-per-min-based-on-ip-interceptor
   (pedestal.interceptor/interceptor
-    {:name  ::rate-limit-2-per-sec-based-on-ip-interceptor
-     :enter (fn [{{:keys [components remote-addr]} :request :as context}]
-              (let [{:keys [rate-limiter]} components]
-                (when-not (r/allow? (get @rate-limiter :2-per-min) remote-addr)
-                  (common-error/http-friendly-exception 429
-                                                        "too-many-requests"
-                                                        "Too Many Requests"
-                                                        {:error :too-many-requests})))
-              context)}))
+   {:name  ::rate-limit-2-per-sec-based-on-ip-interceptor
+    :enter (fn [{{:keys [components remote-addr]} :request :as context}]
+             (let [{:keys [rate-limiter]} components]
+               (when-not (r/allow? (get @rate-limiter :2-per-min) remote-addr)
+                 (common-error/http-friendly-exception 429
+                                                       "too-many-requests"
+                                                       "Too Many Requests"
+                                                       {:error :too-many-requests})))
+             context)}))
 
 (def ^:private routes-example [["/test-rate-limit-1-per-min" :get [rate-limit-1-per-min-based-on-ip-interceptor
                                                                    (fn [_context]
@@ -57,10 +56,10 @@
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)
-    :routes (component/using (component.routes/new-routes routes-example) [:config])
-    :rate-limiter (component.rate-limiter/new-rate-limiter rate-limiters-definition)
-    :service (component/using (component.service/new-service) [:config :routes :rate-limiter])))
+   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :routes (component/using (component.routes/new-routes routes-example) [:config])
+   :rate-limiter (component.rate-limiter/new-rate-limiter rate-limiters-definition)
+   :service (component/using (component.service/new-service) [:config :routes :rate-limiter])))
 
 (s/deftest rate-limit-component-test-1-per-minute
   (let [system (component/start system-test)

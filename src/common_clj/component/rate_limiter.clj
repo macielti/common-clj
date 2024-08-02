@@ -1,6 +1,6 @@
 (ns common-clj.component.rate-limiter
-  (:require [com.stuartsierra.component :as component]
-            [clj-rate-limiter.core :as r]
+  (:require [clj-rate-limiter.core :as r]
+            [com.stuartsierra.component :as component]
             [schema.core :as s])
   (:import (clj_rate_limiter.core MemoryRateLimiterFactory)))
 

@@ -1,11 +1,11 @@
 (ns common-clj.io.interceptors.auth
-  (:require [medley.core :as medley]
-            [schema.core :as s]
-            [cheshire.core :as json]
-            [io.pedestal.interceptor :as pedestal.interceptor]
-            [common-clj.error.core :as common-error]
+  (:require [cheshire.core :as json]
             [clj-http.client :as client]
+            [common-clj.error.core :as common-error]
             [common-clj.schema.core :as common-schema]
+            [io.pedestal.interceptor :as pedestal.interceptor]
+            [medley.core :as medley]
+            [schema.core :as s]
             [taoensso.timbre :as log]))
 
 (s/defschema GoogleRecaptchaV3ResponseTokenValidationResultWireIn
@@ -20,7 +20,6 @@
   [{:keys [success score]} :- GoogleRecaptchaV3ResponseTokenValidationResultWireIn]
   (medley/assoc-some {:validation-result/success success}
                      :validation-result/score score))
-
 
 (s/defn ^:private validate-recaptcha-v3-token! :- GoogleRecaptchaV3ResponseTokenValidationResult
   [response-token :- s/Str
@@ -39,19 +38,18 @@
   (and success
        (>= score 0.5)))
 
-
 (def recaptcha-v3-validation-interceptor
   (pedestal.interceptor/interceptor
-    {:name  ::recaptcha-validation-interceptor
-     :enter (fn [{{:keys [components headers]} :request :as context}]
-              (let [recaptcha-response-token (get headers "x-recaptcha-token" "missing")
-                    recaptcha-secret-token (some-> components :config :recaptcha-secret-token)
-                    recaptcha-result-check (when recaptcha-secret-token
-                                             (-> (validate-recaptcha-v3-token! recaptcha-response-token recaptcha-secret-token)
-                                                 valid-recaptcha-v3-response-check?))]
-                (when (and recaptcha-secret-token (not recaptcha-result-check))
-                  (common-error/http-friendly-exception 400
-                                                        "not-able-to-perform-recaptcha-validation"
-                                                        "Not able to check the success completion of the reCAPTCHA challenge"
-                                                        {:error :not-able-to-perform-recaptcha-validation})))
-              context)}))
+   {:name  ::recaptcha-validation-interceptor
+    :enter (fn [{{:keys [components headers]} :request :as context}]
+             (let [recaptcha-response-token (get headers "x-recaptcha-token" "missing")
+                   recaptcha-secret-token (some-> components :config :recaptcha-secret-token)
+                   recaptcha-result-check (when recaptcha-secret-token
+                                            (-> (validate-recaptcha-v3-token! recaptcha-response-token recaptcha-secret-token)
+                                                valid-recaptcha-v3-response-check?))]
+               (when (and recaptcha-secret-token (not recaptcha-result-check))
+                 (common-error/http-friendly-exception 400
+                                                       "not-able-to-perform-recaptcha-validation"
+                                                       "Not able to check the success completion of the reCAPTCHA challenge"
+                                                       {:error :not-able-to-perform-recaptcha-validation})))
+             context)}))

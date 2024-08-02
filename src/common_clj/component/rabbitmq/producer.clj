@@ -1,8 +1,8 @@
 (ns common-clj.component.rabbitmq.producer
   (:require [com.stuartsierra.component :as component]
-            [langohr.core :as rmq]
-            [langohr.channel :as lch]
             [langohr.basic :as lb]
+            [langohr.channel :as lch]
+            [langohr.core :as rmq]
             [schema.core :as s]))
 
 (s/defn topic->raw-topic :- s/Str

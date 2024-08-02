@@ -2,14 +2,14 @@
   (:require [clojure.test :refer :all]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
+            [common-clj.component.helper.core :as component.helper]
             [common-clj.component.http-client :as component.http-client]
-            [schema.test :as s]
-            [common-clj.component.helper.core :as component.helper]))
+            [schema.test :as s]))
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.edn" :test :edn)
-    :http-client (component/using (component.http-client/new-http-client) [:config])))
+   :config (component.config/new-config "resources/config_test.edn" :test :edn)
+   :http-client (component/using (component.http-client/new-http-client) [:config])))
 
 (s/deftest http-client-component-test
   (let [system (component/start system-test)

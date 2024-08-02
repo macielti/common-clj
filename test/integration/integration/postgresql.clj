@@ -1,18 +1,20 @@
 (ns integration.postgresql
-  (:require [clojure.test :refer :all]
+  (:require [clojure.instant :as instant]
+            [clojure.test :refer :all]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]
             [common-clj.component.postgresql :as component.postgresql]
+            [common-clj.test.helper.components.containers :as test.helper.components.containers]
             [matcher-combinators.test :refer [match?]]
             [next.jdbc :as jdbc]
-            [clojure.instant :as instant]
             [schema.test :as s]))
 
 (def system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.edn" :test :edn)
-    :postgresql (component/using (component.postgresql/new-mock-postgresql) [:config])))
+   :config (component.config/new-config "resources/config_test.edn" :test :edn)
+   :containers (test.helper.components.containers/new-containers #{:postgresql})
+   :postgresql (component/using (component.postgresql/new-mock-postgresql) [:config :containers])))
 
 (s/deftest postresql-component-test
   (let [system (component/start system-test)

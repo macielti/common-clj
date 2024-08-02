@@ -20,10 +20,10 @@
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.edn" :test :edn)
-    :containers (test.helper.components.containers/new-containers)
-    :rabbitmq-producer (component/using (component.rabbitmq.producer/new-mock-producer) [:config :containers])
-    :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-mock-rabbitmq-consumer consumers) [:config :rabbitmq-producer :containers])))
+   :config (component.config/new-config "resources/config_test.edn" :test :edn)
+   :containers (test.helper.components.containers/new-containers #{:rabbitmq})
+   :rabbitmq-producer (component/using (component.rabbitmq.producer/new-mock-producer) [:config :containers])
+   :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-mock-rabbitmq-consumer consumers) [:config :rabbitmq-producer :containers])))
 
 (s/deftest rabbitmq-consumer-and-producer-component-test
   (let [system (component/start system-test)
@@ -78,9 +78,9 @@
 
 (def ^:private system-test-problematic-consumer-with-dead-letter-enabled
   (component/system-map
-    :config (component.config/new-config "resources/config_test.edn" :test :edn)
-    :rabbitmq-producer (component/using (component.rabbitmq.producer/new-producer) [:config])
-    :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-consumer problematic-consumers) [:config :rabbitmq-producer])))
+   :config (component.config/new-config "resources/config_test.edn" :test :edn)
+   :rabbitmq-producer (component/using (component.rabbitmq.producer/new-producer) [:config])
+   :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-consumer problematic-consumers) [:config :rabbitmq-producer])))
 
 (s/deftest rabbitmq-consumer-and-producer-component-test-should-produce-dead-letter
   (let [system (component/start system-test-problematic-consumer-with-dead-letter-enabled)
@@ -108,9 +108,9 @@
 
 (def ^:private system-test-problematic-consumer-with-dead-letter-disabled
   (component/system-map
-    :config (component.config/new-config "resources/config_test_dead_letter_disabled.edn" :test :edn)
-    :rabbitmq-producer (component/using (component.rabbitmq.producer/new-producer) [:config])
-    :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-consumer problematic-consumers) [:config :rabbitmq-producer])))
+   :config (component.config/new-config "resources/config_test_dead_letter_disabled.edn" :test :edn)
+   :rabbitmq-producer (component/using (component.rabbitmq.producer/new-producer) [:config])
+   :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-consumer problematic-consumers) [:config :rabbitmq-producer])))
 
 (s/deftest rabbitmq-consumer-and-producer-component-test-should-not-produce-dead-letter
   (let [system (component/start system-test-problematic-consumer-with-dead-letter-disabled)

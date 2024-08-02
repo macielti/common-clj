@@ -1,8 +1,8 @@
 (ns common-clj.component.http
-  (:require [com.stuartsierra.component :as component]
-            [schema.core :as s]
+  (:require [cheshire.core :as json]
             [clj-http.client :as client]
-            [cheshire.core :as json]))
+            [com.stuartsierra.component :as component]
+            [schema.core :as s]))
 
 (s/defn ^:private authenticate-service! :- s/Str
   [auth-server-base-url :- s/Str

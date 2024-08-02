@@ -1,16 +1,15 @@
 (ns common-clj.component.rabbitmq.consumer
   (:require [clojure.tools.reader.edn :as edn]
             [com.stuartsierra.component :as component]
+            [common-clj.component.rabbitmq.producer :as component.rabbitmq.producer]
             [langohr.channel :as lch]
+            [langohr.consumers :as lc]
             [langohr.core :as rmq]
             [langohr.queue :as lq]
-            [langohr.consumers :as lc]
             [medley.core :as medley]
             [schema.core :as s]
-            [taoensso.timbre :as log]
-            [common-clj.component.rabbitmq.producer :as component.rabbitmq.producer])
-  (:import (clojure.lang IFn)
-           (org.testcontainers.containers RabbitMQContainer GenericContainer)))
+            [taoensso.timbre :as log])
+  (:import (clojure.lang IFn)))
 
 (s/defschema Consumers
   {s/Keyword {:schema     s/Any

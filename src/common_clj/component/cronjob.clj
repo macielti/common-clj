@@ -1,7 +1,7 @@
 (ns common-clj.component.cronjob
-  (:require [schema.core :as s]
-            [com.stuartsierra.component :as component]
-            [hara.io.scheduler :as io.scheduler]))
+  (:require [com.stuartsierra.component :as component]
+            [hara.io.scheduler :as io.scheduler]
+            [schema.core :as s]))
 
 (s/defn tasks-with-components
   [tasks components]

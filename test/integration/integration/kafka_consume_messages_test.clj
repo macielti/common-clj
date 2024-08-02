@@ -28,9 +28,9 @@
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)
-    :producer (component/using (component.producer/new-mock-producer) [:config])
-    :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])))
+   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :producer (component/using (component.producer/new-mock-producer) [:config])
+   :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])))
 
 (s-test/deftest kafka-consumer-component-test
   (mfn/providing [(random-uuid) #uuid "1b9c8e2e-b7b8-4d25-a4fa-16bc3bb34b9a"]
@@ -103,9 +103,9 @@
 
 (def ^:private system-test-invalid-consumer
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)
-    :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config])
-    :producer (component/using (component.producer/new-mock-producer) [:config :consumer])))
+   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config])
+   :producer (component/using (component.producer/new-mock-producer) [:config :consumer])))
 
 (s-test/deftest throw-exception-when-producer-component-is-not-provided
   (testing "that we throw an exception if the producer component is not provided for consumer"
@@ -116,9 +116,9 @@
 
 (def ^:private system-test-disabled-dlq-service-integration
   (component/system-map
-    :config (component.config/new-config "resources/config_test_dead_letter_disabled.json" :test :json)
-    :producer (component/using (component.producer/new-mock-producer) [:config])
-    :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])))
+   :config (component.config/new-config "resources/config_test_dead_letter_disabled.json" :test :json)
+   :producer (component/using (component.producer/new-mock-producer) [:config])
+   :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])))
 
 (s-test/deftest kafka-consumer-component-test-wrong-schema-dlq-disabled
   (let [system (component/start system-test-disabled-dlq-service-integration)
