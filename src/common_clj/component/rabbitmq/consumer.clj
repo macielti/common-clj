@@ -68,14 +68,13 @@
 (defn new-consumer [consumers]
   (->Consumer {} {} {} {} {} {} {} consumers))
 
-(defrecord MockConsumer [config datomic datalevin postgresql http-client prometheus rabbitmq-producer consumers]
+(defrecord MockConsumer [config datomic datalevin postgresql http-client prometheus rabbitmq-producer containers consumers]
   component/Lifecycle
   (start [component]
-    (let [rabbit-mq-container (doto (RabbitMQContainer. "rabbitmq:3-alpine")
-                                .start)
+    (let [rabbitmq-container (-> containers :containers :rabbitmq)
           config-content (:config config)
           topics (-> config-content :topics)
-          uri (.getAmqpUrl rabbit-mq-container)
+          uri (.getAmqpUrl rabbitmq-container)
           connection (rmq/connect {:uri uri})
           channel (lch/open connection)
           components (medley/assoc-some {:config (:config config)}
@@ -112,13 +111,11 @@
                                                                         (:rabbitmq-producer components)))))))
                       {:auto-ack true}))
 
-      (merge component {:rabbitmq-consumer  {:connection connection
-                                             :channel    channel}
-                        :rabbitmq-container rabbit-mq-container})))
+      (merge component {:rabbitmq-consumer {:connection connection
+                                            :channel    channel}})))
 
   (stop [component]
-    (.stop ^GenericContainer (:rabbitmq-container component))
-    (assoc component :rabbitmq-consumer nil)))
+    component))
 
 (defn new-mock-rabbitmq-consumer [consumers]
-  (->MockConsumer {} {} {} {} {} {} {} consumers))
+  (->MockConsumer {} {} {} {} {} {} {} {} consumers))

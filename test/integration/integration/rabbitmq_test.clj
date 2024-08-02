@@ -5,6 +5,7 @@
             [common-clj.component.helper.core :as component.helper]
             [common-clj.component.rabbitmq.consumer :as component.rabbitmq.consumer]
             [common-clj.component.rabbitmq.producer :as component.rabbitmq.producer]
+            [common-clj.test.helper.components.containers :as test.helper.components.containers]
             [schema.core :as schema]
             [schema.test :as s]))
 
@@ -20,8 +21,9 @@
 (def ^:private system-test
   (component/system-map
     :config (component.config/new-config "resources/config_test.edn" :test :edn)
-    :rabbitmq-producer (component/using (component.rabbitmq.producer/new-producer) [:config])
-    :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-mock-rabbitmq-consumer consumers) [:config :rabbitmq-producer])))
+    :containers (test.helper.components.containers/new-containers)
+    :rabbitmq-producer (component/using (component.rabbitmq.producer/new-mock-producer) [:config :containers])
+    :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-mock-rabbitmq-consumer consumers) [:config :rabbitmq-producer :containers])))
 
 (s/deftest rabbitmq-consumer-and-producer-component-test
   (let [system (component/start system-test)
