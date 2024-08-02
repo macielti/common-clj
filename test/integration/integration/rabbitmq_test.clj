@@ -81,7 +81,7 @@
     :config (component.config/new-config "resources/config_test.edn" :test :edn)
     :containers (test.helper.components.containers/new-containers #{:rabbitmq})
     :rabbitmq-producer (component/using (component.rabbitmq.producer/new-mock-producer) [:config :containers])
-    :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-mock-rabbitmq-consumer consumers) [:config :rabbitmq-producer :containers])))
+    :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-mock-rabbitmq-consumer problematic-consumers) [:config :rabbitmq-producer :containers])))
 
 (s/deftest rabbitmq-consumer-and-producer-component-test-should-produce-dead-letter
   (let [system (component/start system-test-problematic-consumer-with-dead-letter-enabled)
