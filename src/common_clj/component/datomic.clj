@@ -1,8 +1,7 @@
 (ns common-clj.component.datomic
   (:require [com.stuartsierra.component :as component]
             [datomic.api :as d]
-            [datomic.client.api :as dl]
-            [schema.core :as s]))
+            [datomic.client.api :as dl]))
 
 (defn mocked-datomic [datomic-schemas]
   (let [datomic-uri "datomic:mem://mocked"
@@ -26,7 +25,6 @@
 
 (defn new-datomic [schemas]
   (map->Datomic {:schemas schemas}))
-
 
 (defn mocked-datomic-local [datomic-schemas]
   (let [db-name (str (random-uuid))

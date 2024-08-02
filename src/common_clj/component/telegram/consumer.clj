@@ -1,17 +1,16 @@
 (ns common-clj.component.telegram.consumer
-  (:require
-    [clostache.parser :as parser]
-    [com.stuartsierra.component :as component]
-    [common-clj.component.telegram.adapters.update :as telegram.adapters.message]
-    [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
-    [io.pedestal.interceptor :as interceptor]
-    [io.pedestal.interceptor.chain :as chain]
-    [medley.core :as medley]
-    [overtone.at-at :as at-at]
-    [schema.core :as s]
-    [telegrambot-lib.core :as telegram-bot]
-    [taoensso.timbre :as log]
-    [morse.api :as morse-api])
+  (:require [clostache.parser :as parser]
+            [com.stuartsierra.component :as component]
+            [common-clj.component.telegram.adapters.update :as telegram.adapters.message]
+            [common-clj.component.telegram.models.consumer :as component.telegram.models.consumer]
+            [io.pedestal.interceptor :as interceptor]
+            [io.pedestal.interceptor.chain :as chain]
+            [medley.core :as medley]
+            [morse.api :as morse-api]
+            [overtone.at-at :as at-at]
+            [schema.core :as s]
+            [taoensso.timbre :as log]
+            [telegrambot-lib.core :as telegram-bot])
   (:import (clojure.lang ExceptionInfo)))
 
 (s/defn ^:private commit-update-as-consumed!
@@ -56,12 +55,12 @@
             (error-handler e components)
             (do (log/error e)
                 (morse-api/send-text token chat-id (parser/render-resource
-                                                     (format "%s/error_processing_message_command.mustache"
-                                                             (-> config :telegram :message-template-dir)))))))))
+                                                    (format "%s/error_processing_message_command.mustache"
+                                                            (-> config :telegram :message-template-dir)))))))))
     (when (and (not handler) (not= type :others))
       (morse-api/send-text token chat-id (parser/render-resource
-                                           (format "%s/command_not_found.mustache"
-                                                   (-> config :telegram :message-template-dir)))))
+                                          (format "%s/command_not_found.mustache"
+                                                  (-> config :telegram :message-template-dir)))))
     (commit-update-as-consumed! id telegram-consumer)))
 
 (s/defmethod consume-update! :test
@@ -136,7 +135,6 @@
 (defn new-telegram-consumer
   [consumers]
   (->TelegramConsumer {} {} {} {} {} {} {} consumers))
-
 
 (defrecord MockTelegramConsumer [config http-client datomic datalevin telegram-producer consumers]
   component/Lifecycle

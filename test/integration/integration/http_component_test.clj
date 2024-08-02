@@ -1,15 +1,15 @@
 (ns integration.http-component-test
-  (:require [clojure.test :refer :all]
-            [schema.test :as s]
+  (:require [cheshire.core :as json]
+            [clj-http.client :as client]
+            [clj-http.fake :as http.fake]
+            [clojure.test :refer :all]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
+            [common-clj.component.helper.core :as component.helper]
+            [common-clj.component.http :as component.http]
             [common-clj.component.routes :as component.routes]
             [common-clj.component.service :as component.service]
-            [common-clj.component.http :as component.http]
-            [cheshire.core :as json]
-            [clj-http.fake :as http.fake]
-            [common-clj.component.helper.core :as component.helper]
-            [clj-http.client :as client]))
+            [schema.test :as s]))
 
 (def ^:private routes-example [["/test" :get (fn [{:keys [headers]}]
                                                {:status 200 :body headers})
@@ -17,10 +17,10 @@
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.edn" :test :edn)
-    :http (component/using (component.http/new-http) [:config])
-    :routes (component/using (component.routes/new-routes routes-example) [:config])
-    :service (component/using (component.service/new-service) [:config :routes])))
+   :config (component.config/new-config "resources/config_test.edn" :test :edn)
+   :http (component/using (component.http/new-http) [:config])
+   :routes (component/using (component.routes/new-routes routes-example) [:config])
+   :service (component/using (component.service/new-service) [:config :routes])))
 
 (def mocked-http-responses
   {"https://example.com/users/auth"

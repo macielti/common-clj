@@ -18,7 +18,7 @@
 
 (def system-test
   (component/system-map
-    :cronjob (component.cronjob/new-cronjob tasks)))
+   :cronjob (component.cronjob/new-cronjob tasks)))
 
 (s/deftest cronjob-task-execution-test
   (let [system (component/start system-test)]

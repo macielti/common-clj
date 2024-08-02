@@ -1,7 +1,7 @@
 (ns common-clj.io.interceptors.auth-test
   (:require [clojure.test :refer :all]
-            [schema.test :as s]
-            [common-clj.io.interceptors.auth :as io.interceptors.auth]))
+            [common-clj.io.interceptors.auth :as io.interceptors.auth]
+            [schema.test :as s]))
 
 (def wire
   {:success true
@@ -23,4 +23,4 @@
     (is (false? (io.interceptors.auth/valid-recaptcha-v3-response-check? (assoc internal :validation-result/success false))))
     (is (false? (io.interceptors.auth/valid-recaptcha-v3-response-check? (assoc internal :validation-result/score 0.2))))
     (is (false? (io.interceptors.auth/valid-recaptcha-v3-response-check? (assoc internal :validation-result/score 0.6
-                                                                                         :validation-result/success false))))))
+                                                                                :validation-result/success false))))))

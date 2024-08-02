@@ -12,6 +12,4 @@ jobs:
       - name: Install dependencies
         run: lein deps
       - name: Run tests
-        run: | 
-          docker-compose -f test/resources/docker-compose.yml up -d
-          lein test
+        run: lein test

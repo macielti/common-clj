@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [26.52.53] - 2024-08-02
+
+## Added
+
+- Implemented `Containers` component. Now you can use it to start and stop docker containers in your integration tests.
+
 ## [25.52.53] - 2024-07-28
 
 ## Added
@@ -707,7 +713,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v25.52.53...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v26.52.53...HEAD
+
+[26.52.53]: https://github.com/macielti/common-clj/compare/v25.52.53...v26.52.53
 
 [25.52.53]: https://github.com/macielti/common-clj/compare/v25.52.52...v25.52.53
 

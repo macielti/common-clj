@@ -1,8 +1,8 @@
 (ns common-clj.component.rabbitmq.producer
   (:require [com.stuartsierra.component :as component]
-            [langohr.core :as rmq]
-            [langohr.channel :as lch]
             [langohr.basic :as lb]
+            [langohr.channel :as lch]
+            [langohr.core :as rmq]
             [schema.core :as s]))
 
 (s/defn topic->raw-topic :- s/Str
@@ -46,5 +46,24 @@
     (rmq/close (:connection rabbitmq-producer))))
 
 (defn new-producer []
-  (map->Producer {}))
+  (->Producer {}))
+
+(defrecord MockProducer [config containers]
+  component/Lifecycle
+  (start [component]
+    (let [rabbitmq-container (-> containers :containers :rabbitmq)
+          uri (.getAmqpUrl rabbitmq-container)
+          connection (rmq/connect {:uri uri})
+          channel (lch/open connection)]
+      (merge component {:rabbitmq-producer {:connection        connection
+                                            :channel           channel
+                                            :produced-messages (atom [])
+                                            :current-env       (-> config :config :current-env)}})))
+
+  (stop [{:keys [rabbitmq-producer]}]
+    (rmq/close (:channel rabbitmq-producer))
+    (rmq/close (:connection rabbitmq-producer))))
+
+(defn new-mock-producer []
+  (->MockProducer {} {}))
 

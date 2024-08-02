@@ -1,15 +1,15 @@
 (ns integration.recaptcha-validation-interceptor-test
-  (:require [clojure.test :refer :all]
+  (:require [cheshire.core :as json]
+            [clj-http.fake :as http.fake]
+            [clojure.test :refer :all]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
+            [common-clj.component.helper.core :as component.helper]
             [common-clj.component.routes :as component.routes]
             [common-clj.component.service :as component.service]
-            [schema.test :as schema-test]
-            [common-clj.component.helper.core :as component.helper]
-            [integration.aux.http :as aux.http]
             [common-clj.io.interceptors.auth :as io.interceptors.auth]
-            [clj-http.fake :as http.fake]
-            [cheshire.core :as json]))
+            [integration.aux.http :as aux.http]
+            [schema.test :as schema-test]))
 
 ;TODO: Check if we called the right external endpoints passing the right params (need a http component that maintain a history of requests that were made during test)
 ;TODO: Make this integration tests not hit the actual google servers (add mock for every external http request)
@@ -20,9 +20,9 @@
 
 (def ^:private system-test-with-recaptcha-v3-validation-disabled
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)
-    :routes (component/using (component.routes/new-routes routes-example) [:config])
-    :service (component/using (component.service/new-service) [:config :routes])))
+   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :routes (component/using (component.routes/new-routes routes-example) [:config])
+   :service (component/using (component.service/new-service) [:config :routes])))
 
 (schema-test/deftest recaptcha-validation-v3-interceptor-disabled-test
   (let [system (component/start system-test-with-recaptcha-v3-validation-disabled)
@@ -36,9 +36,9 @@
 
 (def ^:private system-test-with-recaptcha-v3-validation-enabled
   (component/system-map
-    :config (component.config/new-config "resources/config.test.recaptcha_validation_enabled.edn" :test :edn)
-    :routes (component/using (component.routes/new-routes routes-example) [:config])
-    :service (component/using (component.service/new-service) [:config :routes])))
+   :config (component.config/new-config "resources/config.test.recaptcha_validation_enabled.edn" :test :edn)
+   :routes (component/using (component.routes/new-routes routes-example) [:config])
+   :service (component/using (component.service/new-service) [:config :routes])))
 
 (def valid-recaptcha-v3-token-response "valid-recaptcha-v3-token-response")
 

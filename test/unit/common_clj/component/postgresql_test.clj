@@ -1,10 +1,10 @@
 (ns common-clj.component.postgresql-test
   (:require [clojure.instant :as instant]
             [clojure.test :refer :all]
-            [next.jdbc :as jdbc]
-            [schema.test :as s]
             [common-clj.component.postgresql :as component.postgresql]
-            [matcher-combinators.test :refer [match?]]))
+            [matcher-combinators.test :refer [match?]]
+            [next.jdbc :as jdbc]
+            [schema.test :as s]))
 
 (s/deftest postgresql-for-unit-tests-test
   (let [{db-connection-pool :database-connection} (component.postgresql/posgresql-component-for-unit-tests "resources/schema.sql")]

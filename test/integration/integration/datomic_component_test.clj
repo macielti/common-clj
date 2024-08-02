@@ -48,9 +48,9 @@
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)
-    :datomic (component/using (component.datomic/new-datomic schemas)
-                              [:config])))
+   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :datomic (component/using (component.datomic/new-datomic schemas)
+                             [:config])))
 
 (schema-test/deftest datomic-component-test
   (let [system (component/start system-test)
@@ -82,8 +82,8 @@
 
 (def system-test-datomic-local
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)
-    :datomic (component/using (component.datomic/new-datomic-local schemas) [:config])))
+   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :datomic (component/using (component.datomic/new-datomic-local schemas) [:config])))
 
 (defn ^:private insert-an-user-datomic-local!
   [user connection]
@@ -112,14 +112,14 @@
                (query-user-by-id-datomic-local (:user/id user-test) connection)))))
 
     (testing "that we can stop the datomic component completely"
-        (let [system-after-stop (component/stop-system system)]
+      (let [system-after-stop (component/stop-system system)]
 
-          (testing "that the stopped component exists"
-            (is (true? (-> (get-in system-after-stop [:datomic])
-                           (contains? :datomic)))))
+        (testing "that the stopped component exists"
+          (is (true? (-> (get-in system-after-stop [:datomic])
+                         (contains? :datomic)))))
 
-          (testing "that the component was stopped"
-            (is (false? (boolean (component.helper/get-component-content :datomic system-after-stop)))))
+        (testing "that the component was stopped"
+          (is (false? (boolean (component.helper/get-component-content :datomic system-after-stop)))))
 
-          #_(testing "that we can't transact using a stopped datomic component"
+        #_(testing "that we can't transact using a stopped datomic component"
             (is (thrown? Exception (query-user-by-id-datomic-local (:user/id user-test) connection))))))))

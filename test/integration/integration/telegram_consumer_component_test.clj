@@ -2,10 +2,10 @@
   (:require [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
-            [common-clj.component.telegram.consumer :as component.telegram.consumer]
-            [schema.test :as s]
             [common-clj.component.helper.core :as component.helper]
-            [io.pedestal.interceptor :as interceptor]))
+            [common-clj.component.telegram.consumer :as component.telegram.consumer]
+            [io.pedestal.interceptor :as interceptor]
+            [schema.test :as s]))
 
 (def test-state (atom nil))
 (def interceptor-test-state (atom nil))
@@ -25,8 +25,8 @@
 
 (def system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.json" :test :json)
-    :telegram-consumer (component/using (component.telegram.consumer/new-mock-telegram-consumer consumers) [:config])))
+   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :telegram-consumer (component/using (component.telegram.consumer/new-mock-telegram-consumer consumers) [:config])))
 
 (s/deftest telegram-consumer-component-test
   (let [system (component/start system-test)
@@ -44,7 +44,7 @@
               :update/message "/test param1 param2"
               :update/type    :bot-command
               :update/user    {:user/id 122345}}
-              @test-state))
+             @test-state))
 
       (is (= {:update/chat-id 123456789
               :update/id      56789

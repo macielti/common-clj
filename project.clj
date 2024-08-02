@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "25.52.53"
+(defproject net.clojars.macielti/common-clj "26.52.53"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -45,6 +45,7 @@
                  [com.novemberain/langohr "5.4.0"]
                  [cheshire "5.13.0"]
                  [org.testcontainers/postgresql "1.19.8"]
+                 [org.testcontainers/rabbitmq "1.19.8"]
                  [org.postgresql/postgresql "42.7.3"]
                  [com.github.seancorfield/next.jdbc "1.3.939"]
                  [com.datomic/local "1.0.285"]

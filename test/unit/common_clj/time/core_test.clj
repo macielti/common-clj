@@ -1,9 +1,9 @@
 (ns common-clj.time.core-test
   (:require [clojure.test :refer [is testing]]
             [common-clj.time.core :as time]
+            [matcher-combinators.test :refer [match?]]
             [mockfn.macros :as mfn]
-            [schema.test :as s]
-            [matcher-combinators.test :refer [match?]])
+            [schema.test :as s])
   (:import (java.time LocalDate)
            (java.util Date)))
 

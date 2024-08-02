@@ -1,7 +1,7 @@
 (ns common-clj.component.telegram.diplomat.http-client
   (:require [cheshire.core :as json]
-            [schema.core :as s]
-            [common-clj.component.http-client :as component.http-client]))
+            [common-clj.component.http-client :as component.http-client]
+            [schema.core :as s]))
 
 (s/defn fetch-telegram-file-path :- s/Str
   [external-file-id :- s/Str

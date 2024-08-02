@@ -1,7 +1,7 @@
 (ns common-clj.misc.core
-  (:require [common-clj.keyword.core :as common-keyword]
-            [schema.core :as s]
-            [clojure.walk :refer [postwalk]]))
+  (:require [clojure.walk :refer [postwalk]]
+            [common-clj.keyword.core :as common-keyword]
+            [schema.core :as s]))
 
 (s/defn un-namespaced :- (s/pred map?)
   "Recursively un-namespace map keys"

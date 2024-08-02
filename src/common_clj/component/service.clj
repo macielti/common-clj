@@ -27,7 +27,7 @@
       (assoc component :service (http/start (-> service-map
                                                 http/default-interceptors
                                                 (update ::http/interceptors concat (io.interceptors/common-interceptors
-                                                                                     components))
+                                                                                    components))
                                                 http/create-server)))))
   (stop [component]
     (http/stop (:service component))
