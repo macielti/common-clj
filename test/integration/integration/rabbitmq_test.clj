@@ -21,7 +21,7 @@
   (component/system-map
     :config (component.config/new-config "resources/config_test.edn" :test :edn)
     :rabbitmq-producer (component/using (component.rabbitmq.producer/new-producer) [:config])
-    :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-consumer consumers) [:config :rabbitmq-producer])))
+    :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-mock-rabbitmq-consumer consumers) [:config :rabbitmq-producer])))
 
 (s/deftest rabbitmq-consumer-and-producer-component-test
   (let [system (component/start system-test)

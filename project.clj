@@ -45,6 +45,7 @@
                  [com.novemberain/langohr "5.4.0"]
                  [cheshire "5.13.0"]
                  [org.testcontainers/postgresql "1.19.8"]
+                 [org.testcontainers/rabbitmq "1.19.8"]
                  [org.postgresql/postgresql "42.7.3"]
                  [com.github.seancorfield/next.jdbc "1.3.939"]
                  [com.datomic/local "1.0.285"]
