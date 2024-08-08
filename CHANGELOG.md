@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [26.53.53] - 2024-08-08
+
+## Added
+
+- Implemented schema generator (`common-clj.test.helper.schema/generate`) to help with fixture definition on tests.
+
 ## [26.52.53] - 2024-08-02
 
 ## Added
@@ -713,7 +719,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v26.52.53...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v26.53.53...HEAD
+
+[26.53.53]: https://github.com/macielti/common-clj/compare/v26.52.53...v26.53.53
 
 [26.52.53]: https://github.com/macielti/common-clj/compare/v25.52.53...v26.52.53
 
