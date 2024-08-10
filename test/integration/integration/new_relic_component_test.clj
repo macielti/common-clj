@@ -22,7 +22,7 @@
 
     (Thread/sleep 1000)
 
-    (testing "that we can fetch the list of requests that was made diring an integration test execution"
+    (testing "that we can fetch the requests made by the http-client sent to new relic"
       (is (= [{:method  :post
                :payload {:body    {:hostname  "bruno.nascimento"
                                    :level     "warn"
