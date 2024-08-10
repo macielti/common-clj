@@ -1,6 +1,8 @@
 (ns common-clj.component.http-client
-  (:require [clj-http.client :as client]
+  (:require [cheshire.core :as json]
+            [clj-http.client :as client]
             [com.stuartsierra.component :as component]
+            [medley.core :as medley]
             [schema.core :as s]))
 
 (def method->request-fn
@@ -27,7 +29,8 @@
 
 (defn requests
   [{:keys [requests]}]
-  @requests)
+  (map (fn [request]
+         (medley/update-existing-in request [:payload :body] #(json/decode % true))) @requests))
 
 ;TODO: Maybe in the future this can already incorporate the :http component so we have inter service authentication by default
 (defrecord HttpClient [config]
