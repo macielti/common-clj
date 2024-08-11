@@ -13,10 +13,11 @@
                (let [stacktrace-str (if-let [pr (:pr-stacktrace opts)]
                                       #(with-out-str (pr %))
                                       #(timbre/default-output-error-fn
-                                        {:?err        %
-                                         :output-opts {:stacktrace-fonts {}}}))
+                                         {:?err        %
+                                          :output-opts {:stacktrace-fonts {}}}))
                      entry (medley/assoc-some {:service   service
                                                :level     (str (name (:level data)))
+                                               :log       (-> data :vargs first str)
                                                :namespace (str (:?ns-str data))
                                                :message   (str (force (:msg_ data)))
                                                :hostname  (str (force (:hostname_ data)))}
@@ -37,7 +38,7 @@
           service (-> config :config :service-name)
           http-client (:http-client http-client)]
       (timbre/merge-config!
-       {:appenders {:new-relic-http (new-relic-http-appender new-relic-api-key service http-client)}})
+        {:appenders {:new-relic-http (new-relic-http-appender new-relic-api-key service http-client)}})
       component))
 
   (stop [component]

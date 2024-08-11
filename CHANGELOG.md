@@ -5,11 +5,17 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [26.55.53] - 2024-08-11
+
+## Added
+
+- Minor improvements on New Relic component.
+
 ## [26.54.53] - 2024-08-10
 
 ## Added
 
-- Implemented NewRelic component to send logs to New Relic.
+- Implemented New Relic component to send logs to New Relic.
 
 ## [26.53.53] - 2024-08-08
 
@@ -725,7 +731,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v26.54.53...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v26.55.53...HEAD
+
+[26.55.53]: https://github.com/macielti/common-clj/compare/v26.54.53...v26.55.53
 
 [26.54.53]: https://github.com/macielti/common-clj/compare/v26.53.53...v26.54.53
 
