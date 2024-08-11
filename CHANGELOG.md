@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [26.54.53] - 2024-08-11
+
+## Added
+
+- Minor improvements on NewRelic component.
+
 ## [26.54.53] - 2024-08-10
 
 ## Added

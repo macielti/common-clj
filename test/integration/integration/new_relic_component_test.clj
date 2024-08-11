@@ -11,15 +11,15 @@
 
 (def ^:private system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.edn" :test :edn)
-   :http-client (component/using (component.http-client/new-http-client) [:config])
-   :new-relic (component/using (component.new-relic/new-new-relic) [:config :http-client])))
+    :config (component.config/new-config "resources/config_test.edn" :test :edn)
+    :http-client (component/using (component.http-client/new-http-client) [:config])
+    :new-relic (component/using (component.new-relic/new-new-relic) [:config :http-client])))
 
 (s/deftest new-relic-component-test
   (let [system (component/start system-test)
         http-client (component.helper/get-component-content :http-client system)]
 
-    (log/warn :testing)
+    (log/warn ::testing {:service :random-service-name})
 
     (Thread/sleep 1000)
 
@@ -27,7 +27,7 @@
       (is (match? [{:method  :post
                     :payload {:body    {:hostname  string?
                                         :level     "warn"
-                                        :message   ":testing"
+                                        :message   ":integration.new-relic-component-test/testing {:service :random-service-name}"
                                         :namespace "integration.new-relic-component-test"
                                         :service   "test-service-name"}
                               :headers {"Api-Key"      "random-api-key"
