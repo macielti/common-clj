@@ -9,13 +9,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## Added
 
-- Minor improvements on NewRelic component.
+- Minor improvements on New Relic component.
 
 ## [26.54.53] - 2024-08-10
 
 ## Added
 
-- Implemented NewRelic component to send logs to New Relic.
+- Implemented New Relic component to send logs to New Relic.
 
 ## [26.53.53] - 2024-08-08
 
