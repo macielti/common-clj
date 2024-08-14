@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [27.55.53] - 2024-08-14
+
+## Added
+
+- Implement Correlation ID for RabbitMQ consumer and producer components.
+- Minor improvements to CID implementation.
+
 ## [26.55.53] - 2024-08-11
 
 ## Added
@@ -731,7 +738,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v26.55.53...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v27.55.53...HEAD
+
+[27.55.53]: https://github.com/macielti/common-clj/compare/v26.55.53...v27.55.53
 
 [26.55.53]: https://github.com/macielti/common-clj/compare/v26.54.53...v26.55.53
 

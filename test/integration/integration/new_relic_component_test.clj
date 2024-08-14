@@ -1,5 +1,5 @@
 (ns integration.new-relic-component-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]
@@ -11,9 +11,9 @@
 
 (def ^:private system-test
   (component/system-map
-    :config (component.config/new-config "resources/config_test.edn" :test :edn)
-    :http-client (component/using (component.http-client/new-http-client) [:config])
-    :new-relic (component/using (component.new-relic/new-new-relic) [:config :http-client])))
+   :config (component.config/new-config "resources/config_test.edn" :test :edn)
+   :http-client (component/using (component.http-client/new-http-client) [:config])
+   :new-relic (component/using (component.new-relic/new-new-relic) [:config :http-client])))
 
 (s/deftest new-relic-component-test
   (let [system (component/start system-test)

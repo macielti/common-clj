@@ -2,7 +2,7 @@
   (:require [cheshire.core :as json]
             [clj-http.client :as client]
             [clj-http.fake :as http.fake]
-            [clojure.test :refer :all]
+            [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]

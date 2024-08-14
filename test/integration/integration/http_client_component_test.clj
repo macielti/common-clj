@@ -1,5 +1,5 @@
 (ns integration.http-client-component-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]

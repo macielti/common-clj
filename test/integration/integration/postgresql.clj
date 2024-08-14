@@ -1,6 +1,6 @@
 (ns integration.postgresql
   (:require [clojure.instant :as instant]
-            [clojure.test :refer :all]
+            [clojure.test :refer [is]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]

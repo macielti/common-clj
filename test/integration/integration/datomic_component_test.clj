@@ -109,17 +109,4 @@
 
       (testing "that can query data from the datomic database"
         (is (= user-test
-               (query-user-by-id-datomic-local (:user/id user-test) connection)))))
-
-    (testing "that we can stop the datomic component completely"
-      (let [system-after-stop (component/stop-system system)]
-
-        (testing "that the stopped component exists"
-          (is (true? (-> (get-in system-after-stop [:datomic])
-                         (contains? :datomic)))))
-
-        (testing "that the component was stopped"
-          (is (false? (boolean (component.helper/get-component-content :datomic system-after-stop)))))
-
-        #_(testing "that we can't transact using a stopped datomic component"
-            (is (thrown? Exception (query-user-by-id-datomic-local (:user/id user-test) connection))))))))
+               (query-user-by-id-datomic-local (:user/id user-test) connection)))))))

@@ -1,6 +1,6 @@
 (ns common-clj.component.postgresql-test
   (:require [clojure.instant :as instant]
-            [clojure.test :refer :all]
+            [clojure.test :refer [is]]
             [common-clj.component.postgresql :as component.postgresql]
             [matcher-combinators.test :refer [match?]]
             [next.jdbc :as jdbc]

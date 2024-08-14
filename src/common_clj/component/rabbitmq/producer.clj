@@ -1,5 +1,6 @@
 (ns common-clj.component.rabbitmq.producer
   (:require [com.stuartsierra.component :as component]
+            [common-clj.traceability.core :as common-traceability]
             [langohr.basic :as lb]
             [langohr.channel :as lch]
             [langohr.core :as rmq]
@@ -20,14 +21,18 @@
 (s/defmethod produce! :prod
   [{:keys [topic payload]}
    {:keys [channel]}]
-  (lb/publish channel "" (topic->raw-topic topic) (prn-str payload) {:persistent true}))
+  (let [payload' (assoc payload :meta {:correlation-id (-> (common-traceability/current-correlation-id)
+                                                           common-traceability/correlation-id-appended)})]
+    (lb/publish channel "" (topic->raw-topic topic) (prn-str payload') {:persistent true})))
 
 (s/defmethod produce! :test
   [{:keys [topic payload]}
    {:keys [channel produced-messages]}]
-  (lb/publish channel "" (topic->raw-topic topic) (prn-str payload) {:persistent true})
-  (swap! produced-messages conj {:topic   topic
-                                 :payload payload}))
+  (let [payload' (assoc payload :meta {:correlation-id (-> (common-traceability/current-correlation-id)
+                                                           common-traceability/correlation-id-appended)})]
+    (lb/publish channel "" (topic->raw-topic topic) (prn-str payload') {:persistent true})
+    (swap! produced-messages conj {:topic   topic
+                                   :payload payload'})))
 
 (defrecord Producer [config]
   component/Lifecycle

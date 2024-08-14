@@ -21,7 +21,8 @@
 
       (merge component {:prometheus {:registry registry}})))
 
-  (stop [{:keys [prometheus]}]))
+  (stop [component]
+    component))
 
 (defn new-prometheus [metrics]
   (map->Prometheus {:metrics metrics}))

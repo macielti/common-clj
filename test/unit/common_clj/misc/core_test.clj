@@ -1,5 +1,5 @@
 (ns common-clj.misc.core-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.misc.core :as misc]
             [schema.test :as s]))
 

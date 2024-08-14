@@ -1,5 +1,5 @@
 (ns common-clj.test.helper.time-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is testing]]
             [common-clj.test.helper.time :as test.helper.time]))
 
 (deftest valid-iso-8601?-test

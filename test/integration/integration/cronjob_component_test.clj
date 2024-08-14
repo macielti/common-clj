@@ -1,5 +1,5 @@
 (ns integration.cronjob-component-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.cronjob :as component.cronjob]
             [schema.test :as s]))

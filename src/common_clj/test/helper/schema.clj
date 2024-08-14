@@ -1,5 +1,6 @@
 (ns common-clj.test.helper.schema
-  (:require [java-time.api :as jt]
+  (:require [clojure.test.check.generators]
+            [java-time.api :as jt]
             [schema-generators.complete :as c]
             [schema.core :as s])
   (:import (java.time LocalDate LocalDateTime)

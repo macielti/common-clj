@@ -1,5 +1,5 @@
 (ns common-clj.test.helper.schema-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.test.helper.schema :as test.helper.schema]
             [java-time.api :as jt]
             [matcher-combinators.test :refer [match?]]
