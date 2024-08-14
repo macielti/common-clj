@@ -11,6 +11,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Implement Correlation ID for RabbitMQ consumer and producer components.
 - Minor improvements to CID implementation.
+- Also added CID support to scheduled jobs (CronJob component).
 
 ## [26.55.53] - 2024-08-11
 
