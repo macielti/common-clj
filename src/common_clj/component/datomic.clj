@@ -55,8 +55,8 @@
 
       (assoc component :datomic {:connection connection})))
 
-  (stop [{{:keys [connection]} :datomic :as component}]
-    (assoc component :datomic nil)))
+  (stop [component]
+    component))
 
 (defn new-datomic-local [schemas]
   (map->DatomicLocal {:schemas schemas}))

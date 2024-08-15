@@ -2,6 +2,7 @@
   (:require [clojure.tools.reader.edn :as edn]
             [com.stuartsierra.component :as component]
             [common-clj.component.rabbitmq.producer :as component.rabbitmq.producer]
+            [common-clj.traceability.core :as common-traceability]
             [langohr.channel :as lch]
             [langohr.consumers :as lc]
             [langohr.core :as rmq]
@@ -43,9 +44,13 @@
         (lc/subscribe channel raw-topic
                       (fn [_channel _meta payload]
                         (try
-                          (s/validate schema (edn/read-string (String. payload "UTF-8")))
-                          (handler-fn {:components components
-                                       :payload    (edn/read-string (String. payload "UTF-8"))})
+                          (s/validate schema (-> (String. payload "UTF-8") edn/read-string (dissoc :meta)))
+                          (binding [common-traceability/*correlation-id* (-> (edn/read-string (String. payload "UTF-8"))
+                                                                             :meta
+                                                                             :correlation-id
+                                                                             common-traceability/correlation-id-appended)]
+                            (handler-fn {:components components
+                                         :payload    (edn/read-string (String. payload "UTF-8"))}))
                           (catch Exception e
                             (do (log/error e)
                                 (when (-> components :config :dead-letter-queue-service-integration-enabled)
@@ -96,9 +101,13 @@
         (lc/subscribe channel raw-topic
                       (fn [_channel _meta payload]
                         (try
-                          (s/validate schema (edn/read-string (String. payload "UTF-8")))
-                          (handler-fn {:components components
-                                       :payload    (edn/read-string (String. payload "UTF-8"))})
+                          (s/validate schema (-> (String. payload "UTF-8") edn/read-string (dissoc :meta)))
+                          (binding [common-traceability/*correlation-id* (-> (edn/read-string (String. payload "UTF-8"))
+                                                                             :meta
+                                                                             :correlation-id
+                                                                             common-traceability/correlation-id-appended)]
+                            (handler-fn {:components components
+                                         :payload    (edn/read-string (String. payload "UTF-8"))}))
                           (catch Exception e
                             (do (log/error e)
                                 (when (-> components :config :dead-letter-queue-service-integration-enabled)

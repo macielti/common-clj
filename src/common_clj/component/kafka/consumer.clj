@@ -1,6 +1,7 @@
 (ns common-clj.component.kafka.consumer
   (:require [camel-snake-kebab.core :as camel-snake-kebab]
             [cheshire.core :as json]
+            [clojure.set]
             [clojure.tools.logging :as log]
             [com.stuartsierra.component :as component]
             [common-clj.component.kafka.adapters :as component.kafka.adapters]
@@ -115,7 +116,8 @@
    produced-messages
    consumed-messages]
   (-> (filterv #(topics (keyword (.topic %))) produced-messages)
-      (clojure.set/difference consumed-messages)))
+      set
+      (clojure.set/difference (set consumed-messages))))
 
 (defrecord MockKafkaConsumer [config datomic producer topic-consumers]
   component/Lifecycle

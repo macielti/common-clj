@@ -1,5 +1,5 @@
 (ns integration.correlation-id
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]
@@ -26,12 +26,12 @@
   {:consumer-topic-test {:schema  TestMessagePayload
                          :handler test-topic-consumer}})
 
-(def ^:private routes-example [["/correlation-id-test" :get (common-traceability/with-correlation-id (fn [{{:keys [producer]} :components}]
-                                                                                                       (component.producer/produce! {:topic :consumer-topic-test
-                                                                                                                                     :data  {:payload {:test (common-traceability/current-correlation-id)}}}
-                                                                                                                                    producer)
-                                                                                                       {:status 200
-                                                                                                        :body   {:correlation-id (common-traceability/current-correlation-id)}}))
+(def ^:private routes-example [["/correlation-id-test" :get (common-traceability/http-with-correlation-id (fn [{{:keys [producer]} :components}]
+                                                                                                            (component.producer/produce! {:topic :consumer-topic-test
+                                                                                                                                          :data  {:payload {:test (common-traceability/current-correlation-id)}}}
+                                                                                                                                         producer)
+                                                                                                            {:status 200
+                                                                                                             :body   {:correlation-id (common-traceability/current-correlation-id)}}))
                                 :route-name :test]])
 
 (def ^:private system-test
@@ -50,10 +50,10 @@
                    (testing "that calling endpoint without passing X-Correlation-Id header, give us a default one"
                      (reset! test-state nil)
                      (is (= {:status 200
-                             :body   {:correlation-id "DEFAULT.1B9C8E2E-B7B8-4D25-A4FA-16BC3BB34B9A"}}
+                             :body   {:correlation-id "DEFAULT.16BC3BB34B9A.16BC3BB34B9A"}}
                             (aux.http/request-test-endpoints "/correlation-id-test" nil service-fn)))
 
-                     (is (= "DEFAULT.1B9C8E2E-B7B8-4D25-A4FA-16BC3BB34B9A.1B9C8E2E-B7B8-4D25-A4FA-16BC3BB34B9A"
+                     (is (= "DEFAULT.16BC3BB34B9A.16BC3BB34B9A.16BC3BB34B9A"
                             (do (Thread/sleep 5000)
                                 @test-state))))
                    (component/stop-system system))))
@@ -67,10 +67,10 @@
                    (testing "that calling endpoint without passing X-Correlation-Id header, give us a default one"
                      (reset! test-state nil)
                      (is (= {:status 200
-                             :body   {:correlation-id "MOCK.TEST.1B9C8E2E-B7B8-4D25-A4FA-16BC3BB34B9A"}}
+                             :body   {:correlation-id "MOCK.TEST.16BC3BB34B9A"}}
                             (aux.http/request-test-endpoints "/correlation-id-test" {"X-Correlation-Id" "MOCK.TEST"} service-fn)))
 
-                     (is (= "MOCK.TEST.1B9C8E2E-B7B8-4D25-A4FA-16BC3BB34B9A.1B9C8E2E-B7B8-4D25-A4FA-16BC3BB34B9A"
+                     (is (= "MOCK.TEST.16BC3BB34B9A.16BC3BB34B9A"
                             (do (Thread/sleep 5000)
                                 @test-state))))
                    (component/stop-system system))))

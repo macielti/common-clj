@@ -1,11 +1,13 @@
 (ns integration.rabbitmq-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [com.stuartsierra.component :as component]
             [common-clj.component.config :as component.config]
             [common-clj.component.helper.core :as component.helper]
             [common-clj.component.rabbitmq.consumer :as component.rabbitmq.consumer]
             [common-clj.component.rabbitmq.producer :as component.rabbitmq.producer]
             [common-clj.test.helper.components.containers :as test.helper.components.containers]
+            [matcher-combinators.matchers :as m]
+            [matcher-combinators.test :refer [match?]]
             [schema.core :as schema]
             [schema.test :as s]))
 
@@ -36,16 +38,18 @@
 
       (Thread/sleep 5000)
 
-      (is (= {:test :ok}
-             @test-state))
+      (is (match? (m/equals {:meta {:correlation-id string?}
+                             :test :ok})
+                  @test-state))
 
       (reset! test-state nil))
 
     ;TODO: Create a helper function in order fo fetch produced messages
     (testing "that we can retrieve produced messages"
-      (is (= [{:payload {:test :ok}
-               :topic   :test.example}]
-             @(:produced-messages producer))))
+      (is (match? (m/equals [{:payload {:meta {:correlation-id string?}
+                                        :test :ok}
+                              :topic   :test.example}])
+                  @(:produced-messages producer))))
 
     (component/stop system)))
 
@@ -61,14 +65,16 @@
 
     ;TODO: Create a helper function in order fo fetch produced messages
     (testing "that we can retrieve produced messages"
-      (is (= [{:payload {:test 1}
-               :topic   :test.example}
-              {:payload {:exception-info "clojure.lang.ExceptionInfo: Value does not match schema: {:test (not (keyword? 1))} {:type :schema.core/error, :schema {:test Keyword}, :value {:test 1}, :error {:test (not (keyword? 1))}}"
-                         :payload        {:test 1}
-                         :service        "test-service-name"
-                         :topic          :test.example}
-               :topic   :create-dead-letter}]
-             @(:produced-messages producer))))
+      (is (match? (m/equals [{:payload {:meta {:correlation-id string?}
+                                        :test 1}
+                              :topic   :test.example}
+                             {:payload {:meta           {:correlation-id string?}
+                                        :exception-info "clojure.lang.ExceptionInfo: Value does not match schema: {:test (not (keyword? 1))} {:type :schema.core/error, :schema {:test Keyword}, :value {:test 1}, :error {:test (not (keyword? 1))}}"
+                                        :payload        {:test 1}
+                                        :service        "test-service-name"
+                                        :topic          :test.example}
+                              :topic   :create-dead-letter}])
+                  @(:produced-messages producer))))
 
     (component/stop system)))
 
@@ -96,14 +102,16 @@
 
     ;TODO: Create a helper function in order fo fetch produced messages
     (testing "that we can retrieve produced messages"
-      (is (= [{:payload {:test :ok}
-               :topic   :test.example}
-              {:payload {:exception-info "java.lang.Exception: my exception message"
-                         :payload        {:test :ok}
-                         :service        "test-service-name"
-                         :topic          :test.example}
-               :topic   :create-dead-letter}]
-             @(:produced-messages producer))))
+      (is (match? (m/equals [{:payload {:meta {:correlation-id string?}
+                                        :test :ok}
+                              :topic   :test.example}
+                             {:payload {:meta           {:correlation-id string?}
+                                        :exception-info "java.lang.Exception: my exception message"
+                                        :payload        {:test :ok}
+                                        :service        "test-service-name"
+                                        :topic          :test.example}
+                              :topic   :create-dead-letter}])
+                  @(:produced-messages producer))))
 
     (component/stop system)))
 
@@ -127,8 +135,9 @@
 
     ;TODO: Create a helper function in order fo fetch produced messages
     (testing "that we can retrieve produced messages"
-      (is (= [{:payload {:test :ok}
-               :topic   :test.example}]
-             @(:produced-messages producer))))
+      (is (match? (m/equals [{:payload {:meta {:correlation-id string?}
+                                        :test :ok}
+                              :topic   :test.example}])
+                  @(:produced-messages producer))))
 
     (component/stop system)))

@@ -6,6 +6,7 @@
             [common-clj.component.kafka.consumer :as component.consumer]
             [common-clj.component.kafka.producer :as component.producer]
             [common-clj.traceability.core :as common-traceability]
+            [matcher-combinators.matchers :as m]
             [matcher-combinators.test :refer [match?]]
             [mockfn.macros :as mfn]
             [schema.core :as s]
@@ -44,12 +45,12 @@
                                                   producer)
                      (Thread/sleep 5000)
                      (is (= {:test "just a simple test"
-                             :cid  "DEFAULT.1B9C8E2E-B7B8-4D25-A4FA-16BC3BB34B9A"}
+                             :cid  "DEFAULT.16BC3BB34B9A.16BC3BB34B9A"}
                             @test-state))
                      (reset! test-state nil))
 
                    (testing "that we can retrieve consumed messages using the helper function"
-                     (is (= [{:data  {:meta    {:correlation-id "DEFAULT"}
+                     (is (= [{:data  {:meta    {:correlation-id "DEFAULT.16BC3BB34B9A"}
                                       :payload {:test "just a simple test"}}
                               :topic :consumer-topic-test}]
                             (component.consumer/consumed-messages consumer))))
@@ -88,17 +89,17 @@
       (reset! test-state nil)
 
       (testing "that we produced a message to the DLQ service"
-        (is (= [{:topic :consumer-topic-test
-                 :data  {:payload {:wrong-keyword "just a simple test"}
-                         :meta    {:correlation-id "DEFAULT.TEST"}}}
-                {:topic :create-dead-letter
-                 :data  {:payload {:service "TEST_SERVICE"
-                                   :topic   "CONSUMER_TOPIC_TEST"
-                                   :exceptionInfo
-                                   "clojure.lang.ExceptionInfo: Value does not match schema: {:test missing-required-key, :wrong-keyword disallowed-key} {:type :schema.core/error, :schema {:test java.lang.String}, :value {:wrong-keyword \"just a simple test\"}, :error {:test missing-required-key, :wrong-keyword disallowed-key}}"
-                                   :payload "{\"wrong-keyword\":\"just a simple test\"}"}
-                         :meta    {:correlation-id "DEFAULT"}}}]
-               (component.producer/produced-messages producer)))))
+        (is (match? (m/equals [{:topic :consumer-topic-test
+                                :data  {:payload {:wrong-keyword "just a simple test"}
+                                        :meta    {:correlation-id "DEFAULT.TEST"}}}
+                               {:topic :create-dead-letter
+                                :data  {:payload {:service "TEST_SERVICE"
+                                                  :topic   "CONSUMER_TOPIC_TEST"
+                                                  :exceptionInfo
+                                                  "clojure.lang.ExceptionInfo: Value does not match schema: {:test missing-required-key, :wrong-keyword disallowed-key} {:type :schema.core/error, :schema {:test java.lang.String}, :value {:wrong-keyword \"just a simple test\"}, :error {:test missing-required-key, :wrong-keyword disallowed-key}}"
+                                                  :payload "{\"wrong-keyword\":\"just a simple test\"}"}
+                                        :meta    {:correlation-id string?}}}])
+                    (component.producer/produced-messages producer)))))
     (component/stop system)))
 
 (def ^:private system-test-invalid-consumer
@@ -135,8 +136,8 @@
       (reset! test-state nil)
 
       (testing "that we produced a message to the DLQ service"
-        (is (= [{:topic :consumer-topic-test
-                 :data  {:payload {:wrong-keyword "just a simple test"}
-                         :meta    {:correlation-id "DEFAULT"}}}]
-               (component.producer/produced-messages producer)))))
+        (is (match? (m/equals [{:topic :consumer-topic-test
+                                :data  {:payload {:wrong-keyword "just a simple test"}
+                                        :meta    {:correlation-id string?}}}])
+                    (component.producer/produced-messages producer)))))
     (component/stop system)))

@@ -5,6 +5,7 @@
             [common-clj.component.helper.core :as component.helper]
             [common-clj.component.kafka.consumer :as component.consumer]
             [common-clj.component.kafka.producer :as component.producer]
+            [matcher-combinators.matchers :as m]
             [schema.core :as s]
             [schema.test :as s-test]))
 
@@ -30,8 +31,8 @@
                                  producer)
 
     (testing "that we can use kafka producer to send messages"
-      (is (= [{:data  {:payload {:test "just a simple test"}
-                       :meta    {:correlation-id "DEFAULT"}}
-               :topic :consumer-topic-test}]
-             (component.producer/produced-messages producer))))
+      (is (match? (m/equals [{:data  {:payload {:test "just a simple test"}
+                                      :meta    {:correlation-id string?}}
+                              :topic :consumer-topic-test}])
+                  (component.producer/produced-messages producer))))
     (component/stop system)))

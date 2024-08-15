@@ -1,5 +1,5 @@
 (ns common-clj.io.interceptors.auth-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is testing]]
             [common-clj.io.interceptors.auth :as io.interceptors.auth]
             [schema.test :as s]))
 
