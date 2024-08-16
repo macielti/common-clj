@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [27.55.54] - 2024-08-16
+
+## Fixed
+
+- Fixed bug on `New Relic` component. The component wasn't sending the logs payload properly.
+
 ## [27.55.53] - 2024-08-14
 
 ## Added
@@ -740,6 +746,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/v27.55.53...HEAD
+
+[27.55.54]: https://github.com/macielti/common-clj/compare/v27.55.53...v27.55.54
 
 [27.55.53]: https://github.com/macielti/common-clj/compare/v26.55.53...v27.55.53
 

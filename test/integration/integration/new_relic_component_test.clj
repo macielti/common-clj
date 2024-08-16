@@ -27,7 +27,8 @@
       (is (match? [{:method  :post
                     :payload {:body    {:hostname  string?
                                         :level     "warn"
-                                        :message   ":integration.new-relic-component-test/testing {:service :random-service-name}"
+                                        :cid       string?
+                                        :log       ":integration.new-relic-component-test/testing {:service :random-service-name}"
                                         :namespace "integration.new-relic-component-test"
                                         :service   "test-service-name"}
                               :headers {"Api-Key"      "random-api-key"

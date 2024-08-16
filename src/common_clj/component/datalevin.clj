@@ -1,6 +1,7 @@
 (ns common-clj.component.datalevin
   (:require [com.stuartsierra.component :as component]
-            [datalevin.core :as datalevin]))
+            [datalevin.core :as datalevin]
+            [datalevin.util]))
 
 (defrecord Datalevin [config schema]
   component/Lifecycle

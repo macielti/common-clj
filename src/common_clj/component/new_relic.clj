@@ -19,9 +19,9 @@
                      entry (medley/assoc-some {:cid       (common-traceability/current-correlation-id)
                                                :service   service
                                                :level     (str (name (:level data)))
-                                               :log       (-> data :vargs first str)
+                                               :log       (str (force (:msg_ data)))
                                                :namespace (str (:?ns-str data))
-                                               :message   (str (force (:msg_ data)))
+                                               :log-key   (-> data :vargs first str)
                                                :hostname  (str (force (:hostname_ data)))}
                                               :error (some-> (:?err data) str)
                                               :stacktrace (some-> (:?err data) (stacktrace-str)))]
