@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [27.55.55] - 2024-08-17
+
+## Added
+
+- Make Http Client component expose metrics via Prometheus component.
+
 ## [27.55.54] - 2024-08-16
 
 ## Fixed
@@ -745,7 +751,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v27.55.53...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v27.55.55...HEAD
+
+[27.55.55]: https://github.com/macielti/common-clj/compare/v27.55.54...v27.55.55
 
 [27.55.54]: https://github.com/macielti/common-clj/compare/v27.55.53...v27.55.54
 

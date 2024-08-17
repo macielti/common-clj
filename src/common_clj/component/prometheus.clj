@@ -13,11 +13,14 @@
     {:status 403
      :body   "Not Authorized"}))
 
+(def default-metrics
+  [(prometheus/counter :http-request-response {:labels [:status :service :endpoint]})])
+
 (defrecord Prometheus [config metrics]
   component/Lifecycle
   (start [component]
     (let [registry (-> (partial prometheus/register (prometheus/collector-registry))
-                       (apply metrics))]
+                       (apply (concat metrics default-metrics)))]
 
       (merge component {:prometheus {:registry registry}})))
 
