@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [27.56.55] - 2024-08-17
+
+## Added
+
+- Add support to PATH HTTP Request method for HTTP Client component.
+
 ## [27.55.55] - 2024-08-17
 
 ## Added
@@ -751,7 +757,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v27.55.55...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v27.56.55...HEAD
+
+[27.56.55]: https://github.com/macielti/common-clj/compare/v27.55.55...v27.56.55
 
 [27.55.55]: https://github.com/macielti/common-clj/compare/v27.55.54...v27.55.55
 

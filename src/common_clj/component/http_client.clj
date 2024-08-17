@@ -11,6 +11,7 @@
 (def method->request-fn
   {:post   client/post
    :get    client/get
+   :patch  client/patch
    :delete client/delete})
 
 (defmulti request!
