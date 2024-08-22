@@ -4,7 +4,7 @@
             [datomic.client.api :as dl]))
 
 (defn mocked-datomic [datomic-schemas]
-  (let [datomic-uri "datomic:mem://mocked"
+  (let [datomic-uri "datomic:mem://unit-tests"
         connection (do (d/create-database datomic-uri)
                        (d/connect datomic-uri))]
     @(d/transact connection (flatten datomic-schemas))
@@ -13,14 +13,15 @@
 (defrecord Datomic [config schemas]
   component/Lifecycle
   (start [component]
-    (let [datomic-uri (-> config :config :datomic-uri)
+    (let [datomic-uri (or (-> config :config :datomic-uri)
+                          "datomic:mem://integration-tests")
           connection (do (d/create-database datomic-uri)
                          (d/connect datomic-uri))]
       @(d/transact connection (flatten schemas))
-      (assoc component :datomic {:connection connection})))
+      (assoc component :datomic connection)))
 
-  (stop [{{:keys [connection]} :datomic :as component}]
-    (d/release connection)
+  (stop [{:keys [datomic] :as component}]
+    (d/release datomic)
     (assoc component :datomic nil)))
 
 (defn new-datomic [schemas]

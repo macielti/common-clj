@@ -9,7 +9,8 @@
 (def leaf-generators
   {LocalDateTime (clojure.test.check.generators/fmap #(jt/local-date-time %) (clojure.test.check.generators/choose 2000 2024))
    LocalDate     (clojure.test.check.generators/fmap #(jt/local-date %) (clojure.test.check.generators/choose 2000 2024))
-   Date          (clojure.test.check.generators/fmap #(jt/java-date %) (clojure.test.check.generators/choose 2000 2024))})
+   Date          (clojure.test.check.generators/fmap #(jt/java-date %) (clojure.test.check.generators/choose 2000 2024))
+   BigDecimal    (clojure.test.check.generators/fmap #(bigdec %) (clojure.test.check.generators/choose 0 1000))})
 
 (s/defn generate :- s/Any
   [schema :- s/Any

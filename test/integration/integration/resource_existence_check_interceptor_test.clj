@@ -45,12 +45,12 @@
 
 (s/deftest resource-existence-check-interceptor-test
   (let [system (component/start system-test)
-        datomic (component.helper/get-component-content :datomic system)
+        database-conn (component.helper/get-component-content :datomic system)
         service-fn (-> (component.helper/get-component-content :service system)
                        :io.pedestal.http/service-fn)
         resource-id (random-uuid)]
     (testing "that we can successfully make a post request respecting the expected schema for the body content"
-      (d/transact (:connection datomic) [{:test/id resource-id}])
+      (d/transact database-conn [{:test/id resource-id}])
       (is (= {:status 200
               :body   {:id (str resource-id)}}
              (aux.http/request-test-endpoints (str "/resource-existence-check-interceptor-test/" resource-id) nil service-fn))))

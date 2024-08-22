@@ -5,6 +5,17 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [28.56.55] - 2024-08-22
+
+## Added
+
+- Add support to BigDecimal on `common-clj.test.helper.schema/generate`.
+- Add Datomic component support to CronJob component.
+
+## Changed
+
+- Changed the way that the Datomic connection is retrieved from the Datomic component.
+
 ## [27.56.55] - 2024-08-17
 
 ## Added
@@ -757,7 +768,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v27.56.55...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v28.56.55...HEAD
+
+[28.56.55]: https://github.com/macielti/common-clj/compare/v27.56.55...v28.56.55
 
 [27.56.55]: https://github.com/macielti/common-clj/compare/v27.55.55...v27.56.55
 

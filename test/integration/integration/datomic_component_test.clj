@@ -54,18 +54,18 @@
 
 (schema-test/deftest datomic-component-test
   (let [system (component/start system-test)
-        connection (:connection (component.helper/get-component-content :datomic system))]
+        database-conn (component.helper/get-component-content :datomic system)]
 
     (testing "that we can start the datomic component completely"
-      (is (true? (boolean connection)))
+      (is (true? (boolean database-conn)))
 
       (testing "that the schemas were transacted"
-        @(insert-an-user! user-test connection)
-        (is (thrown? Exception @(insert-an-user! user-test-2 connection))))
+        @(insert-an-user! user-test database-conn)
+        (is (thrown? Exception @(insert-an-user! user-test-2 database-conn))))
 
       (testing "that can query data from the datomic database"
         (is (= user-test
-               (query-user-by-id (:user/id user-test) connection)))))
+               (query-user-by-id (:user/id user-test) database-conn)))))
 
     (testing "that we can stop the datomic component completely"
       (let [system-after-stop (component/stop-system system)]
@@ -78,7 +78,7 @@
           (is (false? (boolean (component.helper/get-component-content :datomic system-after-stop)))))
 
         (testing "that we can't transact using a stopped datomic component"
-          (is (thrown? Exception (query-user-by-id (:user/id user-test) connection))))))))
+          (is (thrown? Exception (query-user-by-id (:user/id user-test) database-conn))))))))
 
 (def system-test-datomic-local
   (component/system-map
@@ -98,15 +98,15 @@
 
 (schema-test/deftest datomic-local-component-test
   (let [system (component/start system-test-datomic-local)
-        connection (:connection (component.helper/get-component-content :datomic system))]
+        database-conn (:connection (component.helper/get-component-content :datomic system))]
 
     (testing "that we can start the datomic component completely"
-      (is (true? (boolean connection)))
+      (is (true? (boolean database-conn)))
 
       (testing "that the schemas were transacted"
-        (insert-an-user-datomic-local! user-test connection)
-        (is (thrown? Exception (insert-an-user-datomic-local! user-test-2 connection))))
+        (insert-an-user-datomic-local! user-test database-conn)
+        (is (thrown? Exception (insert-an-user-datomic-local! user-test-2 database-conn))))
 
       (testing "that can query data from the datomic database"
         (is (= user-test
-               (query-user-by-id-datomic-local (:user/id user-test) connection)))))))
+               (query-user-by-id-datomic-local (:user/id user-test) database-conn)))))))
