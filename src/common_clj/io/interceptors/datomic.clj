@@ -11,9 +11,9 @@
    datomic-query]
   (pedestal.interceptor/interceptor {:name  ::resource-existence-check-interceptor
                                      :enter (fn [{{:keys [components]} :request :as context}]
-                                              (let [datomic (-> components :datomic :connection)
+                                              (let [database-conn (:datomic components)
                                                     resource-identifier (resource-identifier-fn context)
-                                                    resource (-> (d/q datomic-query (d/db datomic) resource-identifier) ffirst (dissoc :db/id))]
+                                                    resource (-> (d/q datomic-query (d/db database-conn) resource-identifier) ffirst (dissoc :db/id))]
                                                 (when-not resource
                                                   (common-error/http-friendly-exception 404
                                                                                         "resource-not-found"
