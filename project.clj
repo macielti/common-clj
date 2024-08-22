@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "28.56.55"
+(defproject net.clojars.macielti/common-clj "28.56.56"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -36,6 +36,7 @@
                  [prismatic/schema-generators "0.1.5"]
                  [nubank/matcher-combinators "3.9.1"]
                  [com.datomic/datomic-free "0.9.5697"]
+                 [com.datomic/peer "1.0.7180"]
                  [com.stuartsierra/component "1.1.0"]
                  [siili/humanize "0.1.1"]
                  [camel-snake-kebab "0.4.3"]

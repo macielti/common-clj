@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [28.56.56] - 2024-08-22
+
+## Added
+
+- Added `com.datomic/peer` dependency to the project.
+
 ## [28.56.55] - 2024-08-22
 
 ## Added
@@ -768,7 +774,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v28.56.55...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v28.56.56...HEAD
+
+[28.56.56]: https://github.com/macielti/common-clj/compare/v28.56.55...v28.56.56
 
 [28.56.55]: https://github.com/macielti/common-clj/compare/v27.56.55...v28.56.55
 
