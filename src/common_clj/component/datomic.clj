@@ -1,7 +1,8 @@
 (ns common-clj.component.datomic
   (:require [com.stuartsierra.component :as component]
             [datomic.api :as d]
-            [datomic.client.api :as dl]))
+            [datomic.client.api :as dl]
+            [taoensso.timbre :as log]))
 
 (defn mocked-datomic [datomic-schemas]
   (let [datomic-uri "datomic:mem://unit-tests"
@@ -15,7 +16,7 @@
   (start [component]
     (let [datomic-uri (or (-> config :config :datomic-uri)
                           "datomic:mem://integration-tests")
-          connection (do (d/create-database datomic-uri)
+          connection (do (log/info ::database-creation (d/create-database datomic-uri))
                          (d/connect datomic-uri))]
       @(d/transact connection (flatten schemas))
       (assoc component :datomic connection)))

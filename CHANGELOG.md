@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [28.56.57] - 2024-08-25
+
+## Added
+
+- Added log to show the result of datomic database creation.
+
 ## [28.56.56] - 2024-08-22
 
 ## Added
@@ -774,7 +780,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v28.56.56...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v28.56.57...HEAD
+
+[28.56.56]: https://github.com/macielti/common-clj/compare/v28.56.56...v28.56.57
 
 [28.56.56]: https://github.com/macielti/common-clj/compare/v28.56.55...v28.56.56
 
