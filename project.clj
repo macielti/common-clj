@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "28.56.57"
+(defproject net.clojars.macielti/common-clj "29.56.57"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -25,7 +25,7 @@
                  [datalevin "0.9.10"]
                  [org.apache.kafka/kafka-clients "3.8.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
-                 [nubank/state-flow "5.17.0"]
+                 [nubank/state-flow "5.18.0"]
                  [clj-http-fake "1.0.4"]
                  [telegrambot-lib "2.15.0"]
                  [io.pedestal/pedestal.service "0.7.0"]
@@ -35,8 +35,7 @@
                  [io.pedestal/pedestal.route "0.7.0"]
                  [prismatic/schema-generators "0.1.5"]
                  [nubank/matcher-combinators "3.9.1"]
-                 [com.datomic/datomic-free "0.9.5697"]
-                 [com.datomic/peer "1.0.7180"]
+                 [com.datomic/peer "1.0.7187"]
                  [com.stuartsierra/component "1.1.0"]
                  [siili/humanize "0.1.1"]
                  [camel-snake-kebab "0.4.3"]
@@ -46,15 +45,14 @@
                  [cheshire "5.13.0"]
                  [org.testcontainers/postgresql "1.20.1"]
                  [org.testcontainers/rabbitmq "1.20.1"]
-                 [org.postgresql/postgresql "42.7.3"]
+                 [org.postgresql/postgresql "42.7.4"]
                  [com.github.seancorfield/next.jdbc "1.3.939"]
-                 [com.datomic/local "1.0.285"]
                  [metosin/schema-tools "0.13.1"]
                  [clj-commons/iapetos "0.1.14"]
                  [clojure.java-time "1.4.2"]
                  [clj-rate-limiter "0.1.6-RC1"]
                  [com.github.liquidz/antq "RELEASE"]
-                 [dev.weavejester/medley "1.8.0"]
+                 [dev.weavejester/medley "1.8.1"]
                  [hara/io.scheduler "3.0.12"]]
 
   :injections [(require 'hashp.core)]
