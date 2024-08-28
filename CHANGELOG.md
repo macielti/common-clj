@@ -5,50 +5,61 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.56.57] - 2024-08-27
+
+### Changed
+
+- Replace `com.datomic/datomic-free` and `com.datomic/local` by `com.datomic/peer`.
+
+### Removed
+
+- Removed `DatomicLocal` Component in favor of main `Datomic` component.
+
+
 ## [28.56.57] - 2024-08-25
 
-## Added
+### Added
 
 - Added log to show the result of datomic database creation.
 
 ## [28.56.56] - 2024-08-22
 
-## Added
+### Added
 
 - Added `com.datomic/peer` dependency to the project.
 
 ## [28.56.55] - 2024-08-22
 
-## Added
+### Added
 
 - Add support to BigDecimal on `common-clj.test.helper.schema/generate`.
 - Add Datomic component support to CronJob component.
 
-## Changed
+### Changed
 
 - Changed the way that the Datomic connection is retrieved from the Datomic component.
 
 ## [27.56.55] - 2024-08-17
 
-## Added
+### Added
 
 - Add support to PATH HTTP Request method for HTTP Client component.
 
 ## [27.55.55] - 2024-08-17
 
-## Added
+### Added
 
 - Make Http Client component expose metrics via Prometheus component.
 
 ## [27.55.54] - 2024-08-16
 
-## Fixed
+### Fixed
 
 - Fixed bug on `New Relic` component. The component wasn't sending the logs payload properly.
 
 ## [27.55.53] - 2024-08-14
 
-## Added
+### Added
 
 - Implement Correlation ID for RabbitMQ consumer and producer components.
 - Minor improvements to CID implementation.
@@ -56,103 +67,103 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [26.55.53] - 2024-08-11
 
-## Added
+### Added
 
 - Minor improvements on New Relic component.
 
 ## [26.54.53] - 2024-08-10
 
-## Added
+### Added
 
 - Implemented New Relic component to send logs to New Relic.
 
 ## [26.53.53] - 2024-08-08
 
-## Added
+### Added
 
 - Implemented schema generator (`common-clj.test.helper.schema/generate`) to help with fixture definition on tests.
 
 ## [26.52.53] - 2024-08-02
 
-## Added
+### Added
 
 - Implemented `Containers` component. Now you can use it to start and stop docker containers in your integration tests.
 
 ## [25.52.53] - 2024-07-28
 
-## Added
+### Added
 
 - Just some housekeeping adding support to component dependency for prometheus and http-client.
 
 ## [25.52.52] - 2024-07-25
 
-## Added
+### Added
 
 - Add `LocalDateWire` schema extension.
 
 ## [25.52.51] - 2024-07-25
 
-## Added
+### Added
 
 - Add misc function to remove namespace from keywords in a map.
 
 ## [25.52.50] - 2024-07-21
 
-## Added
+### Added
 
 - Add CronJob component.
 
 ## [25.51.50] - 2024-07-21
 
-## Changed
+### Changed
 
 - Migrate from [prismatic/plumbing](https://clojars.org/prismatic/plumbing) to [medley](https://clojars.org/medley).
 
 ## [25.51.49] - 2024-07-12
 
-## Changed
+### Changed
 
 - Updating project dependencies.
 
 ## [25.51.48] - 2024-06-06
 
-## Added
+### Added
 
 - Add support to user data from Telegram consumer component updates.
 
 ## [25.50.48] - 2024-06-05
 
-## Added
+### Added
 
 - Add support to Datalevin on Telegram consumer component.
 
 ## [25.49.48] - 2024-02-18
 
-## Changed
+### Changed
 
 - Changed implementation of PostgreSQL component to use connection pooling.
 
 ## [24.49.48] - 2023-11-30
 
-## Fixed
+### Fixed
 
 - Fixed bug on `TelegramConsumer` component.
 
 ## [24.49.47] - 2023-11-28
 
-## Added
+### Added
 
 - Add schema model for `TelegramProducer` component.
 
 ## [24.48.47] - 2023-11-27
 
-## Added
+### Added
 
 - Add TelegramProducer component as dependency for TelegramConsumer component.
 
 ## [24.47.47] - 2023-11-26
 
-## Added
+### Added
 
 - Add Telegram producer component in order to make easier to write integration tests for telegram bots.
 
@@ -165,58 +176,58 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [23.46.47] - 2023-11-24
 
-## Added
+### Added
 
 - Add handler for Telegram bot callback queries. Now the data from the callback query is treated as a bot command.
 
 ## [23.45.47] - 2023-11-20
 
-## Fixed
+### Fixed
 
 - Fixed logs not showing up on terminal
 
 ## [23.45.46] - 2023-11-18
 
-## Added
+### Added
 
 - Add `RateLimiter` component, and now you can use it with interceptors in oder to apply rate limit on service
   endpoints.
 
 ## [23.44.46] - 2023-11-14
 
-## Added
+### Added
 
 - Add `Prometheus` component to `TelegramConsumer` possible dependencies.
 
 ## [23.43.46] - 2023-11-14
 
-## Added
+### Added
 
 - Add `Prometheus` component in order to expose metrics to agentless monitoring for Prometheus in Grafana Cloud.
 
 ## [23.42.46] - 2023-11-12
 
-## Fixed
+### Fixed
 
 - Fixed problem with `DatomicLocal` component while running integration tests, the database was not being cleaned after
   each test execution.
 
 ## [23.42.45] - 2023-11-11
 
-## Fixed
+### Fixed
 
 - Removed call to `#p`. This should be used only on debugging process.
 
 ## [23.42.44] - 2023-11-11
 
-## Added
+### Added
 
 - Add `common-clj.keyword.core/un-namespaced` function in oder to be able to convert namespaced keywords.
 - Add `common-clj.schema.core/un-namespaced` function in oder to be able to convert namespaced schemas.
 
 ## [23.41.44] - 2023-11-10
 
-## Added
+### Added
 
 - Add `common-clj.time.core/date->local-date` function in oder to be able to convert `Date` to `LocalDate`
 
@@ -780,7 +791,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v28.56.57...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.56.57...HEAD
+
+[29.56.56]: https://github.com/macielti/common-clj/compare/v28.56.57...v29.56.57
 
 [28.56.56]: https://github.com/macielti/common-clj/compare/v28.56.56...v28.56.57
 
