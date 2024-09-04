@@ -22,7 +22,7 @@
    consumed-messages]
   (-> (filterv #(= queue (:queue %)) @produced-messages)
       set
-      (clojure.set/difference (set consumed-messages))))
+      (clojure.set/difference (set @consumed-messages))))
 
 (s/defn create-sqs-queues!
   [aws-credentials :- (s/pred map?)
