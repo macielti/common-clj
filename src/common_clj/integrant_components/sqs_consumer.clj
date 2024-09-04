@@ -19,14 +19,15 @@
 (defmethod ig/init-key :common-clj.integrant-components.sqs-consumer/sqs-consumer
   [_ {:keys [components consumers]}]
   (log/info :starting :common-clj.integrant-components.sqs-consumer/sqs-consumer)
-  (let [switch (atom true)
-        aws-credential {:access-key (-> components :config :aws-credentials :access-key)
-                        :secret-key (-> components :config :aws-credentials :secret-key)
-                        :endpoint   (-> components :config :aws-credentials :endpoint)}
-        _ (create-sqs-queues! aws-credential (-> components :config :queues))
+  (let [env (-> components :config :current-env)
+        switch (atom true)
+        aws-credential {:access-key (-> components :config env :aws-credentials :access-key)
+                        :secret-key (-> components :config env :aws-credentials :secret-key)
+                        :endpoint   (-> components :config env :aws-credentials :endpoint)}
+        _ (create-sqs-queues! aws-credential (-> components :config env :queues))
         queues (mapv (fn [queue]
                        (-> (sqs/get-queue-url aws-credential queue)
-                           (assoc :queue queue))) (-> components :config :queues))]
+                           (assoc :queue queue))) (-> components :config env :queues))]
     (doseq [{:keys [queue-url queue]} queues]
       (future
         (while @switch

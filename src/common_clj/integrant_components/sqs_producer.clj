@@ -6,9 +6,10 @@
 (defmethod ig/init-key :common-clj.integrant-components.sqs-producer/sqs-producer
   [_ {:keys [components]}]
   (log/info :starting :common-clj.integrant-components.sqs-producer/sqs-producer)
-  (let [aws-credentials {:access-key (-> components :config :aws-credentials :access-key)
-                         :secret-key (-> components :config :aws-credentials :secret-key)
-                         :endpoint   (-> components :config :aws-credentials :endpoint)}]
+  (let [env (-> components :config :current-env)
+        aws-credentials {:access-key (-> components :config env :aws-credentials :access-key)
+                         :secret-key (-> components :config env :aws-credentials :secret-key)
+                         :endpoint   (-> components :config env :aws-credentials :endpoint)}]
 
     (try (sqs/list-queues aws-credentials)
          (catch Exception ex
