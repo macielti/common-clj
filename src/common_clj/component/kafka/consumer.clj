@@ -20,16 +20,16 @@
 
 (def ^:deprecated kafka-client-starter
   (interceptor/interceptor
-    {:name  ::kafka-client
-     :enter (fn [{:keys [consumer-props] :as context}]
-              (assoc context :kafka-client (new KafkaConsumer consumer-props)))}))
+   {:name  ::kafka-client
+    :enter (fn [{:keys [consumer-props] :as context}]
+             (assoc context :kafka-client (new KafkaConsumer consumer-props)))}))
 
 (def ^:deprecated subscriber
   (interceptor/interceptor
-    {:name  ::subscriber
-     :enter (fn [{:keys [topics kafka-client] :as context}]
-              (.subscribe kafka-client topics)
-              context)}))
+   {:name  ::subscriber
+    :enter (fn [{:keys [topics kafka-client] :as context}]
+             (.subscribe kafka-client topics)
+             context)}))
 
 (s/defn ^:deprecated handler-by-topic
   [topic :- s/Keyword
@@ -51,24 +51,24 @@
 
 (def ^:deprecated kafka-consumer!
   (interceptor/interceptor
-    {:name  ::kafka-consumer
-     :enter (fn [{:keys [kafka-client topic-consumers components service-name] :as context}]
-              (assoc context :loop-consumer (future
-                                              (while true
-                                                (let [records (seq (.poll kafka-client (Duration/ofMillis 100)))]
-                                                  (doseq [record records]
-                                                    (let [{:keys [topic data] :as clj-message} (component.kafka.adapters/kafka-record->clj-message record)
-                                                          {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
-                                                      (try
-                                                        (s/validate schema (:payload data))
-                                                        (binding [common-traceability/*correlation-id* (-> data :meta :correlation-id
-                                                                                                           (or (common-traceability/current-correlation-id))
-                                                                                                           common-traceability/correlation-id-appended)]
-                                                          (handler (:payload data) components))
-                                                        (catch Exception e
-                                                          (do (log/error e)
-                                                              (when (-> components :config :dead-letter-queue-service-integration-enabled)
-                                                                (replay-dead-letter! clj-message service-name (str e) (:producer components)))))))))))))}))
+   {:name  ::kafka-consumer
+    :enter (fn [{:keys [kafka-client topic-consumers components service-name] :as context}]
+             (assoc context :loop-consumer (future
+                                             (while true
+                                               (let [records (seq (.poll kafka-client (Duration/ofMillis 100)))]
+                                                 (doseq [record records]
+                                                   (let [{:keys [topic data] :as clj-message} (component.kafka.adapters/kafka-record->clj-message record)
+                                                         {:keys [handler schema]} (handler-by-topic topic topic-consumers)]
+                                                     (try
+                                                       (s/validate schema (:payload data))
+                                                       (binding [common-traceability/*correlation-id* (-> data :meta :correlation-id
+                                                                                                          (or (common-traceability/current-correlation-id))
+                                                                                                          common-traceability/correlation-id-appended)]
+                                                         (handler (:payload data) components))
+                                                       (catch Exception e
+                                                         (do (log/error e)
+                                                             (when (-> components :config :dead-letter-queue-service-integration-enabled)
+                                                               (replay-dead-letter! clj-message service-name (str e) (:producer components)))))))))))))}))
 
 (s/defrecord ^:deprecated Consumer [config datomic producer topic-consumers]
   component/Lifecycle

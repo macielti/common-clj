@@ -4,12 +4,12 @@
             [schema.core :as s])
   (:import (clj_rate_limiter.core MemoryRateLimiterFactory)))
 
-(s/defschema RateLimitersDefinition
+(s/defschema ^:deprecated RateLimitersDefinition
   {s/Keyword MemoryRateLimiterFactory})
 
-(defrecord RateLimiter [rate-limiters-definition]
+(defrecord ^:deprecated RateLimiter [rate-limiters-definition]
   component/Lifecycle
-  (start [component]
+  (start ^:deprecated [component]
     (let [rate-limiter (atom {})]
 
       (s/validate RateLimitersDefinition rate-limiters-definition)
@@ -20,9 +20,9 @@
 
       (merge component {:rate-limiter rate-limiter})))
 
-  (stop [component]
+  (stop ^:deprecated [component]
     (assoc component :rate-limiter nil)))
 
-(defn new-rate-limiter
+(defn ^:deprecated new-rate-limiter
   [rate-limiters-definition]
   (map->RateLimiter {:rate-limiters-definition rate-limiters-definition}))

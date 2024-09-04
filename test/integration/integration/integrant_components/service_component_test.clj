@@ -12,15 +12,15 @@
               :route-name :fetch-hello-world]])
 
 (def config
-  {:common-clj.integrant-components/routes  {:routes routes}
-   :common-clj.integrant-components/service {:components {:config {:service {:host "0.0.0.0"
-                                                                             :port 8080}}
-                                                          :routes (ig/ref :common-clj.integrant-components/routes)}}})
+  {:component/routes  {:routes routes}
+   :component/service {:components {:config {:service {:host "0.0.0.0"
+                                                       :port 8080}}
+                                    :routes (ig/ref :component/routes)}}})
 
 (s/deftest service-component-test
   (testing "That we can request the defined endpoints"
     (let [system (ig/init config)
-          service-fn (-> system :common-clj.integrant-components/service :io.pedestal.http/service-fn)]
+          service-fn (-> system :component/service :io.pedestal.http/service-fn)]
       (is (= {:status 200
               :body   {:component-keys ["config" "routes"]
                        :hello          "world"}}

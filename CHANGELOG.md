@@ -7,11 +7,16 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Added
 
-- Add Config (Integrant) component.
-- Add Routes (Integrant) component.
-- Add Service (Integrant) component.
-- Add AWS SQS Consumer (Integrant) component.
-- Add AWS SQS Producer (Integrant) component.
+- Add Config component (Integrant).
+- Add Routes component (Integrant).
+- Add Service component (Integrant).
+- Add AWS SQS Consumer component (Integrant).
+- Add AWS SQS Producer component (Integrant).
+- Add Prometheus component (Integrant).
+- Add New Relic component (Integrant).
+- Add HTTP Client component (Integrant).
+- Add Cronjob component (Integrant).
+- Add Datomic component (Integrant).
 
 ### Changed
 
@@ -21,6 +26,11 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Deprecated RabbitMQ Producer component (stuartsierra/component) related code.
 - Deprecated Routes component (stuartsierra/component) related code.
 - Deprecated Service component (stuartsierra/component) related code.
+- Deprecated Prometheus component (stuartsierra/component) related code.
+- Deprecated New Relic component (stuartsierra/component) related code.
+- Deprecated HTTP Client component (stuartsierra/component) related code.
+- Deprecated CronJob component (stuartsierra/component) related code.
+- Deprecated Datomic component (stuartsierra/component) related code.
 
 ## [29.56.57] - 2024-08-27
 

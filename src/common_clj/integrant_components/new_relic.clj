@@ -1,12 +1,13 @@
-(ns common-clj.component.new-relic
+(ns common-clj.integrant-components.new-relic
   (:require [cheshire.core :as json]
-            [com.stuartsierra.component :as component]
             [common-clj.component.http-client :as component.http-client]
             [common-clj.traceability.core :as common-traceability]
+            [integrant.core :as ig]
             [medley.core :as medley]
-            [taoensso.timbre :as timbre]))
+            [taoensso.timbre :as timbre]
+            [taoensso.timbre :as log]))
 
-(defn ^:deprecated new-relic-http-appender
+(defn new-relic-http-appender
   [api-key service http-client & [opts]]
   {:enabled? true
    :async?   true
@@ -33,18 +34,14 @@
                                                             :body    (json/encode entry)}}
                                                  http-client)))})
 
-(defrecord ^:deprecated NewRelic [config http-client]
-  component/Lifecycle
-  (start ^:deprecated [component]
-    (let [new-relic-api-key (-> config :config :new-relic-api-key)
-          service (-> config :config :service-name)
-          http-client (:http-client http-client)]
-      (timbre/merge-config!
-       {:appenders {:new-relic-http (new-relic-http-appender new-relic-api-key service http-client)}})
-      component))
+(defmethod ig/init-key ::new-relic
+  [_ {:keys [components]}]
+  (log/info :starting ::new-relic)
+  {:timbre (timbre/merge-config!
+            {:appenders {:new-relic-http (new-relic-http-appender (-> components :config :new-relic-api-key)
+                                                                  (-> components :config :service-name)
+                                                                  (:http-client components))}})})
 
-  (stop ^:deprecated [component]
-    component))
-
-(defn ^:deprecated new-new-relic []
-  (->NewRelic {} {}))
+(defmethod ig/halt-key! ::new-relic
+  [_ _]
+  (log/info :stopping ::new-relic))

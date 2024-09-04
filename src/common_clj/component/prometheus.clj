@@ -4,7 +4,7 @@
             [iapetos.export :as export]
             [schema.core :as s]))
 
-(s/defn metrics
+(s/defn ^:deprecated metrics
   [{headers                     :headers
     {:keys [prometheus config]} :components}]
   (if (= (get headers "authorization") (str "Bearer " (:prometheus-token config)))
@@ -13,19 +13,19 @@
     {:status 403
      :body   "Not Authorized"}))
 
-(def default-metrics
+(def ^:deprecated default-metrics
   [(prometheus/counter :http-request-response {:labels [:status :service :endpoint]})])
 
-(defrecord Prometheus [config metrics]
+(defrecord ^:deprecated Prometheus [config metrics]
   component/Lifecycle
-  (start [component]
+  (start ^:deprecated [component]
     (let [registry (-> (partial prometheus/register (prometheus/collector-registry))
                        (apply (concat metrics default-metrics)))]
 
       (merge component {:prometheus {:registry registry}})))
 
-  (stop [component]
+  (stop ^:deprecated [component]
     component))
 
-(defn new-prometheus [metrics]
+(defn ^:deprecated new-prometheus [metrics]
   (map->Prometheus {:metrics metrics}))

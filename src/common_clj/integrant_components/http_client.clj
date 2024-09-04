@@ -1,20 +1,20 @@
-(ns common-clj.component.http-client
+(ns common-clj.integrant-components.http-client
   (:require [camel-snake-kebab.core :as camel-snake-kebab]
             [cheshire.core :as json]
             [clj-http.client :as client]
-            [com.stuartsierra.component :as component]
             [iapetos.core :as prometheus]
+            [integrant.core :as ig]
             [medley.core :as medley]
             [schema.core :as s]
             [taoensso.timbre :as log]))
 
-(def ^:deprecated method->request-fn
+(def method->request-fn
   {:post   client/post
    :get    client/get
    :patch  client/patch
    :delete client/delete})
 
-(defmulti ^:deprecated request!
+(defmulti request!
   (fn [_ {:keys [current-env]}]
     current-env))
 
@@ -43,23 +43,20 @@
     (swap! requests conj request-map)
     (request-fn url payload)))
 
-(defn ^:deprecated requests
+(defn requests
   [{:keys [requests]}]
   (map (fn [request]
          (medley/update-existing-in request [:payload :body] #(json/decode % true))) @requests))
 
-;TODO: Maybe in the future this can already incorporate the :http component so we have inter service authentication by default
-(defrecord ^:deprecated HttpClient [config prometheus]
-  component/Lifecycle
-  (start ^:deprecated [component]
-    (let [requests (atom [])]
-      (assoc component :http-client (medley/assoc-some {:requests    requests
-                                                        :service     (-> config :config :service-name)
-                                                        :current-env (-> config :config :current-env)}
-                                                       :prometheus-registry (-> prometheus :prometheus :registry)))))
+(defmethod ig/init-key ::http-client
+  [_ {:keys [components]}]
+  (log/info :starting ::http-client)
+  (let [requests (atom [])]
+    (medley/assoc-some {:requests    requests
+                        :service     (-> components :config :service-name)
+                        :current-env (-> components :config :current-env)}
+                       :prometheus-registry (-> components :prometheus :registry))))
 
-  (stop ^:deprecated [component]
-    (assoc component :http-client nil)))
-
-(defn ^:deprecated new-http-client []
-  (->HttpClient {} {}))
+(defmethod ig/halt-key! ::http-client
+  [_ _]
+  (log/info :stopping ::http-client))

@@ -4,10 +4,9 @@
             [io.pedestal.http :as http]
             [taoensso.timbre :as log]))
 
-(defmethod ig/init-key :common-clj.integrant-components/service
-  [_
-   {:keys [components]}]
-  (log/info :starting-service)
+(defmethod ig/init-key ::service
+  [_ {:keys [components]}]
+  (log/info :starting ::service)
   (http/start (-> {::http/routes          (:routes components)
                    ::http/allowed-origins (constantly true)
                    ::http/host            (-> components :config :service :host)
@@ -18,7 +17,7 @@
                   (update ::http/interceptors concat (io.interceptors/common-interceptors components))
                   http/create-server)))
 
-(defmethod ig/halt-key! :common-clj.integrant-components/service
+(defmethod ig/halt-key! ::service
   [_ service]
-  (log/info :stopping-service)
+  (log/info :stopping ::service)
   (http/stop service))

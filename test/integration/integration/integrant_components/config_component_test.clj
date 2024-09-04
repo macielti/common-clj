@@ -5,17 +5,17 @@
             [schema.test :as s]))
 
 (def config-prod
-  {:common-clj.integrant-components/config {:path "resources/config_test.edn"
-                                            :env  :prod}})
+  {:component/config {:path "resources/config_test.edn"
+                      :env  :prod}})
 
 (def config-test
-  {:common-clj.integrant-components/config {:path "resources/config_test.edn"
-                                            :env  :test}})
+  {:component/config {:path "resources/config_test.edn"
+                      :env  :test}})
 
 (def config-prod-override-props
-  {:common-clj.integrant-components/config {:path      "resources/config_test.edn"
-                                            :env       :prod
-                                            :overrides {:bootstrap-server "http://127.0.0.1:8080"}}})
+  {:component/config {:path      "resources/config_test.edn"
+                      :env       :prod
+                      :overrides {:bootstrap-server "http://127.0.0.1:8080"}}})
 
 (s/deftest config-prod-component-override-props-test
   (testing "That we can define endpoints"
@@ -25,7 +25,7 @@
               :service-authentication {:auth-server-base-url "https://example.com"
                                        :password             "random-password"
                                        :username             "service-name"}}
-             (-> system :common-clj.integrant-components/config)))
+             (:component/config system)))
       (ig/halt! system))))
 
 (s/deftest config-prod-component-test
@@ -36,7 +36,7 @@
               :service-authentication {:auth-server-base-url "https://example.com"
                                        :password             "random-password"
                                        :username             "service-name"}}
-             (-> system :common-clj.integrant-components/config)))
+             (:component/config system)))
       (ig/halt! system))))
 
 (s/deftest config-test-component-test
@@ -55,5 +55,5 @@
                                                               :username             "service-name"}
               :service-name                                  "test-service-name"
               :topics                                        ["test.example"]}
-             (-> system :common-clj.integrant-components/config)))
+             (:component/config system)))
       (ig/halt! system))))
