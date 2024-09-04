@@ -5,7 +5,7 @@
             [common-clj.keyword.core :as keyword.core]
             [schema.core :as s]))
 
-(defmulti read-config-file
+(defmulti ^:deprecated read-config-file
   (fn [_file-path type] type))
 
 (s/defmethod read-config-file :json
@@ -19,16 +19,16 @@
    _type]
   (edn/read-string (slurp file-path)))
 
-(defrecord Config [path env type]
+(defrecord ^:deprecated Config [path env type]
   component/Lifecycle
-  (start [component]
+  (start ^:deprecated [component]
     (let [config (-> (read-config-file path type)
                      env)]
       (merge component {:config (assoc config
                                        :current-env env)})))
 
-  (stop [component]
+  (stop ^:deprecated [component]
     (assoc component :config nil)))
 
-(defn new-config [path env type]
+(defn ^:deprecated new-config [path env type]
   (map->Config {:path path :env env :type type}))

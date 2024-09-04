@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "29.56.57"
+(defproject net.clojars.macielti/common-clj "314.2.0"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -28,11 +28,13 @@
                  [nubank/state-flow "5.18.0"]
                  [clj-http-fake "1.0.4"]
                  [telegrambot-lib "2.15.0"]
+
                  [io.pedestal/pedestal.service "0.7.0"]
                  [io.pedestal/pedestal.interceptor "0.7.0"]
                  [io.pedestal/pedestal.error "0.7.0"]
                  [io.pedestal/pedestal.jetty "0.7.0"]
                  [io.pedestal/pedestal.route "0.7.0"]
+
                  [prismatic/schema-generators "0.1.5"]
                  [nubank/matcher-combinators "3.9.1"]
                  [com.datomic/peer "1.0.7187"]
@@ -53,7 +55,14 @@
                  [clj-rate-limiter "0.1.6-RC1"]
                  [com.github.liquidz/antq "RELEASE"]
                  [dev.weavejester/medley "1.8.1"]
-                 [hara/io.scheduler "3.0.12"]]
+                 [hara/io.scheduler "3.0.12"]
+                 [integrant "0.11.0"]
+
+                 [amazonica "0.3.167"]
+
+                 [com.fasterxml.jackson.core/jackson-core "2.18.0-rc1"]
+                 [com.fasterxml.jackson.core/jackson-databind "2.18.0-rc1"]
+                 [com.fasterxml.jackson.core/jackson-annotations "2.18.0-rc1"]]
 
   :injections [(require 'hashp.core)]
 
