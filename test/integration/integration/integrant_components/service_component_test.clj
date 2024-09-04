@@ -15,7 +15,7 @@
   {:common-clj.integrant-components.routes/routes   {:routes routes}
    :common-clj.integrant-components.service/service {:components {:config {:service {:host "0.0.0.0"
                                                                                      :port 8080}}
-                                                                  :routes (ig/ref :component/routes)}}})
+                                                                  :routes (ig/ref :common-clj.integrant-components.routes/routes)}}})
 
 (s/deftest service-component-test
   (testing "That we can request the defined endpoints"
