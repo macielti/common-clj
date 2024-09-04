@@ -5,8 +5,22 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+
+- Add Config (Integrant) component.
+- Add Routes (Integrant) component.
+- Add Service (Integrant) component.
+- Add AWS SQS Consumer (Integrant) component.
+- Add AWS SQS Producer (Integrant) component.
+
 ### Changed
-- 
+
+- Deprecated Kafka Consumer component (stuartsierra/component) related code.
+- Deprecated Kafka Producer component (stuartsierra/component) related code.
+- Deprecated RabbitMQ Consumer component (stuartsierra/component) related code.
+- Deprecated RabbitMQ Producer component (stuartsierra/component) related code.
+- Deprecated Routes component (stuartsierra/component) related code.
+- Deprecated Service component (stuartsierra/component) related code.
 
 ## [29.56.57] - 2024-08-27
 
@@ -17,7 +31,6 @@ of [keepachangelog.com](http://keepachangelog.com/).
 ### Removed
 
 - Removed `DatomicLocal` Component in favor of main `Datomic` component.
-
 
 ## [28.56.57] - 2024-08-25
 

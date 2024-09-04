@@ -8,7 +8,7 @@
   (:import (org.apache.kafka.clients.producer KafkaProducer ProducerRecord)
            (org.apache.kafka.common.serialization StringSerializer)))
 
-(defmulti produce!
+(defmulti ^:deprecated produce!
   (fn [_ {:keys [current-env]}]
     current-env))
 
@@ -28,14 +28,14 @@
   (let [data' (assoc data :meta {:correlation-id (common-traceability/current-correlation-id)})]
     (swap! produced-messages conj (ProducerRecord. (name topic) (json/encode data')))))
 
-(defn produced-messages
+(defn ^:deprecated produced-messages
   [{:keys [produced-messages]}]
   (mapv component.kafka.adapters/kafka-record->clj-message @produced-messages))
 
-(defrecord Producer [config]
+(defrecord ^:deprecated Producer [config]
   component/Lifecycle
 
-  (start [this]
+  (start ^:deprecated [this]
     (let [bootstrap-server (-> config :config :bootstrap-server)
           producer-props {"value.serializer"  StringSerializer
                           "key.serializer"    StringSerializer
@@ -44,22 +44,22 @@
       (assoc this :producer {:kafka-producer (KafkaProducer. producer-props)
                              :current-env    (-> config :config :current-env)})))
 
-  (stop [this]
+  (stop ^:deprecated [this]
     (assoc this :producer nil)))
 
-(defn new-producer []
+(defn ^:deprecated new-producer []
   (->Producer {}))
 
-(defrecord MockKafkaProducer [config]
+(defrecord ^:deprecated MockKafkaProducer [config]
   component/Lifecycle
 
-  (start [this]
+  (start ^:deprecated [this]
     (let [produced-messages (atom [])]
       (assoc this :producer {:produced-messages produced-messages
                              :current-env       (-> config :config :current-env)})))
 
-  (stop [this]
+  (stop ^:deprecated [this]
     (assoc this :producer nil)))
 
-(defn new-mock-producer []
+(defn ^:deprecated new-mock-producer []
   (->MockKafkaProducer {}))
