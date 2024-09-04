@@ -5,6 +5,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.57.57] - 2024-08-27
+
 ### Added
 
 - Add Config component (Integrant).
@@ -817,7 +819,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.56.57...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.57.57...HEAD
+
+[29.57.57]: https://github.com/macielti/common-clj/compare/v29.56.57...v29.57.57
 
 [29.56.57]: https://github.com/macielti/common-clj/compare/v28.56.57...v29.56.57
 

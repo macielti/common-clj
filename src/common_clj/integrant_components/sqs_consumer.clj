@@ -31,7 +31,7 @@
     (sqs/create-queue aws-credentials :queue-name queue)))
 
 (defmulti consume!
-  (fn [_ {:keys [current-env]}]
+  (fn [{:keys [current-env]}]
     current-env))
 
 (s/defmethod consume! :prod
