@@ -11,7 +11,7 @@
               :route-name :fetch-hello-world]])
 
 (def config
-  {:component/routes {:routes routes}})
+  {:common-clj.integrant-components.routes/routes {:routes routes}})
 
 (s/deftest service-component-test
   (testing "That we can define endpoints"
@@ -20,5 +20,5 @@
                      :get function?
                      :route-name
                      :fetch-hello-world]}
-                  (:component/routes system)))
+                  (:common-clj.integrant-components.routes/routes system)))
       (ig/halt! system))))
