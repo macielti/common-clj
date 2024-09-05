@@ -11,7 +11,7 @@
 (defmethod ig/init-key ::cronjob
   [_ {:keys [tasks components]}]
   (log/info :starting ::cronjob)
-  (let [tasks' (tasks-with-components (:tasks tasks) components)
+  (let [tasks' (tasks-with-components tasks components)
         scheduler (io.scheduler/scheduler tasks' {} {:clock {:timezone "UTC"}})]
 
     (io.scheduler/start! scheduler)
