@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.58.58] - 2024-09-05
+
+### Added
+
+- Bump `org.clojure/core.async` version to `"1.6.681"`
+
 ## [29.58.57] - 2024-09-05
 
 ### Fixed
@@ -827,7 +833,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.58.57...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.58.58...HEAD
+
+[29.58.58]: https://github.com/macielti/common-clj/compare/v29.58.57...v29.58.58
 
 [29.58.57]: https://github.com/macielti/common-clj/compare/v29.57.57...v29.58.57
 
