@@ -34,10 +34,11 @@
                          :secret-key (-> components :config :aws-credentials :secret-key)
                          :endpoint   (-> components :config :aws-credentials :endpoint)}]
 
-    (try (sqs/list-queues aws-credentials)
-         (catch Exception ex
-           (log/error :invalid-credentials :exception ex)
-           (throw ex)))
+    (when (= (-> components :config :current-env) :prod)
+      (try (sqs/list-queues aws-credentials)
+           (catch Exception ex
+             (log/error :invalid-credentials :exception ex)
+             (throw ex))))
 
     (medley/assoc-some {:current-env     (-> components :config :current-env)
                         :aws-credentials aws-credentials}

@@ -58,8 +58,7 @@
           (Thread/sleep 1000))))))
 
 (s/defmethod consume! :test
-  [{:keys [aws-credentials switch components consumers consumed-messages produced-messages]}]
-  (create-sqs-queues! aws-credentials (-> components :config :queues))
+  [{:keys [switch components consumers consumed-messages produced-messages]}]
   (let [queues (-> components :config :queues)]
     (doseq [queue queues]
       (future
@@ -79,7 +78,7 @@
                   (commit-message-as-consumed! message consumed-messages))
                 (catch Exception ex
                   (log/error ex)))))
-          (Thread/sleep 1000))))))
+          (Thread/sleep 10))))))
 
 (defmethod ig/init-key ::sqs-consumer
   [_ {:keys [components consumers]}]

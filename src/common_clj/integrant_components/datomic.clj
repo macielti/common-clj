@@ -14,7 +14,7 @@
   [_ {:keys [components schemas]}]
   (log/info :starting ::datomic)
   (let [datomic-uri (or (-> components :config :datomic-uri)
-                        "datomic:mem://integration-tests")
+                        (str "datomic:mem://" (random-uuid)))
         connection (do (log/info ::database-creation (d/create-database datomic-uri))
                        (d/connect datomic-uri))]
     @(d/transact connection (flatten schemas))
