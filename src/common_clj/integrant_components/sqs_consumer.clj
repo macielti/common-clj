@@ -42,24 +42,25 @@
                            (assoc :queue queue))) (-> components :config :queues))]
     (doseq [{:keys [queue-url queue]} queues]
       (future
-        (while @switch
-          (let [{:keys [messages]} (sqs/receive-message aws-credentials queue-url)]
-            (doseq [message messages]
-              (try
-                (let [{:keys [handler-fn schema]} (get consumers queue)
-                      message' {:payload (s/validate schema (edn/read-string (:body message)))
-                                :queue   queue}]
-                  (handler-fn {:message    message'
-                               :components components})
-                  (log/info :message-handled message')
-                  (sqs/delete-message aws-credentials (assoc message :queue-url queue-url)))
-                (catch Exception ex
-                  (log/error ex)))))
-          (Thread/sleep 1000))))))
+        (try
+          (while @switch
+            (let [{:keys [messages]} (sqs/receive-message aws-credentials {:queue-url queue-url :wait-time-seconds 20})]
+              (doseq [message messages]
+                (try
+                  (let [{:keys [handler-fn schema]} (get consumers queue)
+                        message' {:payload (s/validate schema (edn/read-string (:body message)))
+                                  :queue   queue}]
+                    (handler-fn {:message    message'
+                                 :components components})
+                    (log/info :message-handled message')
+                    (sqs/delete-message aws-credentials (assoc message :queue-url queue-url)))
+                  (catch Exception ex-in
+                    (log/error ex-in))))))
+          (catch Exception ex-ext
+            (log/error ex-ext)))))))
 
 (s/defmethod consume! :test
-  [{:keys [aws-credentials switch components consumers consumed-messages produced-messages]}]
-  (create-sqs-queues! aws-credentials (-> components :config :queues))
+  [{:keys [switch components consumers consumed-messages produced-messages]}]
   (let [queues (-> components :config :queues)]
     (doseq [queue queues]
       (future
@@ -79,7 +80,7 @@
                   (commit-message-as-consumed! message consumed-messages))
                 (catch Exception ex
                   (log/error ex)))))
-          (Thread/sleep 1000))))))
+          (Thread/sleep 10))))))
 
 (defmethod ig/init-key ::sqs-consumer
   [_ {:keys [components consumers]}]
