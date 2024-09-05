@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.58.59] - 2024-09-05
+
+### Fixed
+
+- Fix bug on `Cronjob component (Integrant)`. The component wasn't able to access the defined tasks properly.
+
 ## [29.58.58] - 2024-09-05
 
 ### Added
@@ -833,7 +839,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.58.58...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.58.59...HEAD
+
+[29.58.59]: https://github.com/macielti/common-clj/compare/v29.58.58...v29.58.59
 
 [29.58.58]: https://github.com/macielti/common-clj/compare/v29.58.57...v29.58.58
 
