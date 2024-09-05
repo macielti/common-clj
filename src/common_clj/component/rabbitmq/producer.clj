@@ -6,7 +6,7 @@
             [langohr.core :as rmq]
             [schema.core :as s]))
 
-(s/defn topic->raw-topic :- s/Str
+(s/defn ^:deprecated topic->raw-topic :- s/Str
   [topic :- s/Keyword]
   (let [raw-topic-namespace (namespace topic)
         raw-topic-keyword (name topic)]
@@ -14,7 +14,7 @@
       (str raw-topic-namespace "/" raw-topic-keyword)
       raw-topic-keyword)))
 
-(defmulti produce!
+(defmulti ^:deprecated produce!
   (fn [_ {:keys [current-env]}]
     current-env))
 
@@ -34,9 +34,9 @@
     (swap! produced-messages conj {:topic   topic
                                    :payload payload'})))
 
-(defrecord Producer [config]
+(defrecord ^:deprecated Producer [config]
   component/Lifecycle
-  (start [component]
+  (start ^:deprecated [component]
     (let [config-content (:config config)
           uri (-> config-content :rabbitmq-uri)
           connection (rmq/connect {:uri uri})
@@ -46,16 +46,16 @@
                                             :produced-messages (atom [])
                                             :current-env       (-> config :config :current-env)}})))
 
-  (stop [{:keys [rabbitmq-producer]}]
+  (stop ^:deprecated [{:keys [rabbitmq-producer]}]
     (rmq/close (:channel rabbitmq-producer))
     (rmq/close (:connection rabbitmq-producer))))
 
-(defn new-producer []
+(defn ^:deprecated new-producer []
   (->Producer {}))
 
-(defrecord MockProducer [config containers]
+(defrecord ^:deprecated MockProducer [config containers]
   component/Lifecycle
-  (start [component]
+  (start ^:deprecated [component]
     (let [rabbitmq-container (-> containers :containers :rabbitmq)
           uri (.getAmqpUrl rabbitmq-container)
           connection (rmq/connect {:uri uri})
@@ -65,10 +65,10 @@
                                             :produced-messages (atom [])
                                             :current-env       (-> config :config :current-env)}})))
 
-  (stop [{:keys [rabbitmq-producer]}]
+  (stop ^:deprecated [{:keys [rabbitmq-producer]}]
     (rmq/close (:channel rabbitmq-producer))
     (rmq/close (:connection rabbitmq-producer))))
 
-(defn new-mock-producer []
+(defn ^:deprecated new-mock-producer []
   (->MockProducer {} {}))
 

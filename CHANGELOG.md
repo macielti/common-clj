@@ -5,6 +5,35 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.57.57] - 2024-08-27
+
+### Added
+
+- Add Config component (Integrant).
+- Add Routes component (Integrant).
+- Add Service component (Integrant).
+- Add AWS SQS Consumer component (Integrant).
+- Add AWS SQS Producer component (Integrant).
+- Add Prometheus component (Integrant).
+- Add New Relic component (Integrant).
+- Add HTTP Client component (Integrant).
+- Add Cronjob component (Integrant).
+- Add Datomic component (Integrant).
+
+### Changed
+
+- Deprecated Kafka Consumer component (stuartsierra/component) related code.
+- Deprecated Kafka Producer component (stuartsierra/component) related code.
+- Deprecated RabbitMQ Consumer component (stuartsierra/component) related code.
+- Deprecated RabbitMQ Producer component (stuartsierra/component) related code.
+- Deprecated Routes component (stuartsierra/component) related code.
+- Deprecated Service component (stuartsierra/component) related code.
+- Deprecated Prometheus component (stuartsierra/component) related code.
+- Deprecated New Relic component (stuartsierra/component) related code.
+- Deprecated HTTP Client component (stuartsierra/component) related code.
+- Deprecated CronJob component (stuartsierra/component) related code.
+- Deprecated Datomic component (stuartsierra/component) related code.
+
 ## [29.56.57] - 2024-08-27
 
 ### Changed
@@ -14,7 +43,6 @@ of [keepachangelog.com](http://keepachangelog.com/).
 ### Removed
 
 - Removed `DatomicLocal` Component in favor of main `Datomic` component.
-
 
 ## [28.56.57] - 2024-08-25
 
@@ -791,11 +819,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.56.57...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.57.57...HEAD
 
-[29.56.56]: https://github.com/macielti/common-clj/compare/v28.56.57...v29.56.57
+[29.57.57]: https://github.com/macielti/common-clj/compare/v29.56.57...v29.57.57
 
-[28.56.56]: https://github.com/macielti/common-clj/compare/v28.56.56...v28.56.57
+[29.56.57]: https://github.com/macielti/common-clj/compare/v28.56.57...v29.56.57
+
+[28.56.57]: https://github.com/macielti/common-clj/compare/v28.56.56...v28.56.57
 
 [28.56.56]: https://github.com/macielti/common-clj/compare/v28.56.55...v28.56.56
 

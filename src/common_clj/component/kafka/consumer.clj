@@ -18,25 +18,25 @@
            (org.apache.kafka.clients.consumer KafkaConsumer)
            (org.apache.kafka.common.serialization StringDeserializer)))
 
-(def kafka-client-starter
+(def ^:deprecated kafka-client-starter
   (interceptor/interceptor
    {:name  ::kafka-client
     :enter (fn [{:keys [consumer-props] :as context}]
              (assoc context :kafka-client (new KafkaConsumer consumer-props)))}))
 
-(def subscriber
+(def ^:deprecated subscriber
   (interceptor/interceptor
    {:name  ::subscriber
     :enter (fn [{:keys [topics kafka-client] :as context}]
              (.subscribe kafka-client topics)
              context)}))
 
-(s/defn handler-by-topic
+(s/defn ^:deprecated handler-by-topic
   [topic :- s/Keyword
    topic-consumers]
   (topic topic-consumers))
 
-(s/defn replay-dead-letter!
+(s/defn ^:deprecated replay-dead-letter!
   [{:keys [topic data]} :- component.kafka.models/KafkaMessage
    service-name
    exception-info :- s/Str
@@ -49,7 +49,7 @@
                                               :meta    {:correlation-id (common-traceability/current-correlation-id)}}}
                                      producer))
 
-(def kafka-consumer!
+(def ^:deprecated kafka-consumer!
   (interceptor/interceptor
    {:name  ::kafka-consumer
     :enter (fn [{:keys [kafka-client topic-consumers components service-name] :as context}]
@@ -70,10 +70,10 @@
                                                              (when (-> components :config :dead-letter-queue-service-integration-enabled)
                                                                (replay-dead-letter! clj-message service-name (str e) (:producer components)))))))))))))}))
 
-(s/defrecord Consumer [config datomic producer topic-consumers]
+(s/defrecord ^:deprecated Consumer [config datomic producer topic-consumers]
   component/Lifecycle
 
-  (start [this]
+  (start ^:deprecated [this]
     (let [consumer-props {"value.deserializer" StringDeserializer
                           "key.deserializer"   StringDeserializer
                           "bootstrap.servers"  (get-in config [:config :bootstrap-server])
@@ -95,23 +95,23 @@
       (assoc this :consumer (-> (chain/execute context [kafka-client-starter subscriber kafka-consumer!])
                                 :kafka-client))))
 
-  (stop [{{:keys [kafka-client]} :consumer :as this}]
+  (stop ^:deprecated [{{:keys [kafka-client]} :consumer :as this}]
     (.close kafka-client)
     (assoc this :consumer nil)))
 
-(defn new-consumer [topic-consumers]
+(defn ^:deprecated new-consumer [topic-consumers]
   (map->Consumer {:topic-consumers topic-consumers}))
 
-(defn consumed-messages
+(defn ^:deprecated consumed-messages
   [{:keys [consumed-messages]}]
   (mapv component.kafka.adapters/kafka-record->clj-message @consumed-messages))
 
-(defn ^:private commit-message-as-consumed
+(defn ^:deprecated ^:private commit-message-as-consumed
   [message
    consumed-messages]
   (swap! consumed-messages conj message))
 
-(s/defn ^:private messages-that-were-produced-but-not-consumed-yet
+(s/defn ^:deprecated ^:private messages-that-were-produced-but-not-consumed-yet
   [topics :- #{s/Keyword}
    produced-messages
    consumed-messages]
@@ -119,10 +119,10 @@
       set
       (clojure.set/difference (set consumed-messages))))
 
-(defrecord MockKafkaConsumer [config datomic producer topic-consumers]
+(defrecord ^:deprecated MockKafkaConsumer [config datomic producer topic-consumers]
   component/Lifecycle
 
-  (start [this]
+  (start ^:deprecated [this]
     (when-not (:producer producer)
       (throw (ex-info "MockKafkaConsumer depends on MockKafkaProducer"
                       {:error :mock-kafka-producer-component-not-provided})))
@@ -155,9 +155,9 @@
       (assoc this :consumer {:consumed-messages consumed-messages
                              :consumer-pool     consumer-pool})))
 
-  (stop [{{:keys [consumer-pool]} :consumer :as this}]
+  (stop ^:deprecated [{{:keys [consumer-pool]} :consumer :as this}]
     (at-at/stop-and-reset-pool! consumer-pool)
     (assoc this :consumer nil)))
 
-(defn new-mock-consumer [topic-consumers]
+(defn ^:deprecated new-mock-consumer [topic-consumers]
   (->MockKafkaConsumer {} {} {} topic-consumers))

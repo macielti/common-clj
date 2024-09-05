@@ -12,13 +12,13 @@
             [taoensso.timbre :as log])
   (:import (clojure.lang IFn)))
 
-(s/defschema Consumers
+(s/defschema ^:deprecated Consumers
   {s/Keyword {:schema     s/Any
               :handler-fn IFn}})
 
-(defrecord Consumer [config datomic datalevin postgresql http-client prometheus rabbitmq-producer consumers]
+(defrecord ^:deprecated Consumer [config datomic datalevin postgresql http-client prometheus rabbitmq-producer consumers]
   component/Lifecycle
-  (start [component]
+  (start ^:deprecated [component]
     (let [config-content (:config config)
           topics (-> config-content :topics)
           uri (-> config-content :rabbitmq-uri)
@@ -65,16 +65,16 @@
       (merge component {:rabbitmq-consumer {:connection connection
                                             :channel    channel}})))
 
-  (stop [{:keys [rabbitmq-consumer]}]
+  (stop ^:deprecated [{:keys [rabbitmq-consumer]}]
     (rmq/close (:channel rabbitmq-consumer))
     (rmq/close (:connection rabbitmq-consumer))))
 
-(defn new-consumer [consumers]
+(defn ^:deprecated new-consumer [consumers]
   (->Consumer {} {} {} {} {} {} {} consumers))
 
-(defrecord MockConsumer [config datomic datalevin postgresql http-client prometheus rabbitmq-producer containers consumers]
+(defrecord ^:deprecated MockConsumer [config datomic datalevin postgresql http-client prometheus rabbitmq-producer containers consumers]
   component/Lifecycle
-  (start [component]
+  (start ^:deprecated [component]
     (let [rabbitmq-container (-> containers :containers :rabbitmq)
           config-content (:config config)
           topics (-> config-content :topics)
@@ -122,8 +122,8 @@
       (merge component {:rabbitmq-consumer {:connection connection
                                             :channel    channel}})))
 
-  (stop [component]
+  (stop ^:deprecated [component]
     component))
 
-(defn new-mock-rabbitmq-consumer [consumers]
+(defn ^:deprecated new-mock-rabbitmq-consumer [consumers]
   (->MockConsumer {} {} {} {} {} {} {} {} consumers))

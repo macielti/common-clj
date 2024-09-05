@@ -4,13 +4,13 @@
             [medley.core :as medley]
             [schema.core :as s]))
 
-(s/defn tasks-with-components
+(s/defn ^:deprecated tasks-with-components
   [tasks components]
   (reduce (fn [tasks' task-id] (update-in tasks' [task-id :params] #(merge % {:components components}))) tasks (keys tasks)))
 
-(defrecord ConJob [config datalevin datomic rabbitmq-producer http-client prometheus tasks]
+(defrecord ^:deprecated ConJob [config datalevin datomic rabbitmq-producer http-client prometheus tasks]
   component/Lifecycle
-  (start [component]
+  (start ^:deprecated [component]
     (let [tasks' (tasks-with-components (:tasks tasks) (medley/assoc-some {}
                                                                           :datalevin (:datalevin datalevin)
                                                                           :datomic (:datomic datomic)
@@ -24,9 +24,9 @@
 
       (merge component {:jobs {:scheduler scheduler}})))
 
-  (stop [component]
+  (stop ^:deprecated [component]
     component))
 
-(defn new-cronjob
+(defn ^:deprecated new-cronjob
   [tasks]
   (->ConJob {} {} {} {} {} {} {:tasks tasks}))

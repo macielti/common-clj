@@ -4,9 +4,9 @@
             [io.pedestal.http :as http]
             [medley.core :as medley]))
 
-(defrecord Service [routes config datomic datalevin postgresql rabbitmq-producer producer http-client prometheus rate-limiter telegram-producer]
+(defrecord ^:deprecated Service [routes config datomic datalevin postgresql rabbitmq-producer producer http-client prometheus rate-limiter telegram-producer]
   component/Lifecycle
-  (start [component]
+  (start ^:deprecated [component]
     (let [{{{:keys [host port]} :service} :config} config
           service-map {::http/routes          (:routes routes)
                        ::http/allowed-origins (constantly true)
@@ -29,9 +29,9 @@
                                                 (update ::http/interceptors concat (io.interceptors/common-interceptors
                                                                                     components))
                                                 http/create-server)))))
-  (stop [component]
+  (stop ^:deprecated [component]
     (http/stop (:service component))
     (assoc component :service nil)))
 
-(defn new-service []
+(defn ^:deprecated new-service []
   (->Service {} {} {} {} {} {} {} {} {} {} {}))

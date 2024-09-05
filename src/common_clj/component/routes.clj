@@ -1,13 +1,13 @@
 (ns common-clj.component.routes
   (:require [com.stuartsierra.component :as component]))
 
-(defrecord Routes [routes]
+(defrecord ^:deprecated Routes [routes]
   component/Lifecycle
-  (start [component]
+  (start ^:deprecated [component]
     (assoc component :routes (into #{} routes)))
 
-  (stop [component]
+  (stop ^:deprecated [component]
     (assoc component :routes nil)))
 
-(defn new-routes [routes]
+(defn ^:deprecated new-routes [routes]
   (map->Routes {:routes routes}))
