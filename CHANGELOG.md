@@ -7,9 +7,11 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [29.58.57] - 2024-09-05
 
-### Added
+### Fixed
 
-- 
+- Fix bug on `AWS SQS Consumer component (Integrant)` that was trying to create a queue on AWS (prod) while executing
+  tests. Also reduce the that sleep between each message consumption cycle for test env.
+- Use long pooling to fetch messages from AWS SQS.
 
 ## [29.57.57] - 2024-09-04
 
@@ -825,7 +827,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.57.57...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.58.57...HEAD
+
+[29.58.57]: https://github.com/macielti/common-clj/compare/v29.57.57...v29.58.57
 
 [29.57.57]: https://github.com/macielti/common-clj/compare/v29.56.57...v29.57.57
 
