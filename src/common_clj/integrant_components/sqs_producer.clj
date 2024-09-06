@@ -14,9 +14,8 @@
   [{:keys [queue payload]}
    {:keys [aws-credentials]}]
   (let [payload' (assoc payload :meta {:correlation-id (-> (common-traceability/current-correlation-id)
-                                                           common-traceability/correlation-id-appended)})
-        queue-url (-> (sqs/get-queue-url aws-credentials queue) :queue-url)]
-    (sqs/send-message aws-credentials {:queue-url    queue-url
+                                                           common-traceability/correlation-id-appended)})]
+    (sqs/send-message aws-credentials {:queue-url    (-> (sqs/get-queue-url aws-credentials queue) :queue-url)
                                        :message-body (prn-str payload')})))
 
 (s/defmethod produce! :test
