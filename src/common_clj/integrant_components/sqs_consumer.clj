@@ -1,6 +1,7 @@
 (ns common-clj.integrant-components.sqs-consumer
   (:require [amazonica.aws.sqs :as sqs]
             [clojure.tools.reader.edn :as edn]
+            [common-clj.traceability.core :as common-traceability]
             [integrant.core :as ig]
             [medley.core :as medley]
             [schema.core :as s]
@@ -48,12 +49,19 @@
               (doseq [message messages]
                 (try
                   (let [{:keys [handler-fn schema]} (get consumers queue)
-                        message' {:payload (s/validate schema (edn/read-string (:body message)))
-                                  :queue   queue}]
-                    (handler-fn {:message    message'
-                                 :components components})
-                    (log/info :message-handled message')
-                    (sqs/delete-message aws-credentials (assoc message :queue-url queue-url)))
+                        message' (-> message :body edn/read-string)]
+                    (binding [common-traceability/*correlation-id* (-> message'
+                                                                       :meta
+                                                                       :correlation-id
+                                                                       common-traceability/correlation-id-appended)]
+                      (try
+                        (handler-fn {:message    (s/validate schema (dissoc message' :meta))
+                                     :components components})
+                        (log/info :message-handled {:queue   queue
+                                                    :message (dissoc message :body)})
+                        (sqs/delete-message aws-credentials (assoc message :queue-url queue-url))
+                        (catch Exception ex-handling-message
+                          (log/error ::exception-while-handling-aws-sqs-message ex-handling-message)))))
                   (catch Exception ex-in
                     (log/error ex-in))))))
           (catch Exception ex-ext
@@ -67,19 +75,24 @@
         (while @switch
           (let [messages (fetch-messages-waiting-to-be-processed! queue produced-messages consumed-messages)]
             (doseq [message messages]
-              (try
-                (let [{:keys [handler-fn schema]} (get consumers queue)]
+              (binding [common-traceability/*correlation-id* (-> message
+                                                                 :payload
+                                                                 :meta
+                                                                 :correlation-id
+                                                                 common-traceability/correlation-id-appended)]
+                (try
+                  (let [{:keys [handler-fn schema]} (get consumers queue)]
 
-                  (s/validate schema (-> message :payload (dissoc message :meta)))
+                    (s/validate schema (-> message :payload (dissoc message :meta)))
 
-                  (handler-fn {:message    (-> message :payload (dissoc message :meta))
-                               :components components})
+                    (handler-fn {:message    (-> message :payload (dissoc message :meta))
+                                 :components components})
 
-                  (log/info :message-handled message)
+                    (log/info :message-handled message)
 
-                  (commit-message-as-consumed! message consumed-messages))
-                (catch Exception ex
-                  (log/error ex)))))
+                    (commit-message-as-consumed! message consumed-messages))
+                  (catch Exception ex
+                    (log/error ex))))))
           (Thread/sleep 10))))))
 
 (defmethod ig/init-key ::sqs-consumer

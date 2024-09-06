@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.58.61] - 2024-09-06
+
+### Fixed
+
+- Fix bug on `AWS SQS Consumer component (Integrant)`. The component wasn't consuming messages properly (Test and Prod).
+
 ## [29.58.60] - 2024-09-06
 
 ### Fixed
@@ -846,7 +852,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.58.60...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.58.61...HEAD
+
+[29.58.60]: https://github.com/macielti/common-clj/compare/v29.58.60...v29.58.61
 
 [29.58.60]: https://github.com/macielti/common-clj/compare/v29.58.59...v29.58.60
 
