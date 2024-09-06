@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.58.61] - 2024-09-06
+
+### Fixed
+
+- Fix bug on `AWS SQS Consumer component (Integrant)`. The component wasn't consuming messages properly.
+
 ## [29.58.60] - 2024-09-06
 
 ### Fixed
