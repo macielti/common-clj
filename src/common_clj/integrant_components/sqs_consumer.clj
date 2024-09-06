@@ -75,19 +75,24 @@
         (while @switch
           (let [messages (fetch-messages-waiting-to-be-processed! queue produced-messages consumed-messages)]
             (doseq [message messages]
-              (try
-                (let [{:keys [handler-fn schema]} (get consumers queue)]
+              (binding [common-traceability/*correlation-id* (-> message
+                                                                 :payload
+                                                                 :meta
+                                                                 :correlation-id
+                                                                 common-traceability/correlation-id-appended)]
+                (try
+                  (let [{:keys [handler-fn schema]} (get consumers queue)]
 
-                  (s/validate schema (-> message :payload (dissoc message :meta)))
+                    (s/validate schema (-> message :payload (dissoc message :meta)))
 
-                  (handler-fn {:message    (-> message :payload (dissoc message :meta))
-                               :components components})
+                    (handler-fn {:message    (-> message :payload (dissoc message :meta))
+                                 :components components})
 
-                  (log/info :message-handled message)
+                    (log/info :message-handled message)
 
-                  (commit-message-as-consumed! message consumed-messages))
-                (catch Exception ex
-                  (log/error ex)))))
+                    (commit-message-as-consumed! message consumed-messages))
+                  (catch Exception ex
+                    (log/error ex))))))
           (Thread/sleep 10))))))
 
 (defmethod ig/init-key ::sqs-consumer
