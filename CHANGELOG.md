@@ -9,7 +9,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Fixed
 
-- Fix bug on `AWS SQS Consumer component (Integrant)`. The component wasn't sending the messages passing the right
+- Fix bug on `AWS SQS Producer component (Integrant)`. The component wasn't sending the messages passing the right
   params.
 
 ## [29.58.59] - 2024-09-05
