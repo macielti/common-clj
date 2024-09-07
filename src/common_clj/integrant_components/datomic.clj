@@ -1,10 +1,28 @@
 (ns common-clj.integrant-components.datomic
   (:require [datomic.api :as d]
             [integrant.core :as ig]
-            [taoensso.timbre :as log]))
+            [schema.core :as s]
+            [taoensso.timbre :as log])
+  (:import (datomic.db Db)))
+
+(s/defn transact-and-lookup-entity! :- {:entity   (s/pred map?)
+                                        :db-after Db}
+  [identity-key :- s/Keyword
+   entity :- (s/pred map?)
+   connection]
+  (let [{:keys [db-after]} @(d/transact connection [entity])
+        entity' (-> (d/q '[:find (pull ?entity [*])
+                           :in $ ?identity-key ?entity-identity-id
+                           :where [?entity ?identity-key ?entity-identity-id]] db-after identity-key (identity-key entity))
+                    ffirst
+                    (dissoc :db/id))]
+    (when-not entity'
+      (throw (ex-info "Entity not found after transacting it" {:entity entity})))
+    {:entity   entity'
+     :db-after db-after}))
 
 (defn mocked-datomic [datomic-schemas]
-  (let [datomic-uri "datomic:mem://unit-tests"
+  (let [datomic-uri (str "datomic:mem://" (random-uuid))
         connection (do (d/create-database datomic-uri)
                        (d/connect datomic-uri))]
     @(d/transact connection (flatten datomic-schemas))

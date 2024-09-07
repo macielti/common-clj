@@ -1,6 +1,5 @@
-(ns integration.integrant-components.routes-component-test
+(ns common-clj.integrant-components.routes-test
   (:require [clojure.test :refer :all]
-            [common-clj.integrant-components.routes]
             [integrant.core :as ig]
             [matcher-combinators.test :refer [match?]]
             [schema.test :as s]))
@@ -13,12 +12,11 @@
 (def config
   {:common-clj.integrant-components.routes/routes {:routes routes}})
 
-(s/deftest service-component-test
-  (testing "That we can define endpoints"
+(s/deftest routes-component-definition-test
+  (testing "That we can define route component and start it"
     (let [system (ig/init config)]
-      (is (match? #{["/hello-world"
-                     :get function?
-                     :route-name
-                     :fetch-hello-world]}
-                  (:common-clj.integrant-components.routes/routes system)))
-      (ig/halt! system))))
+      (is (match? {:common-clj.integrant-components.routes/routes #{["/hello-world"
+                                                                     :get function?
+                                                                     :route-name :fetch-hello-world]}}
+                  system))
+      (is (nil? (ig/halt! system))))))
