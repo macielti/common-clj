@@ -5,6 +5,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.59.61] - 2024-09-07
+
 ### Fixed
 
 - Improvements on `common-clj.integrant-components.datomic/mocked-datomic` to avoid point to the same in-memory database
@@ -14,6 +16,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Added `common-clj.integrant-components.datomic/transact-and-lookup-entity!` function to make easier to transact and
   lookup entities in the database.
+- Added full automatic test (unit) coverage for `common-clj.integrant-components.datomic` namespace.
+- Added full automatic test (unit, integration) coverage for `common-clj.integrant-components.routes` namespace.
 
 ## [29.58.61] - 2024-09-06
 
@@ -862,9 +866,11 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.58.61...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.59.61...HEAD
 
-[29.58.60]: https://github.com/macielti/common-clj/compare/v29.58.60...v29.58.61
+[29.59.61]: https://github.com/macielti/common-clj/compare/v29.58.61...v29.59.61
+
+[29.58.61]: https://github.com/macielti/common-clj/compare/v29.58.60...v29.58.61
 
 [29.58.60]: https://github.com/macielti/common-clj/compare/v29.58.59...v29.58.60
 

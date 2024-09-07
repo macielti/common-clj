@@ -2,9 +2,11 @@
   (:require [clojure.test :refer :all]
             [common-clj.integrant-components.datomic :as component.datomic]
             [datomic.api :as d]
-            [schema.test :as s]
-            [matcher-combinators.test :refer [match?]])
-  (:import (datomic.db Db)))
+            [integrant.core :as ig]
+            [matcher-combinators.test :refer [match?]]
+            [schema.test :as s])
+  (:import (datomic.db Db)
+           (datomic.peer LocalConnection)))
 
 (def minimal-schema-for-test
   [{:db/ident       :example/id
@@ -32,3 +34,22 @@
       (is (match? {:db-after #(= (type %) Db)
                    :entity   entity}
                   (component.datomic/transact-and-lookup-entity! :example/id entity connection))))))
+
+(def config {:common-clj.integrant-components.datomic/datomic {:schemas    minimal-schema-for-test
+                                                               :components {:config {:datomic-uri (str "datomic:mem://" (random-uuid))}}}})
+
+(s/deftest datomic-integrant-component-test
+  (let [system (ig/init config)
+        connection (:common-clj.integrant-components.datomic/datomic system)]
+    (testing "Should be able to init a system with datomic component"
+      (is (match? {:common-clj.integrant-components.datomic/datomic #(= (type %) LocalConnection)}
+                  system)))
+    (testing "Should be able to use the initiated datomic component to perform database operations"
+      (is (match? {:tx-data seqable?}
+                  @(d/transact connection [entity])))
+
+      (is (match? {:db-after #(= (type %) Db)
+                   :entity   entity}
+                  (component.datomic/transact-and-lookup-entity! :example/id entity connection))))
+    (testing "The System was stopped"
+      (is (nil? (ig/halt! system))))))
