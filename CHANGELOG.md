@@ -5,6 +5,16 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Improvements on `common-clj.integrant-components.datomic/mocked-datomic` to avoid point to the same in-memory database
+  path between tests.
+
+### Added
+
+- Added `common-clj.integrant-components.datomic/transact-and-lookup-entity!` function to make easier to transact and
+  lookup entities in the database.
+
 ## [29.58.61] - 2024-09-06
 
 ### Fixed
