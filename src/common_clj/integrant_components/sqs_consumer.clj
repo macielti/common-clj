@@ -26,40 +26,39 @@
       (clojure.set/difference (set @consumed-messages))))
 
 (s/defn create-sqs-queues!
-  [aws-credentials :- (s/pred map?)
-   queues :- s/Str]
+  [queues :- s/Str]
   (doseq [queue queues]
-    (sqs/create-queue aws-credentials :queue-name queue)))
+    (sqs/create-queue :queue-name queue)))
 
 (defmulti consume!
   (fn [{:keys [current-env]}]
     current-env))
 
 (s/defmethod consume! :prod
-  [{:keys [aws-credentials switch components consumers]}]
-  (create-sqs-queues! aws-credentials (-> components :config :queues))
+  [{:keys [switch components consumers]}]
+  (create-sqs-queues! (-> components :config :queues))
   (let [queues (mapv (fn [queue]
-                       (-> (sqs/get-queue-url aws-credentials queue)
+                       (-> (sqs/get-queue-url queue)
                            (assoc :queue queue))) (-> components :config :queues))]
     (doseq [{:keys [queue-url queue]} queues]
       (future
         (try
           (while @switch
-            (let [{:keys [messages]} (sqs/receive-message aws-credentials {:queue-url queue-url :wait-time-seconds 20})]
+            (let [{:keys [messages]} (sqs/receive-message :queue-url queue-url :wait-time-seconds 20)]
               (doseq [message messages]
                 (try
                   (let [{:keys [handler-fn schema]} (get consumers queue)
                         message' (-> message :body edn/read-string)]
-                    (binding [common-traceability/*correlation-id* (-> message'
-                                                                       :meta
-                                                                       :correlation-id
-                                                                       common-traceability/correlation-id-appended)]
+                    (binding [common-traceability/*correlation-id* #p (-> #p message'
+                                                                          :meta
+                                                                          :correlation-id
+                                                                          common-traceability/correlation-id-appended)]
                       (try
-                        (handler-fn {:message    (s/validate schema (dissoc message' :meta))
-                                     :components components})
+                        (handler-fn #p {:message    (s/validate schema (dissoc message' :meta))
+                                        :components components})
                         (log/info :message-handled {:queue   queue
                                                     :message (dissoc message :body)})
-                        (sqs/delete-message aws-credentials (assoc message :queue-url queue-url))
+                        (sqs/delete-message (assoc message :queue-url queue-url))
                         (catch Exception ex-handling-message
                           (log/error ::exception-while-handling-aws-sqs-message ex-handling-message)))))
                   (catch Exception ex-in
@@ -98,16 +97,12 @@
 (defmethod ig/init-key ::sqs-consumer
   [_ {:keys [components consumers]}]
   (log/info :starting ::sqs-consumer)
-  (let [switch (atom true)
-        aws-credentials {:access-key (-> components :config :aws-credentials :access-key)
-                         :secret-key (-> components :config :aws-credentials :secret-key)
-                         :endpoint   (-> components :config :aws-credentials :endpoint)}]
+  (let [switch (atom true)]
 
-    (consume! (medley/assoc-some {:switch          switch
-                                  :aws-credentials aws-credentials
-                                  :consumers       consumers
-                                  :components      components
-                                  :current-env     (-> components :config :current-env)}
+    (consume! (medley/assoc-some {:switch      switch
+                                  :consumers   consumers
+                                  :components  components
+                                  :current-env (-> components :config :current-env)}
                                  :produced-messages (when (= (-> components :config :current-env) :test)
                                                       (-> components :producer :produced-messages))
                                  :consumed-messages (when (= (-> components :config :current-env) :test)
