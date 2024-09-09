@@ -5,6 +5,17 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.60.61] - 2024-09-09
+
+### Added
+
+- Added AWS Auth (Integrant) component to define aws credentials globally.
+
+### Changed
+
+- AWS SQS Consumer component (Integrant) and AWS SQS Producer component (Integrant) now use the globally defined aws
+  credentials from AWS Auth (Integrant) component.
+
 ## [29.59.61] - 2024-09-07
 
 ### Fixed
@@ -866,7 +877,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.59.61...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.60.61...HEAD
+
+[29.60.61]: https://github.com/macielti/common-clj/compare/v29.59.61...v29.60.61
 
 [29.59.61]: https://github.com/macielti/common-clj/compare/v29.58.61...v29.59.61
 
