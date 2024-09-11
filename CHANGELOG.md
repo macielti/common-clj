@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.61.61] - 2024-09-11
+
+### Added
+
+- Retry policy for Datomic (Integrant) component to make it more resilient to database connection problems while staring
+  the component.
+
 ## [29.60.61] - 2024-09-09
 
 ### Added
@@ -877,7 +884,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.60.61...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.61.61...HEAD
+
+[29.61.61]: https://github.com/macielti/common-clj/compare/v29.60.61...v29.61.61
 
 [29.60.61]: https://github.com/macielti/common-clj/compare/v29.59.61...v29.60.61
 
