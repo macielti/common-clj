@@ -892,6 +892,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/v29.61.61...HEAD
 
+[29.61.62]: https://github.com/macielti/common-clj/compare/v29.61.61...v29.61.62
+
 [29.61.61]: https://github.com/macielti/common-clj/compare/v29.60.61...v29.61.61
 
 [29.60.61]: https://github.com/macielti/common-clj/compare/v29.59.61...v29.60.61
