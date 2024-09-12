@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.61.62] - 2024-09-11
+
+### Changed
+
+- Minor improvement on Datomic (Integrant) component.
+
 ## [29.61.61] - 2024-09-11
 
 ### Added
@@ -885,6 +891,8 @@ of [keepachangelog.com](http://keepachangelog.com/).
 - Add `loose-schema` function.
 
 [Unreleased]: https://github.com/macielti/common-clj/compare/v29.61.61...HEAD
+
+[29.61.62]: https://github.com/macielti/common-clj/compare/v29.61.61...v29.61.62
 
 [29.61.61]: https://github.com/macielti/common-clj/compare/v29.60.61...v29.61.61
 

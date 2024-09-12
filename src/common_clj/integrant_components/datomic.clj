@@ -4,8 +4,7 @@
             [schema.core :as s]
             [taoensso.timbre :as log]
             [diehard.core :as dh])
-  (:import (datomic.db Db)
-           (org.apache.activemq.artemis.api.core ActiveMQNotConnectedException)))
+  (:import (datomic.db Db)))
 
 (s/defn transact-and-lookup-entity! :- {:entity   (s/pred map?)
                                         :db-after Db}
@@ -35,7 +34,7 @@
   (log/info :starting ::datomic)
   (let [datomic-uri (or (-> components :config :datomic-uri)
                         (str "datomic:mem://" (random-uuid)))
-        connection (dh/with-retry {:retry-on    ActiveMQNotConnectedException
+        connection (dh/with-retry {:retry-on    Exception
                                    :max-retries 3}
                      (log/info ::database-created? (d/create-database datomic-uri))
                      (d/connect datomic-uri))]
