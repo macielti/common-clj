@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.61.62] - 2024-09-11
+
+### Changed
+
+- Minor improvement on Datomic (Integrant) component.
+
 ## [29.61.61] - 2024-09-11
 
 ### Added
