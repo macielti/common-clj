@@ -1,11 +1,11 @@
 (ns common-clj.integrant-components.sqs-producer
   (:require [amazonica.aws.sqs :as sqs]
+            [common-clj.integrant-components.sqs-consumer :as component.sqs-consumer]
             [common-clj.traceability.core :as common-traceability]
             [integrant.core :as ig]
             [medley.core :as medley]
             [schema.core :as s]
-            [taoensso.timbre :as log]
-            [common-clj.integrant-components.sqs-consumer :as component.sqs-consumer]))
+            [taoensso.timbre :as log]))
 
 (defmulti produce!
   (fn [_ {:keys [current-env]}]
@@ -29,9 +29,8 @@
   [_ {:keys [components]}]
   (log/info :starting ::sqs-producer)
 
-  (component.sqs-consumer/create-sqs-queues! (-> components :config :queues))
-
   (when (= (-> components :config :current-env) :prod)
+    (component.sqs-consumer/create-sqs-queues! (-> components :config :queues))
     (try (sqs/list-queues)
          (catch Exception ex
            (log/error :invalid-credentials :exception ex)
