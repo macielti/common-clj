@@ -4,7 +4,8 @@
             [integrant.core :as ig]
             [medley.core :as medley]
             [schema.core :as s]
-            [taoensso.timbre :as log]))
+            [taoensso.timbre :as log]
+            [common-clj.integrant-components.sqs-consumer :as component.sqs-consumer]))
 
 (defmulti produce!
   (fn [_ {:keys [current-env]}]
@@ -14,7 +15,7 @@
   [{:keys [queue payload]} _producer]
   (let [payload' (assoc payload :meta {:correlation-id (-> (common-traceability/current-correlation-id)
                                                            common-traceability/correlation-id-appended)})]
-    (sqs/send-message (sqs/get-queue-url queue) (prn-str payload'))))
+    (sqs/send-message :queue-url (:queue-url (sqs/get-queue-url queue)) :message-body (prn-str payload'))))
 
 (s/defmethod produce! :test
   [{:keys [queue payload]}
@@ -27,6 +28,8 @@
 (defmethod ig/init-key ::sqs-producer
   [_ {:keys [components]}]
   (log/info :starting ::sqs-producer)
+
+  (component.sqs-consumer/create-sqs-queues! (-> components :config :queues))
 
   (when (= (-> components :config :current-env) :prod)
     (try (sqs/list-queues)

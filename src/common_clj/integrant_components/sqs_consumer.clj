@@ -49,13 +49,13 @@
                 (try
                   (let [{:keys [handler-fn schema]} (get consumers queue)
                         message' (-> message :body edn/read-string)]
-                    (binding [common-traceability/*correlation-id* #p (-> #p message'
-                                                                          :meta
-                                                                          :correlation-id
-                                                                          common-traceability/correlation-id-appended)]
+                    (binding [common-traceability/*correlation-id* (-> message'
+                                                                       :meta
+                                                                       :correlation-id
+                                                                       common-traceability/correlation-id-appended)]
                       (try
-                        (handler-fn #p {:message    (s/validate schema (dissoc message' :meta))
-                                        :components components})
+                        (handler-fn {:message    (s/validate schema (dissoc message' :meta))
+                                     :components components})
                         (log/info :message-handled {:queue   queue
                                                     :message (dissoc message :body)})
                         (sqs/delete-message (assoc message :queue-url queue-url))
