@@ -1,9 +1,9 @@
 (ns common-clj.integrant-components.datomic
   (:require [datomic.api :as d]
+            [diehard.core :as dh]
             [integrant.core :as ig]
             [schema.core :as s]
-            [taoensso.timbre :as log]
-            [diehard.core :as dh])
+            [taoensso.timbre :as log])
   (:import (datomic.db Db)))
 
 (s/defn transact-and-lookup-entity! :- {:entity   (s/pred map?)
