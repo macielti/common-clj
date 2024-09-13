@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.61.64] - 2024-09-13
+
+### Fixed
+
+- Fixed expected schema param type for `queues` on `common-clj.integrant-components.sqs-consumer/create-sqs-queues!`.
+
 ## [29.61.63] - 2024-09-13
 
 ### Fixed
@@ -902,7 +908,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.61.63...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.61.64...HEAD
+
+[29.61.64]: https://github.com/macielti/common-clj/compare/v29.61.63...v29.61.64
 
 [29.61.63]: https://github.com/macielti/common-clj/compare/v29.61.62...v29.61.63
 

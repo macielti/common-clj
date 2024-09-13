@@ -26,7 +26,7 @@
       (clojure.set/difference (set @consumed-messages))))
 
 (s/defn create-sqs-queues!
-  [queues :- s/Str]
+  [queues :- [s/Str]]
   (doseq [queue queues]
     (sqs/create-queue :queue-name queue)))
 
