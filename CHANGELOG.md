@@ -5,6 +5,18 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.61.63] - 2024-09-13
+
+### Fixed
+
+- Fix bug on `AWS SQS Producer component (Integrant)`. The component wasn't sending the params for the message produce
+  operation properly.
+- Removed calls to `#p`. This should be used only on debugging process.
+
+### Added
+
+- Try to create AWS SQS queues while starting `AWS SQS Producer component (Integrant)`.
+
 ## [29.61.62] - 2024-09-11
 
 ### Changed
@@ -890,7 +902,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.61.61...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.61.63...HEAD
+
+[29.61.63]: https://github.com/macielti/common-clj/compare/v29.61.62...v29.61.63
 
 [29.61.62]: https://github.com/macielti/common-clj/compare/v29.61.61...v29.61.62
 
