@@ -99,15 +99,17 @@
   (log/info :starting ::sqs-consumer)
   (let [switch (atom true)]
 
-    (repeatedly (get-in components [:config :consumer-parallelism] 4)
-                #(consume! (medley/assoc-some {:switch      switch
-                                               :consumers   consumers
-                                               :components  components
-                                               :current-env (-> components :config :current-env)}
-                                              :produced-messages (when (= (-> components :config :current-env) :test)
-                                                                   (-> components :producer :produced-messages))
-                                              :consumed-messages (when (= (-> components :config :current-env) :test)
-                                                                   (atom [])))))
+    (dotimes [thread-number (get-in components [:config :consumer-parallelism] 4)]
+      (log/info ::starting-consumer-thread thread-number)
+      (consume! (medley/assoc-some {:switch      switch
+                                    :consumers   consumers
+                                    :components  components
+                                    :current-env (-> components :config :current-env)}
+                                   :produced-messages (when (= (-> components :config :current-env) :test)
+                                                        (-> components :producer :produced-messages))
+                                   :consumed-messages (when (= (-> components :config :current-env) :test)
+                                                        (atom [])))))
+
     {:switch switch}))
 
 (defmethod ig/halt-key! ::sqs-consumer

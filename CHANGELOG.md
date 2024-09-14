@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.62.69] - 2024-09-14
+
+### Changed
+
+- Applying more parallelism improvements to `AWS SQS Consumer component (Integrant)`.
+
 ## [29.62.68] - 2024-09-14
 
 ### Changed
@@ -940,7 +946,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.62.68...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.62.69...HEAD
+
+[29.62.69]: https://github.com/macielti/common-clj/compare/v29.62.68...v29.62.69
 
 [29.62.68]: https://github.com/macielti/common-clj/compare/v29.62.67...v29.62.68
 
