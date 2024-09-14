@@ -32,7 +32,8 @@
     (sqs/create-queue :queue-name queue)))
 
 (defmulti consume!
-  (fn [{:keys [current-env]}]
+  (fn [{:keys [current-env]}
+       _consumer-parallelism]
     current-env))
 
 (s/defmethod consume! :prod
