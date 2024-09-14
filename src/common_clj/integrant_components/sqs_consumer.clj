@@ -56,8 +56,8 @@
                       (try
                         (handler-fn {:message    (s/validate schema (dissoc message' :meta))
                                      :components components})
-                        (log/info :message-handled {:queue   queue
-                                                    :message (dissoc message :body)})
+                        (log/debug ::message-handled {:queue   queue
+                                                      :message (dissoc message :body)})
                         (sqs/delete-message (assoc message :queue-url queue-url))
                         (catch Exception ex-handling-message
                           (log/error ::exception-while-handling-aws-sqs-message ex-handling-message)))))
@@ -87,7 +87,7 @@
                     (handler-fn {:message    (-> message :payload (dissoc message :meta))
                                  :components components})
 
-                    (log/info :message-handled message)
+                    (log/debug ::message-handled message)
 
                     (commit-message-as-consumed! message consumed-messages))
                   (catch Exception ex

@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.61.66] - 2024-09-13
+
+### Changed
+
+- Instead of logging (at INFO level) each message consumed by `AWS SQS Consumer component (Integrant)`, now we are
+  logging that info at DEBUG level.
+
 ## [29.61.65] - 2024-09-13
 
 ### Fixed
@@ -915,7 +922,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.61.65...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.61.66...HEAD
+
+[29.61.66]: https://github.com/macielti/common-clj/compare/v29.61.65...v29.61.66
 
 [29.61.65]: https://github.com/macielti/common-clj/compare/v29.61.64...v29.61.65
 
