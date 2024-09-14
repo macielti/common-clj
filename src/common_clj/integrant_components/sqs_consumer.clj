@@ -5,8 +5,7 @@
             [integrant.core :as ig]
             [medley.core :as medley]
             [schema.core :as s]
-            [taoensso.timbre :as log]
-            [parallel.core :as p])
+            [taoensso.timbre :as log])
   (:import (clojure.lang IFn)))
 
 (s/defschema Consumers
@@ -32,13 +31,11 @@
     (sqs/create-queue :queue-name queue)))
 
 (defmulti consume!
-  (fn [{:keys [current-env]}
-       _consumer-parallelism]
+  (fn [{:keys [current-env]}]
     current-env))
 
 (s/defmethod consume! :prod
-  [{:keys [switch components consumers]}
-   consumer-parallelism :- s/Int]
+  [{:keys [switch components consumers]}]
   (create-sqs-queues! (-> components :config :queues))
   (let [queues (mapv (fn [queue]
                        (-> (sqs/get-queue-url queue)
@@ -48,31 +45,29 @@
         (try
           (while @switch
             (let [{:keys [messages]} (sqs/receive-message :queue-url queue-url :wait-time-seconds 20)]
-              (p/pmap (fn parallel-message-consumption
-                        [message]
-                        (try
-                          (let [{:keys [handler-fn schema]} (get consumers queue)
-                                message' (-> message :body edn/read-string)]
-                            (binding [common-traceability/*correlation-id* (-> message'
-                                                                               :meta
-                                                                               :correlation-id
-                                                                               common-traceability/correlation-id-appended)]
-                              (try
-                                (handler-fn {:message    (s/validate schema (dissoc message' :meta))
-                                             :components components})
-                                (log/debug ::message-handled {:queue   queue
-                                                              :message (dissoc message :body)})
-                                (sqs/delete-message (assoc message :queue-url queue-url))
-                                (catch Exception ex-handling-message
-                                  (log/error ::exception-while-handling-aws-sqs-message ex-handling-message)))))
-                          (catch Exception ex-in
-                            (log/error ex-in)))) messages consumer-parallelism)))
+              (doseq [message messages]
+                (try
+                  (let [{:keys [handler-fn schema]} (get consumers queue)
+                        message' (-> message :body edn/read-string)]
+                    (binding [common-traceability/*correlation-id* (-> message'
+                                                                       :meta
+                                                                       :correlation-id
+                                                                       common-traceability/correlation-id-appended)]
+                      (try
+                        (handler-fn {:message    (s/validate schema (dissoc message' :meta))
+                                     :components components})
+                        (log/debug ::message-handled {:queue   queue
+                                                      :message (dissoc message :body)})
+                        (sqs/delete-message (assoc message :queue-url queue-url))
+                        (catch Exception ex-handling-message
+                          (log/error ::exception-while-handling-aws-sqs-message ex-handling-message)))))
+                  (catch Exception ex-in
+                    (log/error ex-in))))))
           (catch Exception ex-ext
             (log/error ex-ext)))))))
 
 (s/defmethod consume! :test
-  [{:keys [switch components consumers consumed-messages produced-messages]}
-   _consumer-parallelism :- s/Int]
+  [{:keys [switch components consumers consumed-messages produced-messages]}]
   (let [queues (-> components :config :queues)]
     (doseq [queue queues]
       (future
@@ -104,15 +99,15 @@
   (log/info :starting ::sqs-consumer)
   (let [switch (atom true)]
 
-    (consume! (medley/assoc-some {:switch      switch
-                                  :consumers   consumers
-                                  :components  components
-                                  :current-env (-> components :config :current-env)}
-                                 :produced-messages (when (= (-> components :config :current-env) :test)
-                                                      (-> components :producer :produced-messages))
-                                 :consumed-messages (when (= (-> components :config :current-env) :test)
-                                                      (atom [])))
-              (get-in components [:config :consumer-parallelism] 4))
+    (repeatedly (get-in components [:config :consumer-parallelism] 4)
+                #(consume! (medley/assoc-some {:switch      switch
+                                               :consumers   consumers
+                                               :components  components
+                                               :current-env (-> components :config :current-env)}
+                                              :produced-messages (when (= (-> components :config :current-env) :test)
+                                                                   (-> components :producer :produced-messages))
+                                              :consumed-messages (when (= (-> components :config :current-env) :test)
+                                                                   (atom [])))))
     {:switch switch}))
 
 (defmethod ig/halt-key! ::sqs-consumer
