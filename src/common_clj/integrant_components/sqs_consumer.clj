@@ -5,7 +5,8 @@
             [integrant.core :as ig]
             [medley.core :as medley]
             [schema.core :as s]
-            [taoensso.timbre :as log])
+            [taoensso.timbre :as log]
+            [parallel.core :as p])
   (:import (clojure.lang IFn)))
 
 (s/defschema Consumers
@@ -35,7 +36,8 @@
     current-env))
 
 (s/defmethod consume! :prod
-  [{:keys [switch components consumers]}]
+  [{:keys [switch components consumers]}
+   consumer-parallelism :- s/Int]
   (create-sqs-queues! (-> components :config :queues))
   (let [queues (mapv (fn [queue]
                        (-> (sqs/get-queue-url queue)
@@ -45,29 +47,31 @@
         (try
           (while @switch
             (let [{:keys [messages]} (sqs/receive-message :queue-url queue-url :wait-time-seconds 20)]
-              (doseq [message messages]
-                (try
-                  (let [{:keys [handler-fn schema]} (get consumers queue)
-                        message' (-> message :body edn/read-string)]
-                    (binding [common-traceability/*correlation-id* (-> message'
-                                                                       :meta
-                                                                       :correlation-id
-                                                                       common-traceability/correlation-id-appended)]
-                      (try
-                        (handler-fn {:message    (s/validate schema (dissoc message' :meta))
-                                     :components components})
-                        (log/debug ::message-handled {:queue   queue
-                                                      :message (dissoc message :body)})
-                        (sqs/delete-message (assoc message :queue-url queue-url))
-                        (catch Exception ex-handling-message
-                          (log/error ::exception-while-handling-aws-sqs-message ex-handling-message)))))
-                  (catch Exception ex-in
-                    (log/error ex-in))))))
+              (p/pmap (fn parallel-message-consumption
+                        [message]
+                        (try
+                          (let [{:keys [handler-fn schema]} (get consumers queue)
+                                message' (-> message :body edn/read-string)]
+                            (binding [common-traceability/*correlation-id* (-> message'
+                                                                               :meta
+                                                                               :correlation-id
+                                                                               common-traceability/correlation-id-appended)]
+                              (try
+                                (handler-fn {:message    (s/validate schema (dissoc message' :meta))
+                                             :components components})
+                                (log/debug ::message-handled {:queue   queue
+                                                              :message (dissoc message :body)})
+                                (sqs/delete-message (assoc message :queue-url queue-url))
+                                (catch Exception ex-handling-message
+                                  (log/error ::exception-while-handling-aws-sqs-message ex-handling-message)))))
+                          (catch Exception ex-in
+                            (log/error ex-in)))) messages consumer-parallelism)))
           (catch Exception ex-ext
             (log/error ex-ext)))))))
 
 (s/defmethod consume! :test
-  [{:keys [switch components consumers consumed-messages produced-messages]}]
+  [{:keys [switch components consumers consumed-messages produced-messages]}
+   _consumer-parallelism :- s/Int]
   (let [queues (-> components :config :queues)]
     (doseq [queue queues]
       (future
@@ -106,7 +110,8 @@
                                  :produced-messages (when (= (-> components :config :current-env) :test)
                                                       (-> components :producer :produced-messages))
                                  :consumed-messages (when (= (-> components :config :current-env) :test)
-                                                      (atom []))))
+                                                      (atom [])))
+              (get-in components [:config :consumer-parallelism] 4))
     {:switch switch}))
 
 (defmethod ig/halt-key! ::sqs-consumer

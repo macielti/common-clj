@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.62.66] - 2024-09-14
+
+### Added
+
+- Now the AWS SQS Consumer component (Integrant) is able to consume messages applying some level of parallelism.
+
 ## [29.61.66] - 2024-09-13
 
 ### Changed
@@ -922,7 +928,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.61.66...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.62.66...HEAD
+
+[29.62.66]: https://github.com/macielti/common-clj/compare/v29.61.66...v29.62.66
 
 [29.61.66]: https://github.com/macielti/common-clj/compare/v29.61.65...v29.61.66
 
