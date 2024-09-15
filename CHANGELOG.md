@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [29.63.69] - 2024-09-15
+
+### Added
+
+- Now you can control the timeout in ms for the `AWS SQS Consumer` component (Integrant) while handling each message.
+
 ## [29.62.69] - 2024-09-14
 
 ### Changed
@@ -946,7 +952,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.62.69...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v29.63.69...HEAD
+
+[29.63.69]: https://github.com/macielti/common-clj/compare/v29.62.69...v29.63.69
 
 [29.62.69]: https://github.com/macielti/common-clj/compare/v29.62.68...v29.62.69
 

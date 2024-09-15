@@ -2,6 +2,7 @@
   (:require [amazonica.aws.sqs :as sqs]
             [clojure.tools.reader.edn :as edn]
             [common-clj.traceability.core :as common-traceability]
+            [diehard.core :as dh]
             [integrant.core :as ig]
             [medley.core :as medley]
             [schema.core :as s]
@@ -54,8 +55,10 @@
                                                                        :correlation-id
                                                                        common-traceability/correlation-id-appended)]
                       (try
-                        (handler-fn {:message    (s/validate schema (dissoc message' :meta))
-                                     :components components})
+                        (dh/with-timeout {:timeout-ms (get-in components [:config :message-consumption-timeout-ms] 30000)
+                                          :interrupt? true}
+                          (handler-fn {:message    (s/validate schema (dissoc message' :meta))
+                                       :components components}))
                         (log/debug ::message-handled {:queue   queue
                                                       :message (dissoc message :body)})
                         (sqs/delete-message (assoc message :queue-url queue-url))
