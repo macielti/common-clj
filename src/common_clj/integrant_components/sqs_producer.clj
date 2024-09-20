@@ -30,7 +30,7 @@
   (log/info :starting ::sqs-producer)
 
   (when (= (-> components :config :current-env) :prod)
-    (component.sqs-consumer/create-sqs-queues! (-> components :config :queues))
+    (component.sqs-consumer/create-sqs-queues! (-> components :config :queues keys))
     (try (sqs/list-queues)
          (catch Exception ex
            (log/error :invalid-credentials :exception ex)
