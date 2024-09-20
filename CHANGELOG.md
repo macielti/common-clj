@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [30.63.69] - 2024-09-20
+
+### Changed
+
+- Now you can control the number of parallel consumer threads for each queue on `AWS SQS Consumer` component
+  (Integrant).
+
 ## [29.63.69] - 2024-09-15
 
 ### Added
@@ -952,7 +959,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v29.63.69...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v30.63.69...HEAD
+
+[30.63.69]: https://github.com/macielti/common-clj/compare/v29.63.69...v30.63.69
 
 [29.63.69]: https://github.com/macielti/common-clj/compare/v29.62.69...v29.63.69
 
