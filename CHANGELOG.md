@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [30.63.70] - 2024-09-22
+
+### Changed
+
+- Instead of logging (at INFO level) each number of consumers threads up  `AWS SQS Consumer component (Integrant)`
+  validation, now we are logging that info at DEBUG level.
+
 ## [30.63.69] - 2024-09-20
 
 ### Changed
@@ -959,7 +966,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v30.63.69...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v30.63.70...HEAD
+
+[30.63.70]: https://github.com/macielti/common-clj/compare/v30.63.69...v30.63.70
 
 [30.63.69]: https://github.com/macielti/common-clj/compare/v29.63.69...v30.63.69
 

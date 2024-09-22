@@ -96,7 +96,7 @@
     (if (< (->> (get @consumers-thread-pool queue) (filter #(not (future-done? %))) count)
            (get-in components [:config :queues queue :parallel-consumers] 4))
       (do
-        (log/info ::consumers-threads-count-bellow-treshold :starting-new-consumer-thread :queue queue)
+        (log/warn ::consumers-threads-count-bellow-treshold :starting-new-consumer-thread :queue queue)
         (swap! consumers-thread-pool
                update queue conj (future (consume! (medley/assoc-some {:switch      switch
                                                                        :consumer    (get consumers queue)
@@ -107,7 +107,7 @@
                                                                                            (-> components :producer :produced-messages))
                                                                       :consumed-messages (when (= (-> components :config :current-env) :test)
                                                                                            (atom [])))))))
-      (log/info ::all-expected-consumers-threads-are-up-and-running :queue queue))))
+      (log/debug ::all-expected-consumers-threads-are-up-and-running :queue queue))))
 
 (defmethod ig/init-key ::sqs-consumer
   [_ {:keys [components consumers]}]
