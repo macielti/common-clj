@@ -52,8 +52,8 @@
                   (try
                     (dh/with-timeout {:timeout-ms (get-in components [:config :message-consumption-timeout-ms] 30000)
                                       :interrupt? true}
-                                     ((:handler-fn consumer) {:message    (s/validate (:schema consumer) (dissoc message' :meta))
-                                                              :components components}))
+                      ((:handler-fn consumer) {:message    (s/validate (:schema consumer) (dissoc message' :meta))
+                                               :components components}))
                     (log/debug ::message-handled {:queue   queue
                                                   :message (dissoc message :body)})
                     (sqs/delete-message (assoc message :queue-url queue-url))
