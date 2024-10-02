@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [30.64.70] - 2024-10-02
+
+### Added
+
+- Added `common-clj.io.interceptors.customer` namespace to hold customer identification specific interceptors.
+
 ## [30.63.70] - 2024-09-22
 
 ### Changed
@@ -966,7 +972,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v30.63.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v30.64.70...HEAD
+
+[30.64.70]: https://github.com/macielti/common-clj/compare/v30.63.70...v30.64.70
 
 [30.63.70]: https://github.com/macielti/common-clj/compare/v30.63.69...v30.63.70
 
