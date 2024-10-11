@@ -32,4 +32,4 @@
   [customer-id :- s/Uuid
    role :- s/Keyword
    datomic]
-  (d/transact datomic [[:db/add [:customer/id customer-id] :customer/roles role]]))
+  @(d/transact datomic [[:db/add [:customer/id customer-id] :customer/roles role]]))
