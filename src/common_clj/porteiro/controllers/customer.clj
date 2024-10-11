@@ -39,7 +39,7 @@
    role :- s/Keyword
    datomic]
   (if (database.customer/lookup customer-id (d/db datomic))
-    (do (database.customer/add-role! customer-id role datomic)
+    (do (database.customer/add-role! customer-id role datomic) ;;TODO: Check how to make this transaction already return the updated entity
         (database.customer/lookup customer-id (d/db datomic)))
     (throw (ex-info "Customer not found"
                     {:status 404
