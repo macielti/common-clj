@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [30.65.70] - 2024-10-10
+
+### Added
+
+- Added `src/common_clj/porteiro` namespace to hold customer authentication features.
+
 ## [30.64.70] - 2024-10-02
 
 ### Added
@@ -972,7 +978,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v30.64.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v30.65.70...HEAD
+
+[30.65.70]: https://github.com/macielti/common-clj/compare/v30.64.70...v30.65.70
 
 [30.64.70]: https://github.com/macielti/common-clj/compare/v30.63.70...v30.64.70
 

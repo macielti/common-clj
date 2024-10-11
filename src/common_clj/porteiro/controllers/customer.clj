@@ -21,7 +21,7 @@
                                      (jt/sql-timestamp))}))
 
 (s/defn authenticate-customer! :- s/Str
-  [{:customer/keys [username password]} :- models.customer/CustomerAuthentication
+  [{:keys [username password]} :- models.customer/CustomerAuthentication
    {:keys [jwt-secret]}
    database]
   (let [{:customer/keys [hashed-password] :as customer} (database.customer/by-username username database)]
