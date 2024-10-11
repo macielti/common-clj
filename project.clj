@@ -57,7 +57,8 @@
                  [com.fasterxml.jackson.core/jackson-databind "2.18.0-rc1"]
                  [com.fasterxml.jackson.core/jackson-annotations "2.18.0-rc1"]
                  [diehard "0.11.12"]
-                 [overtone/at-at "1.3.58"]]
+                 [overtone/at-at "1.3.58"]
+                 [buddy/buddy-hashers "1.8.158"]]
 
   :injections [(require 'hashp.core)]
 
