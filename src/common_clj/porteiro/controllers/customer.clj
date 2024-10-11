@@ -5,6 +5,7 @@
             [common-clj.porteiro.adapters.customer :as adapters.customer]
             [common-clj.porteiro.db.datomic.customer :as database.customer]
             [common-clj.porteiro.models.customer :as models.customer]
+            [datomic.api :as d]
             [java-time.api :as jt]
             [schema.core :as s]))
 
@@ -32,3 +33,14 @@
                                             "invalid-credentials"
                                             "Wrong username or/and password"
                                             "Customer is trying to login using invalid credentials"))))
+
+(s/defn add-role! :- models.customer/Customer
+  [customer-id :- s/Uuid
+   role :- s/Keyword
+   datomic]
+  (if (database.customer/lookup customer-id (d/db datomic))
+    (do (database.customer/add-role! customer-id role datomic)
+        (database.customer/lookup customer-id (d/db datomic)))
+    (throw (ex-info "Customer not found"
+                    {:status 404
+                     :cause  "Customer not found"}))))

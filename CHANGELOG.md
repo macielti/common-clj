@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [30.66.70] - 2024-10-10
+
+### Added
+
+- Added roles management for customer authentication features.
+
 ## [30.65.70] - 2024-10-10
 
 ### Added
