@@ -984,7 +984,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v30.65.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v30.66.70...HEAD
+
+[30.66.70]: https://github.com/macielti/common-clj/compare/v30.65.70...v30.66.70
 
 [30.65.70]: https://github.com/macielti/common-clj/compare/v30.64.70...v30.65.70
 
