@@ -26,7 +26,6 @@
      wire-role        :role} :query-params
     {:keys [datomic]}        :components}]
   {:status 200
-   :body   (-> (controllers.customer/add-role! (UUID/fromString wire-customer-id)
-                                               (adapters.customer/wire->internal-role wire-role)
-                                               datomic)
+   :body   (-> (UUID/fromString wire-customer-id)
+               (controllers.customer/add-role! (adapters.customer/wire->internal-role wire-role) datomic)
                adapters.customer/internal->wire)})
