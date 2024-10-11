@@ -1,8 +1,8 @@
 (ns common-clj.porteiro.db.datomic.customer
-  (:require [datomic.api :as d]
-            [schema.core :as s]
+  (:require [common-clj.integrant-components.datomic :as component.datomic]
             [common-clj.porteiro.models.customer :as models.customer]
-            [common-clj.integrant-components.datomic :as component.datomic]))
+            [datomic.api :as d]
+            [schema.core :as s]))
 
 (s/defn insert! :- models.customer/Customer
   [customer :- models.customer/Customer
@@ -18,3 +18,18 @@
                  :where [?customer :customer/username ?username]] database username)
           ffirst
           (dissoc :db/id)))
+
+(s/defn lookup :- (s/maybe models.customer/Customer)
+  [customer-id :- s/Uuid
+   database]
+  (some-> (d/q '[:find (pull ?e [*])
+                 :in $ ?customer-id
+                 :where [?e :customer/id ?customer-id]] database customer-id)
+          ffirst
+          (dissoc :db/id)))
+
+(s/defn add-role!
+  [customer-id :- s/Uuid
+   role :- s/Keyword
+   datomic]
+  @(d/transact datomic [[:db/add [:customer/id customer-id] :customer/roles role]]))

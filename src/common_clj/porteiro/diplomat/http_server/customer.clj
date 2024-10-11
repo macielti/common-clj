@@ -1,8 +1,9 @@
 (ns common-clj.porteiro.diplomat.http-server.customer
-  (:require [datomic.api :as d]
-            [schema.core :as s]
-            [common-clj.porteiro.adapters.customer :as adapters.customer]
-            [common-clj.porteiro.controllers.customer :as controllers.customer]))
+  (:require [common-clj.porteiro.adapters.customer :as adapters.customer]
+            [common-clj.porteiro.controllers.customer :as controllers.customer]
+            [datomic.api :as d]
+            [schema.core :as s])
+  (:import (java.util UUID)))
 
 (s/defn create-customer!
   [{{:keys [customer]} :json-params
@@ -19,3 +20,12 @@
    :body   (-> (adapters.customer/wire->internal-customer-authentication customer)
                (controllers.customer/authenticate-customer! config (d/db datomic))
                adapters.customer/customer-token->wire)})
+
+(s/defn add-role!
+  [{{wire-customer-id :customer-id
+     wire-role        :role} :query-params
+    {:keys [datomic]}        :components}]
+  {:status 200
+   :body   (-> (UUID/fromString wire-customer-id)
+               (controllers.customer/add-role! (adapters.customer/wire->internal-role wire-role) datomic)
+               adapters.customer/internal->wire)})
