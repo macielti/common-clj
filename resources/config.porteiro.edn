@@ -1,0 +1,6 @@
+{:test {:service-name        "rango"
+        :jwt-secret          "9837ed52-87b5-48c4-bd09-1cd06d18c1c5"
+        :service             {:host "0.0.0.0"
+                              :port 8080}
+        :admin-customer-seed {:customer {:username "admin"
+                                         :password "password"}}}}
