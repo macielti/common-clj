@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "30.66.70"
+(defproject net.clojars.macielti/common-clj "30.67.70"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -58,7 +58,9 @@
                  [com.fasterxml.jackson.core/jackson-annotations "2.18.0-rc1"]
                  [diehard "0.11.12"]
                  [overtone/at-at "1.3.58"]
-                 [buddy/buddy-hashers "1.8.158"]]
+                 [buddy/buddy-hashers "1.8.158"]
+                 [com.github.igrishaev/pg2-core "0.1.18"]
+                 [com.github.igrishaev/pg2-migration "0.1.18"]]
 
   :injections [(require 'hashp.core)]
 
