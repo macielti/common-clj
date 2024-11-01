@@ -9,7 +9,9 @@
   (testing "That we can connect to a mocked postgresql container"
     (let [conn (postgresql/mocked-postgresql-conn)
           now (jt/local-date)]
-      (is (= nil
+      (is (= [{:nome       "nascimento"
+               :apelido    "brunão"
+               :nascimento now}]
              (pg/execute conn
                          "INSERT INTO pessoa (apelido, nome, nascimento) VALUES ($1, $2, $3)
                           returning *"
