@@ -1,7 +1,7 @@
 (ns common-clj.integrant-components.postgresql
   (:require [integrant.core :as ig]
-            [pg.core :as pg]
             [pg.migration.core :as mig]
+            [pg.pool :as pool]
             [taoensso.timbre :as log])
   (:import (org.testcontainers.containers PostgreSQLContainer)))
 
@@ -9,14 +9,14 @@
   [_ {:keys [components]}]
   (log/info :starting ::postgresql)
   (let [postgresql-config (-> components :config :postgresql)
-        connection (pg/connect postgresql-config)]
+        pool (pool/pool postgresql-config)]
     (mig/migrate-all postgresql-config)
-    connection))
+    pool))
 
 (defmethod ig/halt-key! ::postgresql
-  [_ connection]
+  [_ pool]
   (log/info :stopping ::postgresql)
-  (pg/close connection))
+  (pool/close pool))
 
 (defmethod ig/init-key ::postgresql-mock
   [_ _]
@@ -27,12 +27,12 @@
                            :user     (.getUsername postgresql-container)
                            :password (.getPassword postgresql-container)
                            :database (.getDatabaseName postgresql-container)}
-        connection (pg/connect postgresql-config)]
+        pool (pool/pool postgresql-config)]
     (mig/migrate-all postgresql-config)
-    connection))
+    pool))
 
 (defmethod ig/halt-key! ::postgresql-mock
-  [_ connection]
+  [_ pool]
   (log/info :stopping ::postgresql-mock)
-  (pg/close connection))
+  (pool/close pool))
 
