@@ -1,7 +1,9 @@
 (ns common-clj.integrant-components.postgresql
   (:require [integrant.core :as ig]
+            [pg.core :as pg]
             [pg.migration.core :as mig]
             [pg.pool :as pool]
+            [schema.core :as s]
             [taoensso.timbre :as log])
   (:import (org.testcontainers.containers PostgreSQLContainer)))
 
@@ -35,4 +37,18 @@
   [_ pool]
   (log/info :stopping ::postgresql-mock)
   (pool/close pool))
+
+(s/defn mocked-postgresql-conn
+  "Intended to be used for unit testing"
+  []
+  (let [postgresql-container (doto (PostgreSQLContainer. "postgres:16-alpine")
+                               .start)
+        postgresql-config {:host     (.getHost postgresql-container)
+                           :port     (.getMappedPort postgresql-container PostgreSQLContainer/POSTGRESQL_PORT)
+                           :user     (.getUsername postgresql-container)
+                           :password (.getPassword postgresql-container)
+                           :database (.getDatabaseName postgresql-container)}]
+    (mig/migrate-all postgresql-config)
+    (pg/connect postgresql-config)))
+
 
