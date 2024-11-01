@@ -58,7 +58,9 @@
                  [com.fasterxml.jackson.core/jackson-annotations "2.18.0-rc1"]
                  [diehard "0.11.12"]
                  [overtone/at-at "1.3.58"]
-                 [buddy/buddy-hashers "1.8.158"]]
+                 [buddy/buddy-hashers "1.8.158"]
+                 [com.github.igrishaev/pg2-core "0.1.18"]
+                 [com.github.igrishaev/pg2-migration "0.1.18"]]
 
   :injections [(require 'hashp.core)]
 
