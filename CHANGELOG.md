@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [30.67.70] - 2024-11-01
+
+### Added
+
+- New `PostgreSQL` component (Integrant).
+
 ## [30.66.70] - 2024-10-10
 
 ### Added
@@ -984,7 +990,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v30.66.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v30.67.70...HEAD
+
+[30.67.70]: https://github.com/macielti/common-clj/compare/v30.66.70...v30.67.70
 
 [30.66.70]: https://github.com/macielti/common-clj/compare/v30.65.70...v30.66.70
 
