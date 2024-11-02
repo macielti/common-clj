@@ -7,11 +7,11 @@
 
 (def system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.json" :test :json)))
+   :config (component.config/new-config "test/resources/config_test.json" :test :json)))
 
 (def system-prod
   (component/system-map
-   :config (component.config/new-config "resources/config_test.json" :prod :json)))
+   :config (component.config/new-config "test/resources/config_test.json" :prod :json)))
 
 (s/deftest config-component-test
   (let [system            (component/start system-test)
