@@ -1,5 +1,5 @@
 (ns common-clj.integrant-components.datomic-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.integrant-components.datomic :as component.datomic]
             [datomic.api :as d]
             [integrant.core :as ig]

@@ -1,5 +1,5 @@
 (ns integration.integrant-components.service-component-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.integrant-components.routes]
             [common-clj.integrant-components.service]
             [integrant.core :as ig]

@@ -1,5 +1,5 @@
 (ns common-clj.integrant-components.prometheus_test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.integrant-components.prometheus]
             [iapetos.core :as prometheus]
             [integrant.core :as ig]

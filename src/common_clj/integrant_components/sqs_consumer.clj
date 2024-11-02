@@ -1,5 +1,6 @@
 (ns common-clj.integrant-components.sqs-consumer
   (:require [amazonica.aws.sqs :as sqs]
+            [clojure.set]
             [clojure.tools.reader.edn :as edn]
             [common-clj.traceability.core :as common-traceability]
             [diehard.core :as dh]

@@ -3,8 +3,8 @@
             [common-clj.integrant-components.postgresql :as postgresql]
             [common-clj.porteiro.db.postgresql.customer :as database.customer]
             [common-clj.porteiro.models.customer :as models.customer]
-            [matcher-combinators.test :refer [match?]]
             [common-clj.test.helper.schema :as test.helper.schema]
+            [matcher-combinators.test :refer [match?]]
             [schema.test :as s]))
 
 (def customer-id (random-uuid))

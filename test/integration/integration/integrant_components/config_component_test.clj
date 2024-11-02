@@ -1,5 +1,5 @@
 (ns integration.integrant-components.config-component-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.integrant-components.config]
             [integrant.core :as ig]
             [schema.test :as s]))

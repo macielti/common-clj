@@ -1,6 +1,6 @@
 (ns integration.integrant-components.prometheus-component-test
   (:require [clojure.string :as str]
-            [clojure.test :refer :all]
+            [clojure.test :refer [is testing]]
             [common-clj.integrant-components.prometheus :as component.prometheus]
             [common-clj.integrant-components.routes]
             [common-clj.integrant-components.service]
