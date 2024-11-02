@@ -7,7 +7,7 @@
 
 (s/defn resource-existence-check-interceptor
   "resource-identifier-fn -> function used to extract param used to query the resource, must receive a context as argument.
-  sql-query -> datomic query that will try to find the resource using the resource identifier"
+  sql-query -> postgresql query that will try to find the resource using the resource identifier"
   [resource-identifier-fn
    sql-query]
   (pedestal.interceptor/interceptor {:name  ::resource-existence-check-interceptor

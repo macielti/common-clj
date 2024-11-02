@@ -5,8 +5,8 @@
 
 (s/deftest str->keyword-kebab-case-test
   (testing "that loweCamelCase strings can be converted to kebab case"
-    (is (= :datomic-uri
-           (keyword.core/str->keyword-kebab-case "datomicUri")))))
+    (is (= :database-uri
+           (keyword.core/str->keyword-kebab-case "databaseUri")))))
 
 (s/deftest un-namespaced-test
   (testing "GIVEN a namespaced keword WHEN we unamespace it THEN It should be un-namespaced"

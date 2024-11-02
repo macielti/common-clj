@@ -1,5 +1,5 @@
 (ns common-clj.integrant-components.routes-test
-  (:require [clojure.test :refer [is testing function?]]
+  (:require [clojure.test :refer [function? is testing]]
             [integrant.core :as ig]
             [matcher-combinators.test :refer [match?]]
             [schema.test :as s]))
