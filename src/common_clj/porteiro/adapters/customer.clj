@@ -33,3 +33,15 @@
 (s/defn wire->internal-role :- s/Keyword
   [wire-role :- s/Str]
   (camel-snake-kebab/->kebab-case-keyword wire-role))
+
+(s/defn internal-role->wire-role :- s/Str
+  [wire-role :- s/Keyword]
+  (camel-snake-kebab/->snake_case_string wire-role))
+
+(s/defn postgresql->internal :- models.customer/Customer
+  [{:keys [id username roles name hashed_password]}]
+  (medley/assoc-some {:customer/id              id
+                      :customer/username        username
+                      :customer/hashed-password hashed_password
+                      :customer/roles           (map wire->internal-role roles)}
+                     :customer/name name))

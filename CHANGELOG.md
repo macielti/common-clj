@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [30.68.70] - 2024-11-02
+
+### Changed
+
+- Use PostgreSQL component (Integrant) for Porteiro source code instead of Datomic.
+
 ## [30.67.70] - 2024-11-01
 
 ### Added
@@ -990,7 +996,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v30.67.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v30.68.70...HEAD
+
+[30.68.70]: https://github.com/macielti/common-clj/compare/v30.67.70...v30.68.70
 
 [30.67.70]: https://github.com/macielti/common-clj/compare/v30.66.70...v30.67.70
 
