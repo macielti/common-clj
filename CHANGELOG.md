@@ -7,6 +7,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [30.69.70] - 2024-11-02
 
+### Fixed
+
+- Remove resources files from project release files.
+
 ## [30.68.70] - 2024-11-02
 
 ### Changed
