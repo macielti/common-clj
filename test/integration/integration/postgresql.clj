@@ -12,11 +12,11 @@
 
 (def system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.edn" :test :edn)
+   :config (component.config/new-config "test/resources/config_test.edn" :test :edn)
    :containers (test.helper.components.containers/new-containers #{:postgresql})
    :postgresql (component/using (component.postgresql/new-mock-postgresql) [:config :containers])))
 
-(s/deftest postresql-component-test
+(s/deftest postgresql-component-test
   (let [system (component/start system-test)
         postgresql-pool (component.helper/get-component-content :postgresql system)]
     (jdbc/execute! postgresql-pool ["INSERT INTO pessoa (apelido, nome, nascimento)
