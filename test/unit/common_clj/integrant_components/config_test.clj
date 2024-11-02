@@ -21,4 +21,4 @@
                                                                    :username             "service-name"}
                    :service-name                                  "test-service-name"
                    :topics                                        ["test.example"]}}
-           (component.config/config-file! "resources/config_test.edn")))))
+           (component.config/config-file! "test/resources/config_test.edn")))))
