@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "30.68.70"
+(defproject net.clojars.macielti/common-clj "30.69.70"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -62,22 +62,23 @@
                  [com.github.igrishaev/pg2-core "0.1.18"]
                  [com.github.igrishaev/pg2-migration "0.1.18"]]
 
-  :injections [(require 'hashp.core)]
+  :profiles {:dev {:resource-paths ^:replace ["test/resources"]
 
-  :resource-paths ["resources" "test/resources/"]
+                   :test-paths     ^:replace ["test/unit" "test/integration" "test/helpers"]
 
-  :test-paths ["test/unit" "test/integration" "test/helpers"]
+                   :injections     [(require 'hashp.core)]
 
-  :aliases {"clean-ns"     ["clojure-lsp" "clean-ns" "--dry"] ;; check if namespaces are clean
-            "format"       ["clojure-lsp" "format" "--dry"] ;; check if namespaces are formatted
-            "diagnostics"  ["clojure-lsp" "diagnostics"]
-            "lint"         ["do" ["clean-ns"] ["format"] ["diagnostics"]]
-            "clean-ns-fix" ["clojure-lsp" "clean-ns"]
-            "format-fix"   ["clojure-lsp" "format"]
-            "lint-fix"     ["do" ["clean-ns-fix"] ["format-fix"]]
-            "outdated"     ["with-profile" "antq" "run" "-m" "antq.core"]}
+                   :aliases        {"clean-ns"     ["clojure-lsp" "clean-ns" "--dry"] ;; check if namespaces are clean
+                                    "format"       ["clojure-lsp" "format" "--dry"] ;; check if namespaces are formatted
+                                    "diagnostics"  ["clojure-lsp" "diagnostics"]
+                                    "lint"         ["do" ["clean-ns"] ["format"] ["diagnostics"]]
+                                    "clean-ns-fix" ["clojure-lsp" "clean-ns"]
+                                    "format-fix"   ["clojure-lsp" "format"]
+                                    "lint-fix"     ["do" ["clean-ns-fix"] ["format-fix"]]
+                                    "outdated"     ["with-profile" "antq" "run" "-m" "antq.core"]}
+                   :repl-options   {:init-ns common-clj.schema.core}}}
+
+  :resource-paths ["resources"]
 
   :jvm-opts ^:replace ["--add-opens=java.base/java.nio=ALL-UNNAMED"
-                       "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"]
-
-  :repl-options {:init-ns common-clj.schema.core})
+                       "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"])

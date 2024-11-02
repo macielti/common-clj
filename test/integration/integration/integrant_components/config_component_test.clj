@@ -1,19 +1,19 @@
 (ns integration.integrant-components.config-component-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.integrant-components.config]
             [integrant.core :as ig]
             [schema.test :as s]))
 
 (def config-prod
-  {:common-clj.integrant-components.config/config {:path "resources/config_test.edn"
+  {:common-clj.integrant-components.config/config {:path "test/resources/config_test.edn"
                                                    :env  :prod}})
 
 (def config-test
-  {:common-clj.integrant-components.config/config {:path "resources/config_test.edn"
+  {:common-clj.integrant-components.config/config {:path "test/resources/config_test.edn"
                                                    :env  :test}})
 
 (def config-prod-override-props
-  {:common-clj.integrant-components.config/config {:path      "resources/config_test.edn"
+  {:common-clj.integrant-components.config/config {:path      "test/resources/config_test.edn"
                                                    :env       :prod
                                                    :overrides {:bootstrap-server "http://127.0.0.1:8080"}}})
 

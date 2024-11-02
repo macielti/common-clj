@@ -1,6 +1,7 @@
 (ns common-clj.io.interceptors.customer
   (:require [buddy.sign.jwt :as jwt]
             [camel-snake-kebab.core :as camel-snake-kebab]
+            [clojure.set]
             [clojure.string :as str]
             [common-clj.error.core :as common-error]
             [schema.core :as s])

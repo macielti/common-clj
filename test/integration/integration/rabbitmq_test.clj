@@ -22,7 +22,7 @@
 
 (def ^:private system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.edn" :test :edn)
+   :config (component.config/new-config "test/resources/config_test.edn" :test :edn)
    :containers (test.helper.components.containers/new-containers #{:rabbitmq})
    :rabbitmq-producer (component/using (component.rabbitmq.producer/new-mock-producer) [:config :containers])
    :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-mock-rabbitmq-consumer consumers) [:config :rabbitmq-producer :containers])))
@@ -84,7 +84,7 @@
 
 (def ^:private system-test-problematic-consumer-with-dead-letter-enabled
   (component/system-map
-   :config (component.config/new-config "resources/config_test.edn" :test :edn)
+   :config (component.config/new-config "test/resources/config_test.edn" :test :edn)
    :containers (test.helper.components.containers/new-containers #{:rabbitmq})
    :rabbitmq-producer (component/using (component.rabbitmq.producer/new-mock-producer) [:config :containers])
    :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-mock-rabbitmq-consumer problematic-consumers) [:config :rabbitmq-producer :containers])))
@@ -117,7 +117,7 @@
 
 (def ^:private system-test-problematic-consumer-with-dead-letter-disabled
   (component/system-map
-   :config (component.config/new-config "resources/config_test_dead_letter_disabled.edn" :test :edn)
+   :config (component.config/new-config "test/resources/config_test_dead_letter_disabled.edn" :test :edn)
    :containers (test.helper.components.containers/new-containers #{:rabbitmq})
    :rabbitmq-producer (component/using (component.rabbitmq.producer/new-mock-producer) [:config :containers])
    :rabbitmq-consumer (component/using (component.rabbitmq.consumer/new-mock-rabbitmq-consumer consumers) [:config :rabbitmq-producer :containers])))

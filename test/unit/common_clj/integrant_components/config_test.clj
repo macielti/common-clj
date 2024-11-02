@@ -1,5 +1,5 @@
 (ns common-clj.integrant-components.config-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.integrant-components.config :as component.config]
             [schema.test :as s]))
 
@@ -21,4 +21,4 @@
                                                                    :username             "service-name"}
                    :service-name                                  "test-service-name"
                    :topics                                        ["test.example"]}}
-           (component.config/config-file! "resources/config_test.edn")))))
+           (component.config/config-file! "test/resources/config_test.edn")))))

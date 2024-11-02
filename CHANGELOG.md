@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [30.69.70] - 2024-11-02
+
+### Fixed
+
+- Remove resources files from project release files.
+
 ## [30.68.70] - 2024-11-02
 
 ### Changed
@@ -996,7 +1002,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v30.68.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v30.69.70...HEAD
+
+[30.69.70]: https://github.com/macielti/common-clj/compare/v30.68.70...v30.69.70
 
 [30.68.70]: https://github.com/macielti/common-clj/compare/v30.67.70...v30.68.70
 

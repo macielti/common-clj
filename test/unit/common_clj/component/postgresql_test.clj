@@ -7,7 +7,7 @@
             [schema.test :as s]))
 
 (s/deftest postgresql-for-unit-tests-test
-  (let [{db-connection-pool :database-connection} (component.postgresql/posgresql-component-for-unit-tests "resources/schema.sql")]
+  (let [{db-connection-pool :database-connection} (component.postgresql/posgresql-component-for-unit-tests "test/resources/schema.sql")]
     (jdbc/execute! db-connection-pool ["INSERT INTO pessoa (apelido, nome, nascimento)
                                      VALUES (?, ?, ?)"
                                        "brunão" "nascimento" (instant/read-instant-timestamp "2020-03-23T01:17Z")])

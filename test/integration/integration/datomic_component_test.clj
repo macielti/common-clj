@@ -47,7 +47,7 @@
 
 (def ^:private system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :config (component.config/new-config "test/resources/config_test.json" :test :json)
    :datomic (component/using (component.datomic/new-datomic schemas)
                              [:config])))
 

@@ -1,5 +1,5 @@
 (ns common-clj.integrant-components.postgresql-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [is testing]]
             [common-clj.integrant-components.postgresql :as postgresql]
             [java-time.api :as jt]
             [pg.core :as pg]

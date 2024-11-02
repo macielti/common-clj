@@ -56,7 +56,7 @@
 
 (def ^:private system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :config (component.config/new-config "test/resources/config_test.json" :test :json)
    :routes (component/using (component.routes/new-routes routes-example) [:config])
    :rate-limiter (component.rate-limiter/new-rate-limiter rate-limiters-definition)
    :service (component/using (component.service/new-service) [:config :routes :rate-limiter])))
