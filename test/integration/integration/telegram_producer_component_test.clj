@@ -8,7 +8,7 @@
 
 (def system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :config (component.config/new-config "test/resources/config_test.json" :test :json)
    :telegram-producer (component/using (component.telegram.producer/new-telegram-producer) [:config])))
 
 (s/deftest telegram-consumer-component-test
