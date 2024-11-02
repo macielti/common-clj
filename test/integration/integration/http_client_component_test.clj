@@ -8,7 +8,7 @@
 
 (def ^:private system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.edn" :test :edn)
+   :config (component.config/new-config "test/resources/config_test.edn" :test :edn)
    :http-client (component/using (component.http-client/new-http-client) [:config])))
 
 (s/deftest http-client-component-test

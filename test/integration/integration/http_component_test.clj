@@ -17,7 +17,7 @@
 
 (def ^:private system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.edn" :test :edn)
+   :config (component.config/new-config "test/resources/config_test.edn" :test :edn)
    :http (component/using (component.http/new-http) [:config])
    :routes (component/using (component.routes/new-routes routes-example) [:config])
    :service (component/using (component.service/new-service) [:config :routes])))

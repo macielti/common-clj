@@ -36,7 +36,7 @@
 
 (def ^:private system-test
   (component/system-map
-   :config (component.config/new-config "resources/config_test.json" :test :json)
+   :config (component.config/new-config "test/resources/config_test.json" :test :json)
    :routes (component/using (component.routes/new-routes routes-example) [:config])
    :producer (component/using (component.producer/new-mock-producer) [:config])
    :consumer (component/using (component.consumer/new-mock-consumer topic-consumers) [:config :producer])
