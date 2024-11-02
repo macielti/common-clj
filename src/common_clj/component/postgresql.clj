@@ -65,7 +65,7 @@
                                                   "/" (.getDatabaseName postgresql-container))
                           :initial-pool-size 3
                           :max-pool-size     14})
-          schema-sql (slurp "resources/schema.sql")]
+          schema-sql (slurp "test/resources/schema.sql")]
 
       (jdbc/execute! db-connection [schema-sql])
 
