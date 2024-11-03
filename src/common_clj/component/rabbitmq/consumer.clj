@@ -16,7 +16,7 @@
   {s/Keyword {:schema     s/Any
               :handler-fn IFn}})
 
-(defrecord ^:deprecated Consumer [config postgresql http-client prometheus rabbitmq-producer consumers]
+(defrecord ^:deprecated Consumer [config http-client prometheus rabbitmq-producer consumers]
   component/Lifecycle
   (start ^:deprecated [component]
     (let [config-content (:config config)
@@ -26,7 +26,6 @@
           channel (lch/open connection)
           components (medley/assoc-some {:config (:config config)}
                                         :rabbitmq-producer (:rabbitmq-producer rabbitmq-producer)
-                                        :postgresql (:postgresql postgresql)
                                         :http-client (:http-client http-client)
                                         :prometheus (:prometheus prometheus))
           service-name (:service-name config-content)]
@@ -68,9 +67,9 @@
     (rmq/close (:connection rabbitmq-consumer))))
 
 (defn ^:deprecated new-consumer [consumers]
-  (->Consumer {} {} {} {} {} consumers))
+  (->Consumer {} {} {} {} consumers))
 
-(defrecord ^:deprecated MockConsumer [config postgresql http-client prometheus rabbitmq-producer containers consumers]
+(defrecord ^:deprecated MockConsumer [config http-client prometheus rabbitmq-producer containers consumers]
   component/Lifecycle
   (start ^:deprecated [component]
     (let [rabbitmq-container (-> containers :containers :rabbitmq)
@@ -81,7 +80,6 @@
           channel (lch/open connection)
           components (medley/assoc-some {:config (:config config)}
                                         :rabbitmq-producer (:rabbitmq-producer rabbitmq-producer)
-                                        :postgresql (:postgresql postgresql)
                                         :http-client (:http-client http-client)
                                         :prometheus (:prometheus prometheus))
           service-name (:service-name config-content)]
@@ -122,4 +120,4 @@
     component))
 
 (defn ^:deprecated new-mock-rabbitmq-consumer [consumers]
-  (->MockConsumer {} {} {} {} {} {} consumers))
+  (->MockConsumer {} {} {} {} {} consumers))
