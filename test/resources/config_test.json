@@ -1,23 +1,17 @@
 {
   "prod": {
     "bootstrapServer": "http://localhost:9092",
-    "datomicURI": "datomic:mem://example-prod",
     "service": {
       "host": "0.0.0.0",
       "port": 80
     }
   },
   "test": {
-    "datomicLocal": {
-      "storageDir": "/tmp/datomic",
-      "dbName": "test"
-    },
     "serviceName": "test-service",
     "topics": [
       "consumer-topic-test"
     ],
     "bootstrapServer": "http://localhost:9092",
-    "datomicURI": "datomic:mem://example-test",
     "service": {
       "host": "0.0.0.0",
       "port": 8080

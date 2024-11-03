@@ -70,7 +70,7 @@
                                                              (when (-> components :config :dead-letter-queue-service-integration-enabled)
                                                                (replay-dead-letter! clj-message service-name (str e) (:producer components)))))))))))))}))
 
-(s/defrecord ^:deprecated Consumer [config datomic producer topic-consumers]
+(s/defrecord ^:deprecated Consumer [config producer topic-consumers]
   component/Lifecycle
 
   (start ^:deprecated [this]
@@ -80,8 +80,7 @@
                           "group.id"           (get-in config [:config :service-name])}
           components (medley/assoc-some {}
                                         :producer (:producer producer)
-                                        :config (:config config)
-                                        :datomic (:datomic datomic))
+                                        :config (:config config))
           topics (get-in config [:config :topics])
           context {:consumer-props  consumer-props
                    :topics          topics
@@ -119,7 +118,7 @@
       set
       (clojure.set/difference (set consumed-messages))))
 
-(defrecord ^:deprecated MockKafkaConsumer [config datomic producer topic-consumers]
+(defrecord ^:deprecated MockKafkaConsumer [config producer topic-consumers]
   component/Lifecycle
 
   (start ^:deprecated [this]
@@ -128,8 +127,7 @@
                       {:error :mock-kafka-producer-component-not-provided})))
     (let [components (medley/assoc-some {}
                                         :producer (:producer producer)
-                                        :config (:config config)
-                                        :datomic (:datomic datomic))
+                                        :config (:config config))
           consumed-messages (atom [])
           produced-messages (-> components :producer :produced-messages)
           topics (->> components :config :topics (map keyword) set)
@@ -160,4 +158,4 @@
     (assoc this :consumer nil)))
 
 (defn ^:deprecated new-mock-consumer [topic-consumers]
-  (->MockKafkaConsumer {} {} {} topic-consumers))
+  (->MockKafkaConsumer {} {} topic-consumers))

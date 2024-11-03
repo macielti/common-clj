@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "30.69.70"
+(defproject net.clojars.macielti/common-clj "31.69.70"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -18,7 +18,6 @@
                  [morse "0.4.3"]
                  [overtone/at-at "1.3.58"]
                  [clj-test-containers "0.7.4"]
-                 [datalevin "0.9.10"]
                  [org.apache.kafka/kafka-clients "3.8.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
                  [nubank/state-flow "5.18.0"]
@@ -32,7 +31,6 @@
                  [prismatic/schema-generators "0.1.5"]
                  [nubank/matcher-combinators "3.9.1"]
                  [org.clojure/core.async "1.6.681"]
-                 [com.datomic/peer "1.0.7187"]
                  [com.stuartsierra/component "1.1.0"]
                  [siili/humanize "0.1.1"]
                  [camel-snake-kebab "0.4.3"]
@@ -60,7 +58,8 @@
                  [overtone/at-at "1.3.58"]
                  [buddy/buddy-hashers "1.8.158"]
                  [com.github.igrishaev/pg2-core "0.1.18"]
-                 [com.github.igrishaev/pg2-migration "0.1.18"]]
+                 [com.github.igrishaev/pg2-migration "0.1.18"]
+                 [commons-io/commons-io "2.17.0"]]
 
   :profiles {:dev {:resource-paths ^:replace ["test/resources"]
 
@@ -78,7 +77,4 @@
                                     "outdated"     ["with-profile" "antq" "run" "-m" "antq.core"]}
                    :repl-options   {:init-ns common-clj.schema.core}}}
 
-  :resource-paths ["resources"]
-
-  :jvm-opts ^:replace ["--add-opens=java.base/java.nio=ALL-UNNAMED"
-                       "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"])
+  :resource-paths ["resources"])
