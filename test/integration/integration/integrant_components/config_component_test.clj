@@ -46,8 +46,6 @@
               :current-env                                   :test
               :dead-letter-queue-service-integration-enabled true
               :new-relic-api-key                             "random-api-key"
-              :postgresql-uri                                "jdbc:postgres://localhost:5432/postgres?user=postgres&password=postgres"
-              :rabbitmq-uri                                  "amqp://guest:guest@localhost:5672"
               :service                                       {:host "0.0.0.0"
                                                               :port 8000}
               :service-authentication                        {:auth-server-base-url "https://example.com"

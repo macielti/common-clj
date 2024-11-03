@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "31.69.70"
+(defproject net.clojars.macielti/common-clj "32.69.70"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -11,13 +11,11 @@
   :exclusions [log4j]
 
   :dependencies [[org.clojure/clojure "1.11.4"]
-                 [clojure.jdbc/clojure.jdbc-c3p0 "0.3.4"]
                  [hashp "0.2.2"]
                  [com.attendify/schema-refined "0.3.0-alpha5"]
                  [nubank/mockfn "0.7.0"]
                  [morse "0.4.3"]
                  [overtone/at-at "1.3.58"]
-                 [clj-test-containers "0.7.4"]
                  [org.apache.kafka/kafka-clients "3.8.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
                  [nubank/state-flow "5.18.0"]
@@ -38,10 +36,6 @@
                  [buddy/buddy-sign "3.6.1-359"]
                  [com.novemberain/langohr "5.4.0"]
                  [cheshire "5.13.0"]
-                 [org.testcontainers/postgresql "1.20.1"]
-                 [org.testcontainers/rabbitmq "1.20.1"]
-                 [org.postgresql/postgresql "42.7.4"]
-                 [com.github.seancorfield/next.jdbc "1.3.939"]
                  [metosin/schema-tools "0.13.1"]
                  [clj-commons/iapetos "0.1.14"]
                  [clojure.java-time "1.4.2"]
@@ -57,13 +51,14 @@
                  [diehard "0.11.12"]
                  [overtone/at-at "1.3.58"]
                  [buddy/buddy-hashers "1.8.158"]
-                 [com.github.igrishaev/pg2-core "0.1.18"]
-                 [com.github.igrishaev/pg2-migration "0.1.18"]
-                 [commons-io/commons-io "2.17.0"]]
+                 [commons-io/commons-io "2.17.0"]
+                 [net.clojars.macielti/postgresql-component "1.1.0"]]
 
   :profiles {:dev {:resource-paths ^:replace ["test/resources"]
 
                    :test-paths     ^:replace ["test/unit" "test/integration" "test/helpers"]
+
+                   :dependencies   [[net.clojars.macielti/common-test-clj "1.0.0"]]
 
                    :injections     [(require 'hashp.core)]
 

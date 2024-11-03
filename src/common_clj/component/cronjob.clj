@@ -8,12 +8,11 @@
   [tasks components]
   (reduce (fn [tasks' task-id] (update-in tasks' [task-id :params] #(merge % {:components components}))) tasks (keys tasks)))
 
-(defrecord ^:deprecated ConJob [config rabbitmq-producer http-client prometheus tasks]
+(defrecord ^:deprecated ConJob [config http-client prometheus tasks]
   component/Lifecycle
   (start ^:deprecated [component]
     (let [tasks' (tasks-with-components (:tasks tasks) (medley/assoc-some {}
                                                                           :config (:config config)
-                                                                          :rabbitmq-producer (:rabbitmq-producer rabbitmq-producer)
                                                                           :http-client (:http-client http-client)
                                                                           :prometheus (:prometheus prometheus)))
           scheduler (io.scheduler/scheduler tasks' {} {:clock {:timezone "UTC"}})]
@@ -27,4 +26,4 @@
 
 (defn ^:deprecated new-cronjob
   [tasks]
-  (->ConJob {} {} {} {} {:tasks tasks}))
+  (->ConJob {} {} {} {:tasks tasks}))

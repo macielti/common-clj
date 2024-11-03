@@ -1,9 +1,9 @@
 (ns common-clj.porteiro.db.postgresql.customer-test
   (:require [clojure.test :refer :all]
-            [common-clj.integrant-components.postgresql :as postgresql]
             [common-clj.porteiro.db.postgresql.customer :as database.customer]
             [common-clj.porteiro.models.customer :as models.customer]
             [common-clj.test.helper.schema :as test.helper.schema]
+            [common-test-clj.component.postgresql-mock :as component.postgresql-mock]
             [matcher-combinators.test :refer [match?]]
             [schema.test :as s]))
 
@@ -15,7 +15,7 @@
 
 (s/deftest insert-test
   (testing "Should insert a customer"
-    (let [conn (postgresql/mocked-postgresql-conn)]
+    (let [conn (component.postgresql-mock/postgresql-conn-mock)]
       (is (match? {:customer/hashed-password string?
                    :customer/id              uuid?
                    :customer/roles           ()
@@ -24,7 +24,7 @@
 
 (s/deftest by-username-test
   (testing "Should be able to query a customer by username"
-    (let [conn (postgresql/mocked-postgresql-conn)]
+    (let [conn (component.postgresql-mock/postgresql-conn-mock)]
       (database.customer/insert! customer conn)
       (is (match? {:customer/id              uuid?
                    :customer/username        "magal"
@@ -36,7 +36,7 @@
 
 (s/deftest lookup-test
   (testing "Should be able to query a customer by id"
-    (let [conn (postgresql/mocked-postgresql-conn)]
+    (let [conn (component.postgresql-mock/postgresql-conn-mock)]
       (database.customer/insert! customer conn)
       (is (match? {:customer/id              uuid?
                    :customer/username        "magal"
@@ -48,7 +48,7 @@
 
 (s/deftest add-role-test
   (testing "Should be able to query a customer by id"
-    (let [conn (postgresql/mocked-postgresql-conn)]
+    (let [conn (component.postgresql-mock/postgresql-conn-mock)]
       (database.customer/insert! customer conn)
       (is (match? {:customer/id              uuid?
                    :customer/username        "magal"

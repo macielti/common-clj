@@ -4,7 +4,7 @@
             [io.pedestal.http :as http]
             [medley.core :as medley]))
 
-(defrecord ^:deprecated Service [routes config postgresql rabbitmq-producer producer http-client prometheus rate-limiter telegram-producer]
+(defrecord ^:deprecated Service [routes config producer http-client prometheus rate-limiter telegram-producer]
   component/Lifecycle
   (start ^:deprecated [component]
     (let [{{{:keys [host port]} :service} :config} config
@@ -16,8 +16,6 @@
                        ::http/join?           false}
           components (medley/assoc-some {:config (:config config)}
                                         :producer (:producer producer)
-                                        :rabbitmq-producer (:rabbitmq-producer rabbitmq-producer)
-                                        :postgresql (:postgresql postgresql)
                                         :http-client (:http-client http-client)
                                         :prometheus (:prometheus prometheus)
                                         :rate-limiter (:rate-limiter rate-limiter)
@@ -32,4 +30,4 @@
     (assoc component :service nil)))
 
 (defn ^:deprecated new-service []
-  (->Service {} {} {} {} {} {} {} {} {}))
+  (->Service {} {} {} {} {} {} {}))
