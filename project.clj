@@ -16,7 +16,6 @@
                  [nubank/mockfn "0.7.0"]
                  [morse "0.4.3"]
                  [overtone/at-at "1.3.58"]
-                 [clj-test-containers "0.7.4"]
                  [org.apache.kafka/kafka-clients "3.8.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
                  [nubank/state-flow "5.18.0"]

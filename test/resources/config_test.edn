@@ -7,7 +7,6 @@
         :service                                       {:host "0.0.0.0"
                                                         :port 8000}
         :topics                                        ["test.example"]
-        :rabbitmq-uri                                  "amqp://guest:guest@localhost:5672"
         :dead-letter-queue-service-integration-enabled true
         :service-authentication                        {:auth-server-base-url "https://example.com"
                                                         :username             "service-name"

@@ -1,9 +1,9 @@
 (ns common-clj.porteiro.db.postgresql.customer-test
   (:require [clojure.test :refer :all]
-            [common-test-clj.component.postgresql-mock :as component.postgresql-mock]
             [common-clj.porteiro.db.postgresql.customer :as database.customer]
             [common-clj.porteiro.models.customer :as models.customer]
             [common-clj.test.helper.schema :as test.helper.schema]
+            [common-test-clj.component.postgresql-mock :as component.postgresql-mock]
             [matcher-combinators.test :refer [match?]]
             [schema.test :as s]))
 
