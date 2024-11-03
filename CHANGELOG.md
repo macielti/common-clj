@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [32.69.70] - 2024-11-03
+
+### Removed
+
+- Removed all code related with RabbitMQ and PostgreSQL components.
+- Removed all code related with test containers.
+
 ## [31.69.70] - 2024-11-02
 
 ### Removed
@@ -1008,7 +1015,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v31.69.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v32.69.70...HEAD
+
+[32.69.70]: https://github.com/macielti/common-clj/compare/v31.69.70...v32.69.70
 
 [31.69.70]: https://github.com/macielti/common-clj/compare/v30.69.70...v31.69.70
 
