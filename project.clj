@@ -58,7 +58,8 @@
                  [overtone/at-at "1.3.58"]
                  [buddy/buddy-hashers "1.8.158"]
                  [com.github.igrishaev/pg2-core "0.1.18"]
-                 [com.github.igrishaev/pg2-migration "0.1.18"]]
+                 [com.github.igrishaev/pg2-migration "0.1.18"]
+                 [commons-io/commons-io "2.17.0"]]
 
   :profiles {:dev {:resource-paths ^:replace ["test/resources"]
 
