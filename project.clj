@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "30.69.70"
+(defproject net.clojars.macielti/common-clj "31.69.70"
   :description "Just common Clojure code that I use across projects"
   :url "https://github.com/macielti/common-clj"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
@@ -76,7 +76,4 @@
                                     "outdated"     ["with-profile" "antq" "run" "-m" "antq.core"]}
                    :repl-options   {:init-ns common-clj.schema.core}}}
 
-  :resource-paths ["resources"]
-
-  :jvm-opts ^:replace ["--add-opens=java.base/java.nio=ALL-UNNAMED"
-                       "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED"])
+  :resource-paths ["resources"])

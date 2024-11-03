@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [31.69.70] - 2024-11-02
+
+### Removed
+
+- Removed all code related with Datomic and Datalevin components.
+
 ## [30.69.70] - 2024-11-02
 
 ### Fixed
@@ -1002,7 +1008,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v30.69.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v31.69.70...HEAD
+
+[31.69.70]: https://github.com/macielti/common-clj/compare/v30.69.70...v31.69.70
 
 [30.69.70]: https://github.com/macielti/common-clj/compare/v30.68.70...v30.69.70
 
