@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [33.70.70] - 2024-11-05
+
+### Removed
+
+- Removed Kafka and New Relic deprecated components related code.
+
 ## [32.70.70] - 2024-11-05
 
 ### Added
@@ -1021,7 +1027,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v32.70.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v33.70.70...HEAD
+
+[33.70.70]: https://github.com/macielti/common-clj/compare/v32.70.70...v33.70.70
 
 [32.70.70]: https://github.com/macielti/common-clj/compare/v32.69.70...v32.70.70
 
