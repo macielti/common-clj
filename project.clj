@@ -13,7 +13,6 @@
                  [com.attendify/schema-refined "0.3.0-alpha5"]
                  [morse "0.4.3"]
                  [overtone/at-at "1.3.58"]
-                 [org.apache.kafka/kafka-clients "3.8.0"]
                  [de.ubercode.clostache/clostache "1.4.0"]
                  [telegrambot-lib "2.15.0"]
                  [io.pedestal/pedestal.service "0.7.2"]
