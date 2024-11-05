@@ -9,7 +9,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Removed
 
-- Removed Kafka and New Relic deprecated components related code.
+- Removed Kafka, New Relic and Rate Limiter deprecated components related code.
 
 ## [32.70.70] - 2024-11-05
 
