@@ -57,6 +57,7 @@
 
                    :dependencies   [[net.clojars.macielti/common-test-clj "1.0.0"]
                                     [nubank/matcher-combinators "3.9.1"]
+                                    [clj-http-fake "1.0.4"]
                                     [com.taoensso/timbre "6.6.1"]
                                     [nubank/mockfn "0.7.0"]
                                     [hashp "0.2.2"]]
