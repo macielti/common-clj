@@ -45,9 +45,7 @@
                  [overtone/at-at "1.4.65"]
                  [buddy/buddy-hashers "1.8.158"]
                  [commons-io/commons-io "2.17.0"]
-                 [net.clojars.macielti/postgresql-component "2.1.2"]
-                 [com.taoensso/timbre "6.6.1"]
-                 [com.taoensso/encore "3.129.0"]]
+                 [net.clojars.macielti/postgresql-component "2.1.2"]]
 
   :profiles {:dev {:resource-paths ^:replace ["test/resources"]
 
@@ -59,6 +57,8 @@
 
                    :dependencies   [[net.clojars.macielti/common-test-clj "1.0.0"]
                                     [nubank/matcher-combinators "3.9.1"]
+                                    [com.taoensso/timbre "6.6.1"]
+                                    [nubank/mockfn "0.7.0"]
                                     [hashp "0.2.2"]]
 
                    :injections     [(require 'hashp.core)]
