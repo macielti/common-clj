@@ -45,7 +45,8 @@
                  [overtone/at-at "1.4.65"]
                  [buddy/buddy-hashers "1.8.158"]
                  [commons-io/commons-io "2.17.0"]
-                 [net.clojars.macielti/postgresql-component "2.1.2"]]
+                 [net.clojars.macielti/postgresql-component "2.1.2"]
+                 [com.taoensso/timbre "6.6.1"]]
 
   :profiles {:dev {:resource-paths ^:replace ["test/resources"]
 
