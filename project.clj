@@ -46,7 +46,8 @@
                  [buddy/buddy-hashers "1.8.158"]
                  [commons-io/commons-io "2.17.0"]
                  [net.clojars.macielti/postgresql-component "2.1.2"]
-                 [com.taoensso/timbre "6.6.1"]]
+                 [com.taoensso/timbre "6.6.1"]
+                 [com.taoensso/encore "3.129.0"]]
 
   :profiles {:dev {:resource-paths ^:replace ["test/resources"]
 
