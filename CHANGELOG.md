@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [34.70.70] - 2024-11-05
+
+### Remove
+
+- Removed all components from Stuart Sierra's component library.
+- Removed `porteiro` related code.
+
 ## [33.70.70] - 2024-11-05
 
 ### Removed
