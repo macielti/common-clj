@@ -31,7 +31,8 @@
                  [integrant "0.13.1"]
                  [amazonica "0.3.167"]
                  [diehard "0.11.12"]
-                 [overtone/at-at "1.4.65"]]
+                 [overtone/at-at "1.4.65"]
+                 [commons-io/commons-io "2.17.0"]]
 
   :profiles {:dev {:resource-paths ^:replace ["test/resources"]
 
