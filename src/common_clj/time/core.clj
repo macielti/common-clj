@@ -3,7 +3,6 @@
   (:import (java.time LocalDate LocalDateTime ZoneOffset)
            (java.util Date TimeZone)))
 
-
 (s/defn local-datetime? :- s/Bool
   [value]
   (= (type value) LocalDateTime))
