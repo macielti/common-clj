@@ -24,5 +24,5 @@
       (is (= {:status 200
               :body   {:component-keys ["config" "routes"]
                        :hello          "world"}}
-             (aux.http/request-test-endpoints "/hello-world" nil service-fn)))
+             (aux.http/get-request-test-endpoints "/hello-world" nil service-fn)))
       (ig/halt! system))))

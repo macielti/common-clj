@@ -2,7 +2,7 @@
   (:require [cheshire.core :as json]
             [io.pedestal.test :as test]))
 
-(defn request-test-endpoints
+(defn get-request-test-endpoints
   [path
    headers
    service-fn]

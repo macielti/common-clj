@@ -2,16 +2,9 @@
   (:require [clojure.test :refer [is testing]]
             [common-clj.time.core :as time]
             [matcher-combinators.test :refer [match?]]
-            [mockfn.macros :as mfn]
             [schema.test :as s])
   (:import (java.time LocalDate)
            (java.util Date)))
-
-(s/deftest now-datetime-test
-  (testing "that we can generate a datetime now"
-    (is (= #inst "2022-02-23T22:19:31.390-00:00"
-           (mfn/providing [(time/now-datetime) #inst "2022-02-23T22:19:31.390-00:00"]
-                          (time/now-datetime))))))
 
 (s/deftest now-test
   (testing "now local datetime"

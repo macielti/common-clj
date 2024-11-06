@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [34.70.70] - 2024-11-05
+
+### Remove
+
+- Removed all components from Stuart Sierra's component library.
+- Removed `porteiro` related code.
+
 ## [33.70.70] - 2024-11-05
 
 ### Removed
@@ -1027,7 +1034,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v33.70.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v34.70.70...HEAD
+
+[33.70.70]: https://github.com/macielti/common-clj/compare/v33.70.70...v34.70.70
 
 [33.70.70]: https://github.com/macielti/common-clj/compare/v32.70.70...v33.70.70
 

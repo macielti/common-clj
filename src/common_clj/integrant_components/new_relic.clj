@@ -1,10 +1,9 @@
 (ns common-clj.integrant-components.new-relic
   (:require [cheshire.core :as json]
-            [common-clj.component.http-client :as component.http-client]
+            [common-clj.integrant-components.http-client :as component.http-client]
             [common-clj.traceability.core :as common-traceability]
             [integrant.core :as ig]
             [medley.core :as medley]
-            [taoensso.timbre :as timbre]
             [taoensso.timbre :as log]))
 
 (defn new-relic-http-appender
@@ -14,7 +13,7 @@
    :fn       (fn [data]
                (let [stacktrace-str (if-let [pr (:pr-stacktrace opts)]
                                       #(with-out-str (pr %))
-                                      #(timbre/default-output-error-fn
+                                      #(log/default-output-error-fn
                                         {:?err        %
                                          :output-opts {:stacktrace-fonts {}}}))
                      entry (medley/assoc-some {:cid       (common-traceability/current-correlation-id)
@@ -37,7 +36,7 @@
 (defmethod ig/init-key ::new-relic
   [_ {:keys [components]}]
   (log/info :starting ::new-relic)
-  {:timbre (timbre/merge-config!
+  {:timbre (log/merge-config!
             {:appenders {:new-relic-http (new-relic-http-appender (-> components :config :new-relic-api-key)
                                                                   (-> components :config :service-name)
                                                                   (:http-client components))}})})
