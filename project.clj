@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "34.70.70"
+(defproject net.clojars.macielti/common-clj "34.71.70"
 
   :description "Just common Clojure code that I use across projects"
 
@@ -9,7 +9,7 @@
 
   :exclusions [log4j]
 
-  :dependencies [[org.clojure/clojure "1.11.4"]
+  :dependencies [[org.clojure/clojure "1.12.0"]
                  [morse "0.4.3"]
                  [io.pedestal/pedestal.service "0.7.2"]
                  [io.pedestal/pedestal.interceptor "0.7.2"]
