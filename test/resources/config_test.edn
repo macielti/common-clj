@@ -10,5 +10,4 @@
         :dead-letter-queue-service-integration-enabled true
         :service-authentication                        {:auth-server-base-url "https://example.com"
                                                         :username             "service-name"
-                                                        :password             "random-password"}
-        :new-relic-api-key                             "random-api-key"}}
+                                                        :password             "random-password"}}}

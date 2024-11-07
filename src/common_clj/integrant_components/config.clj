@@ -2,7 +2,7 @@
   (:require [clojure.tools.reader.edn :as edn]
             [integrant.core :as ig]
             [schema.core :as s]
-            [taoensso.timbre :as log]))
+            [clojure.tools.logging :as log]))
 
 (s/defn config-file!
   "Expects a Path to an edn file"

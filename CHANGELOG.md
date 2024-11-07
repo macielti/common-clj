@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [35.71.70] - 2024-11-07
+
+### Removed
+
+- Removed timbre logging library.
+
 ## [34.71.70] - 2024-11-07
 
 ### Changed
@@ -1040,7 +1046,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v34.71.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v35.71.70...HEAD
+
+[35.71.70]: https://github.com/macielti/common-clj/compare/v34.71.70...v35.71.70
 
 [34.71.70]: https://github.com/macielti/common-clj/compare/v34.70.70...v34.71.70
 

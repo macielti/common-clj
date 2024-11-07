@@ -3,7 +3,7 @@
             [iapetos.export :as export]
             [integrant.core :as ig]
             [schema.core :as s]
-            [taoensso.timbre :as log]))
+            [clojure.tools.logging :as log]))
 
 (s/defn expose-metrics-http-request-handler
   [{headers                     :headers

@@ -11,7 +11,6 @@
                                             :username             "service-name"}}
             :test {:bootstrap-server                              "http://localhost:9092"
                    :dead-letter-queue-service-integration-enabled true
-                   :new-relic-api-key                             "random-api-key"
                    :service                                       {:host "0.0.0.0"
                                                                    :port 8000}
                    :service-authentication                        {:auth-server-base-url "https://example.com"

@@ -2,7 +2,7 @@
   (:require [hara.io.scheduler :as io.scheduler]
             [integrant.core :as ig]
             [schema.core :as s]
-            [taoensso.timbre :as log]))
+            [clojure.tools.logging :as log]))
 
 (s/defn tasks-with-components
   [tasks components]

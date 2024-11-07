@@ -8,7 +8,7 @@
             [medley.core :as medley]
             [overtone.at-at :as at-at]
             [schema.core :as s]
-            [taoensso.timbre :as log])
+            [clojure.tools.logging :as log])
   (:import (clojure.lang IFn)))
 
 (s/defschema Consumers
