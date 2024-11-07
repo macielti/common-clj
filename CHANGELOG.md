@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [34.71.70] - 2024-11-07
+
+### Changed
+
+- Bump Clojure version.
+
 ## [34.70.70] - 2024-11-05
 
 ### Remove
@@ -1034,9 +1040,11 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v34.70.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v34.71.70...HEAD
 
-[33.70.70]: https://github.com/macielti/common-clj/compare/v33.70.70...v34.70.70
+[34.71.70]: https://github.com/macielti/common-clj/compare/v34.70.70...v34.71.70
+
+[34.70.70]: https://github.com/macielti/common-clj/compare/v33.70.70...v34.70.70
 
 [33.70.70]: https://github.com/macielti/common-clj/compare/v32.70.70...v33.70.70
 
