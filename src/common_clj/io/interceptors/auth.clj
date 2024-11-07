@@ -6,7 +6,7 @@
             [io.pedestal.interceptor :as pedestal.interceptor]
             [medley.core :as medley]
             [schema.core :as s]
-            [taoensso.timbre :as log]))
+            [clojure.tools.logging :as log]))
 
 (s/defschema GoogleRecaptchaV3ResponseTokenValidationResultWireIn
   (common-schema/loose-schema {:success                s/Bool

@@ -2,7 +2,7 @@
   (:require [clj-rate-limiter.core :as r]
             [integrant.core :as ig]
             [schema.core :as s]
-            [taoensso.timbre :as log])
+            [clojure.tools.logging :as log])
   (:import (clj_rate_limiter.core MemoryRateLimiterFactory)))
 
 (s/defschema RateLimitersDefinition

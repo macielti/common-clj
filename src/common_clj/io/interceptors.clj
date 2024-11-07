@@ -6,7 +6,7 @@
             [io.pedestal.interceptor :as pedestal.interceptor]
             [io.pedestal.interceptor.error :as error]
             [schema.core :as s]
-            [taoensso.timbre :as log])
+            [clojure.tools.logging :as log])
   (:import (clojure.lang ExceptionInfo)))
 
 (def error-handler-interceptor

@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "34.71.70"
+(defproject net.clojars.macielti/common-clj "35.71.70"
 
   :description "Just common Clojure code that I use across projects"
 
@@ -32,7 +32,8 @@
                  [amazonica "0.3.167"]
                  [diehard "0.11.12"]
                  [overtone/at-at "1.4.65"]
-                 [commons-io/commons-io "2.17.0"]]
+                 [commons-io/commons-io "2.17.0"]
+                 [org.clojure/tools.logging "1.3.0"]]
 
   :profiles {:dev {:resource-paths ^:replace ["test/resources"]
 
@@ -43,9 +44,10 @@
                                     [com.github.liquidz/antq "RELEASE"]]
 
                    :dependencies   [[net.clojars.macielti/common-test-clj "1.0.0"]
+                                    [org.slf4j/slf4j-api "2.0.16"]
+                                    [ch.qos.logback/logback-classic "1.5.12"]
                                     [nubank/matcher-combinators "3.9.1"]
                                     [clj-http-fake "1.0.4"]
-                                    [com.taoensso/timbre "6.6.1"]
                                     [nubank/mockfn "0.7.0"]
                                     [hashp "0.2.2"]]
 

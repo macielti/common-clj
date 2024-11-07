@@ -1,6 +1,6 @@
 (ns common-clj.integrant-components.routes
   (:require [integrant.core :as ig]
-            [taoensso.timbre :as log]))
+            [clojure.tools.logging :as log]))
 
 (defmethod ig/init-key ::routes
   [_ {:keys [routes]}]

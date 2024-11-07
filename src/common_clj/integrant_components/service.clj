@@ -2,7 +2,7 @@
   (:require [common-clj.io.interceptors :as io.interceptors]
             [integrant.core :as ig]
             [io.pedestal.http :as http]
-            [taoensso.timbre :as log]))
+            [clojure.tools.logging :as log]))
 
 (defmethod ig/init-key ::service
   [_ {:keys [components]}]

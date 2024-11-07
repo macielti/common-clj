@@ -5,7 +5,7 @@
             [integrant.core :as ig]
             [medley.core :as medley]
             [schema.core :as s]
-            [taoensso.timbre :as log]))
+            [clojure.tools.logging :as log]))
 
 (defmulti produce!
   (fn [_ {:keys [current-env]}]

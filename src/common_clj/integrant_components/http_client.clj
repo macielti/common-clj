@@ -6,7 +6,7 @@
             [integrant.core :as ig]
             [medley.core :as medley]
             [schema.core :as s]
-            [taoensso.timbre :as log]))
+            [clojure.tools.logging :as log]))
 
 (def method->request-fn
   {:post   client/post
