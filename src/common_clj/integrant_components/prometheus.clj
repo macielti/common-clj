@@ -1,9 +1,9 @@
 (ns common-clj.integrant-components.prometheus
-  (:require [iapetos.core :as prometheus]
+  (:require [clojure.tools.logging :as log]
+            [iapetos.core :as prometheus]
             [iapetos.export :as export]
             [integrant.core :as ig]
-            [schema.core :as s]
-            [clojure.tools.logging :as log]))
+            [schema.core :as s]))
 
 (s/defn expose-metrics-http-request-handler
   [{headers                     :headers

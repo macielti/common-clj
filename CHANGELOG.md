@@ -5,6 +5,16 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [36.71.70] - 2024-11-07
+
+### Removed
+
+- Removed deprecated code.
+
+### Added
+
+- Bump dependencies.
+
 ## [35.71.70] - 2024-11-07
 
 ### Removed
@@ -1046,7 +1056,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v35.71.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v36.71.70...HEAD
+
+[36.71.70]: https://github.com/macielti/common-clj/compare/v35.71.70...v36.71.70
 
 [35.71.70]: https://github.com/macielti/common-clj/compare/v34.71.70...v35.71.70
 

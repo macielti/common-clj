@@ -1,8 +1,8 @@
 (ns common-clj.integrant-components.config
-  (:require [clojure.tools.reader.edn :as edn]
+  (:require [clojure.tools.logging :as log]
+            [clojure.tools.reader.edn :as edn]
             [integrant.core :as ig]
-            [schema.core :as s]
-            [clojure.tools.logging :as log]))
+            [schema.core :as s]))
 
 (s/defn config-file!
   "Expects a Path to an edn file"

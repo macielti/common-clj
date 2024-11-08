@@ -1,12 +1,12 @@
 (ns common-clj.io.interceptors.auth
   (:require [cheshire.core :as json]
             [clj-http.client :as client]
+            [clojure.tools.logging :as log]
             [common-clj.error.core :as common-error]
             [common-clj.schema.core :as common-schema]
             [io.pedestal.interceptor :as pedestal.interceptor]
             [medley.core :as medley]
-            [schema.core :as s]
-            [clojure.tools.logging :as log]))
+            [schema.core :as s]))
 
 (s/defschema GoogleRecaptchaV3ResponseTokenValidationResultWireIn
   (common-schema/loose-schema {:success                s/Bool

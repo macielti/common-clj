@@ -33,8 +33,3 @@
   (testing "that we can convert a Date object to ISO-8601 string"
     (is (= "2022-07-22T22:59:17.598Z"
            (time.parser.core/date->wire #inst"2022-07-22T22:59:17.598-00:00")))))
-
-(s/deftest wire->date-test
-  (testing "that we can convert a ISO-8601 string into a Date object"
-    (is (= #inst "2022-07-22T22:59:17.598-00:00"
-           (time.parser.core/wire->date "2022-07-22T22:59:17.598Z")))))

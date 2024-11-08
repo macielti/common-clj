@@ -1,11 +1,11 @@
 (ns common-clj.integrant-components.sqs-producer
   (:require [amazonica.aws.sqs :as sqs]
+            [clojure.tools.logging :as log]
             [common-clj.integrant-components.sqs-consumer :as component.sqs-consumer]
             [common-clj.traceability.core :as common-traceability]
             [integrant.core :as ig]
             [medley.core :as medley]
-            [schema.core :as s]
-            [clojure.tools.logging :as log]))
+            [schema.core :as s]))
 
 (defmulti produce!
   (fn [_ {:keys [current-env]}]
