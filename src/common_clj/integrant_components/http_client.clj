@@ -2,11 +2,11 @@
   (:require [camel-snake-kebab.core :as camel-snake-kebab]
             [cheshire.core :as json]
             [clj-http.client :as client]
+            [clojure.tools.logging :as log]
             [iapetos.core :as prometheus]
             [integrant.core :as ig]
             [medley.core :as medley]
-            [schema.core :as s]
-            [clojure.tools.logging :as log]))
+            [schema.core :as s]))
 
 (def method->request-fn
   {:post   client/post

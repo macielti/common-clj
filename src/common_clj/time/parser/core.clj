@@ -1,6 +1,6 @@
 (ns common-clj.time.parser.core
   (:require [schema.core :as s])
-  (:import (java.time LocalDate OffsetDateTime ZoneOffset)
+  (:import (java.time LocalDate ZoneOffset)
            (java.time.format DateTimeFormatter)
            (java.util Date)))
 
@@ -23,10 +23,3 @@
   [date :- Date]
   (-> (.atOffset (.toInstant date) ZoneOffset/UTC)
       (.format DateTimeFormatter/ISO_DATE_TIME)))
-
-(s/defn wire->date :- Date
-  "Convert ISO-8601 string to Date object"
-  [date-iso-8601 :- s/Str]
-  (-> (OffsetDateTime/parse date-iso-8601)
-      .toInstant
-      Date/from))

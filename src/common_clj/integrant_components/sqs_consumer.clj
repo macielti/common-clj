@@ -1,14 +1,14 @@
 (ns common-clj.integrant-components.sqs-consumer
   (:require [amazonica.aws.sqs :as sqs]
             [clojure.set]
+            [clojure.tools.logging :as log]
             [clojure.tools.reader.edn :as edn]
             [common-clj.traceability.core :as common-traceability]
             [diehard.core :as dh]
             [integrant.core :as ig]
             [medley.core :as medley]
             [overtone.at-at :as at-at]
-            [schema.core :as s]
-            [clojure.tools.logging :as log])
+            [schema.core :as s])
   (:import (clojure.lang IFn)))
 
 (s/defschema Consumers

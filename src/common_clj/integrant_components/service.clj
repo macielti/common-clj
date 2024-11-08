@@ -1,8 +1,8 @@
 (ns common-clj.integrant-components.service
-  (:require [common-clj.io.interceptors :as io.interceptors]
+  (:require [clojure.tools.logging :as log]
+            [common-clj.io.interceptors :as io.interceptors]
             [integrant.core :as ig]
-            [io.pedestal.http :as http]
-            [clojure.tools.logging :as log]))
+            [io.pedestal.http :as http]))
 
 (defmethod ig/init-key ::service
   [_ {:keys [components]}]

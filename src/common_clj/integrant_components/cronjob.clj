@@ -1,8 +1,8 @@
 (ns common-clj.integrant-components.cronjob
-  (:require [hara.io.scheduler :as io.scheduler]
+  (:require [clojure.tools.logging :as log]
+            [hara.io.scheduler :as io.scheduler]
             [integrant.core :as ig]
-            [schema.core :as s]
-            [clojure.tools.logging :as log]))
+            [schema.core :as s]))
 
 (s/defn tasks-with-components
   [tasks components]

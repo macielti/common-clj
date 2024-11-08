@@ -1,8 +1,8 @@
 (ns common-clj.integrant-components.rate-limiter
   (:require [clj-rate-limiter.core :as r]
+            [clojure.tools.logging :as log]
             [integrant.core :as ig]
-            [schema.core :as s]
-            [clojure.tools.logging :as log])
+            [schema.core :as s])
   (:import (clj_rate_limiter.core MemoryRateLimiterFactory)))
 
 (s/defschema RateLimitersDefinition

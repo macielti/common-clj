@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "35.71.70"
+(defproject net.clojars.macielti/common-clj "36.71.70"
 
   :description "Just common Clojure code that I use across projects"
 
@@ -43,7 +43,7 @@
                                     [com.github.clojure-lsp/lein-clojure-lsp "1.4.13"]
                                     [com.github.liquidz/antq "RELEASE"]]
 
-                   :dependencies   [[net.clojars.macielti/common-test-clj "1.0.0"]
+                   :dependencies   [[net.clojars.macielti/common-test-clj "1.1.0"]
                                     [org.slf4j/slf4j-api "2.0.16"]
                                     [ch.qos.logback/logback-classic "1.5.12"]
                                     [nubank/matcher-combinators "3.9.1"]
