@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "36.71.70"
+(defproject net.clojars.macielti/common-clj "37.71.70"
 
   :description "Just common Clojure code that I use across projects"
 
@@ -11,11 +11,6 @@
 
   :dependencies [[org.clojure/clojure "1.12.0"]
                  [morse "0.4.3"]
-                 [io.pedestal/pedestal.service "0.7.2"]
-                 [io.pedestal/pedestal.interceptor "0.7.2"]
-                 [io.pedestal/pedestal.error "0.7.2"]
-                 [io.pedestal/pedestal.jetty "0.7.2"]
-                 [io.pedestal/pedestal.route "0.7.2"]
                  [prismatic/schema-generators "0.1.5"]
                  [siili/humanize "0.1.1"]
                  [camel-snake-kebab "0.4.3"]
@@ -33,7 +28,8 @@
                  [diehard "0.11.12"]
                  [overtone/at-at "1.4.65"]
                  [commons-io/commons-io "2.17.0"]
-                 [org.clojure/tools.logging "1.3.0"]]
+                 [org.clojure/tools.logging "1.3.0"]
+                 [org.clojure/tools.reader "1.5.0"]]
 
   :profiles {:dev {:resource-paths ^:replace ["test/resources"]
 
@@ -46,6 +42,7 @@
                    :dependencies   [[net.clojars.macielti/common-test-clj "1.1.0"]
                                     [org.slf4j/slf4j-api "2.0.16"]
                                     [ch.qos.logback/logback-classic "1.5.12"]
+                                    [net.clojars.macielti/service-component "0.2.0"]
                                     [nubank/matcher-combinators "3.9.1"]
                                     [clj-http-fake "1.0.4"]
                                     [nubank/mockfn "0.7.0"]
