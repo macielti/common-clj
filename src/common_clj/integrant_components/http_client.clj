@@ -1,7 +1,7 @@
 (ns common-clj.integrant-components.http-client
   (:require [camel-snake-kebab.core :as camel-snake-kebab]
             [cheshire.core :as json]
-            [clj-http.client :as client]
+            [clj-http.lite.client :as client]
             [clojure.tools.logging :as log]
             [iapetos.core :as prometheus]
             [integrant.core :as ig]
@@ -11,7 +11,7 @@
 (def method->request-fn
   {:post   client/post
    :get    client/get
-   :patch  client/patch
+   :put    client/put
    :delete client/delete})
 
 (defmulti request!

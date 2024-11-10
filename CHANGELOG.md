@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [37.71.71] - 2024-11-10
+
+### Changed
+
+- Replaced clj-http with clj-http-lite for better compatibility with GraalVM.
+
 ## [37.71.70] - 2024-11-08
 
 ### Removed
@@ -1062,7 +1068,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v37.71.70...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v37.71.71...HEAD
+
+[37.71.71]: https://github.com/macielti/common-clj/compare/v37.71.70...v37.71.71
 
 [37.71.70]: https://github.com/macielti/common-clj/compare/v36.71.70...v37.71.70
 
