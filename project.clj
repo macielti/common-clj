@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "37.71.71"
+(defproject net.clojars.macielti/common-clj "38.71.71"
 
   :description "Just common Clojure code that I use across projects"
 
@@ -10,8 +10,6 @@
   :exclusions [log4j]
 
   :dependencies [[org.clojure/clojure "1.12.0"]
-                 [morse "0.4.3"]
-                 [org.clj-commons/clj-http-lite "1.0.13"]
                  [prismatic/schema-generators "0.1.5"]
                  [siili/humanize "0.1.1"]
                  [camel-snake-kebab "0.4.3"]

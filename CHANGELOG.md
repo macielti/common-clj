@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [38.71.71] - 2024-11-10
+
+### Removed
+
+- Removed HTTP Client component.
+
 ## [37.71.71] - 2024-11-10
 
 ### Changed
@@ -1068,7 +1074,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v37.71.71...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v38.71.71...HEAD
+
+[38.71.71]: https://github.com/macielti/common-clj/compare/v37.71.71...v38.71.71
 
 [37.71.71]: https://github.com/macielti/common-clj/compare/v37.71.70...v37.71.71
 
