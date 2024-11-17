@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [38.72.72] - 2024-11-16
+
+### Changed
+
+- Bump dependencies.
+
 ## [38.72.71] - 2024-11-16
 
 ### Added
@@ -1081,7 +1087,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v38.72.71...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v38.72.72...HEAD
+
+[38.72.72]: https://github.com/macielti/common-clj/compare/v38.72.71...v38.72.72
 
 [38.72.71]: https://github.com/macielti/common-clj/compare/v38.71.71...v38.72.71
 
