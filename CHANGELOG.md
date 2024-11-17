@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [38.72.71] - 2024-11-16
+
+### Added
+
+- Added `:http-request-in-handle-timing` Prometheus component metric to measure the time spent while handling http
+  requests.
+
 ## [38.71.71] - 2024-11-10
 
 ### Removed
@@ -1074,7 +1081,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v38.71.71...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v38.72.71...HEAD
+
+[38.72.71]: https://github.com/macielti/common-clj/compare/v38.71.71...v38.72.71
 
 [38.71.71]: https://github.com/macielti/common-clj/compare/v37.71.71...v38.71.71
 
