@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [40.72.72] - 2024-11-17
+
+### Changed
+
+- Properly use bindings feature from Pedestal interceptors for CID handling.
+
 ## [39.72.72] - 2024-11-17
 
 ### Added
@@ -1099,7 +1105,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v39.72.72...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v40.72.72...HEAD
+
+[40.72.72]: https://github.com/macielti/common-clj/compare/v39.72.72...v40.72.72
 
 [39.72.72]: https://github.com/macielti/common-clj/compare/v38.72.72...v39.72.72
 
