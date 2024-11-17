@@ -15,7 +15,8 @@
      :body   "Not Authorized"}))
 
 (def default-metrics
-  [(prometheus/counter :http-request-response {:labels [:status :service :endpoint]})])
+  [(prometheus/counter :http-request-response {:labels [:status :service :endpoint]})
+   (prometheus/histogram :http-request-in-handle-timing {:labels [:service :endpoint]})])
 
 (defmethod ig/init-key ::prometheus
   [_ {:keys [metrics]}]
