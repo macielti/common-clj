@@ -31,8 +31,7 @@
 (s/deftest config-prod-component-test
   (testing "That we can define endpoints"
     (let [system (ig/init config-prod)]
-      (is (= {:bootstrap-server       "http://localhost:9092"
-              :current-env            :prod
+      (is (= {:current-env            :prod
               :service-authentication {:auth-server-base-url "https://example.com"
                                        :password             "random-password"
                                        :username             "service-name"}}
@@ -42,8 +41,7 @@
 (s/deftest config-test-component-test
   (testing "That we can define endpoints"
     (let [system (ig/init config-test)]
-      (is (= {:bootstrap-server                              "http://localhost:9092"
-              :current-env                                   :test
+      (is (= {:current-env                                   :test
               :dead-letter-queue-service-integration-enabled true
               :service                                       {:host "0.0.0.0"
                                                               :port 8000}
