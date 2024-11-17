@@ -5,6 +5,19 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [39.72.72] - 2024-11-17
+
+### Added
+
+- Added `:http-request-in-handle-timing-v2` (summary) Prometheus component metric to measure the time spent while
+  handling http
+  requests.
+
+### Removed
+
+- Removed `:http-request-in-handle-timing` Prometheus component metric to measure the time spent while handling http
+  requests.
+
 ## [38.72.72] - 2024-11-16
 
 ### Changed
