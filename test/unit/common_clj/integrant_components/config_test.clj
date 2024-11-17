@@ -5,12 +5,10 @@
 
 (s/deftest config-file-test
   (testing "That we can read a config file"
-    (is (= {:prod {:bootstrap-server       "http://localhost:9092"
-                   :service-authentication {:auth-server-base-url "https://example.com"
+    (is (= {:prod {:service-authentication {:auth-server-base-url "https://example.com"
                                             :password             "random-password"
                                             :username             "service-name"}}
-            :test {:bootstrap-server                              "http://localhost:9092"
-                   :dead-letter-queue-service-integration-enabled true
+            :test {:dead-letter-queue-service-integration-enabled true
                    :service                                       {:host "0.0.0.0"
                                                                    :port 8000}
                    :service-authentication                        {:auth-server-base-url "https://example.com"

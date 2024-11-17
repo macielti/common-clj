@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "39.72.72"
+(defproject net.clojars.macielti/common-clj "40.72.72"
 
   :description "Just common Clojure code that I use across projects"
 
@@ -41,7 +41,7 @@
                    :dependencies   [[net.clojars.macielti/common-test-clj "1.1.1"]
                                     [org.slf4j/slf4j-api "2.0.16"]
                                     [ch.qos.logback/logback-classic "1.5.12"]
-                                    [net.clojars.macielti/service-component "1.4.2"]
+                                    [net.clojars.macielti/service-component "2.4.2"]
                                     [nubank/matcher-combinators "3.9.1"]
                                     [clj-http-fake "1.0.4"]
                                     [nubank/mockfn "0.7.0"]

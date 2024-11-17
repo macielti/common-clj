@@ -1,5 +1,6 @@
 (ns common-clj.traceability.core
   (:require [clojure.string :as str]
+            [io.pedestal.interceptor :as pedestal.interceptor]
             [schema.core :as s]))
 
 (def ^:dynamic *correlation-id* nil)
@@ -20,12 +21,14 @@
       (get "x-correlation-id" (current-correlation-id))
       clojure.string/upper-case))
 
-(s/defn http-with-correlation-id
-  [http-request-handler-fn]
-  (s/fn [request-context]
-    (binding [*correlation-id* (-> (current-correlation-id-from-request-context request-context)
-                                   correlation-id-appended)]
-      (http-request-handler-fn request-context))))
+(def with-correlation-id-interceptor
+  (pedestal.interceptor/interceptor
+   {:name  ::with-correlation-id-interceptor
+    :enter (fn [{:keys [request] :as context}]
+             (update context :bindings assoc #'*correlation-id* (-> (current-correlation-id-from-request-context request)
+                                                                    correlation-id-appended)))
+    :leave (fn [context]
+             (update context :bindings dissoc #'*correlation-id*))}))
 
 (s/defn job-with-correlation-id
   [job-handler-fn
