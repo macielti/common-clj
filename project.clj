@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "38.72.71"
+(defproject net.clojars.macielti/common-clj "38.72.72"
 
   :description "Just common Clojure code that I use across projects"
 
@@ -18,7 +18,7 @@
                  [cheshire "5.13.0"]
                  [metosin/schema-tools "0.13.1"]
                  [clj-commons/iapetos "0.1.14"]
-                 [clojure.java-time "1.4.2"]
+                 [clojure.java-time "1.4.3"]
                  [clj-rate-limiter "0.1.6-RC1"]
                  [dev.weavejester/medley "1.8.1"]
                  [hara/io.scheduler "3.0.12"]
@@ -35,13 +35,13 @@
                    :test-paths     ^:replace ["test/unit" "test/integration" "test/helpers"]
 
                    :plugins        [[lein-cloverage "1.2.4"]
-                                    [com.github.clojure-lsp/lein-clojure-lsp "1.4.13"]
+                                    [com.github.clojure-lsp/lein-clojure-lsp "1.4.15"]
                                     [com.github.liquidz/antq "RELEASE"]]
 
-                   :dependencies   [[net.clojars.macielti/common-test-clj "1.1.0"]
+                   :dependencies   [[net.clojars.macielti/common-test-clj "1.1.1"]
                                     [org.slf4j/slf4j-api "2.0.16"]
                                     [ch.qos.logback/logback-classic "1.5.12"]
-                                    [net.clojars.macielti/service-component "0.2.0"]
+                                    [net.clojars.macielti/service-component "1.4.2"]
                                     [nubank/matcher-combinators "3.9.1"]
                                     [clj-http-fake "1.0.4"]
                                     [nubank/mockfn "0.7.0"]
