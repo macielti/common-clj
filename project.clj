@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "38.72.72"
+(defproject net.clojars.macielti/common-clj "39.72.72"
 
   :description "Just common Clojure code that I use across projects"
 
