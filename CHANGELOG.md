@@ -10,8 +10,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 ### Added
 
 - Added `:http-request-in-handle-timing-v2` (summary) Prometheus component metric to measure the time spent while
-  handling http
-  requests.
+  handling http requests.
 
 ### Removed
 
