@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "40.72.72"
+(defproject net.clojars.macielti/common-clj "41.72.72"
 
   :description "Just common Clojure code that I use across projects"
 
@@ -17,7 +17,6 @@
                  [buddy/buddy-sign "3.6.1-359"]
                  [cheshire "5.13.0"]
                  [metosin/schema-tools "0.13.1"]
-                 [clj-commons/iapetos "0.1.14"]
                  [clojure.java-time "1.4.3"]
                  [clj-rate-limiter "0.1.6-RC1"]
                  [dev.weavejester/medley "1.8.1"]
