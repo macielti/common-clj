@@ -7,8 +7,9 @@
   (s/constrained s/Str #(re-matches #"^\d{4}-\d{2}-\d{2}$" %)))
 
 (s/defschema LocalDateTimeWire
-  "Example: '2024-11-21T04:56:24.605402'"
-  (s/constrained s/Str #(re-matches #"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}$" %)))
+  "Example: '2024-11-21T04:56:24.605402' or '2024-11-21T04:56'"
+  (s/constrained s/Str #(or (re-matches #"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}$" %)
+                            (re-matches #"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$" %))))
 
 (s/defschema UuidWire
   "Example: '9c97de3b-ac65-44b2-ba4f-b65f8778e514'"

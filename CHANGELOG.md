@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [41.73.73] - 2024-11-23
+
+### Fixed
+
+- More flexible `LocalDateTimeWire` schema.
+
 ## [41.73.72] - 2024-11-23
 
 ### Added
