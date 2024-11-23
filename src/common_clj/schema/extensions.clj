@@ -1,6 +1,6 @@
 (ns common-clj.schema.extensions
-  (:require [schema.core :as s]
-            [clj-uuid]))
+  (:require [clj-uuid]
+            [schema.core :as s]))
 
 (s/defschema LocalDateWire
   "Example: '2024-09-07'"
