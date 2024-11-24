@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [41.74.73] - 2024-11-23
+
+### Fixed
+
+- More support to different formats for `LocalDateTimeWire` schema.
+
 ## [41.73.73] - 2024-11-23
 
 ### Fixed
@@ -1123,7 +1129,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v41.73.73...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v41.74.73...HEAD
+
+[41.74.73]: https://github.com/macielti/common-clj/compare/v41.73.73...v41.74.73
 
 [41.73.73]: https://github.com/macielti/common-clj/compare/v41.73.72...v41.73.73
 
