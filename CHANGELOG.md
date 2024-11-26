@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [41.74.74] - 2024-11-26
+
+### Fixed
+
+- Removed require to `io.pedestal.log`.
+
 ## [41.74.73] - 2024-11-23
 
 ### Fixed
@@ -1129,7 +1135,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v41.74.73...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v41.74.74...HEAD
+
+[41.74.74]: https://github.com/macielti/common-clj/compare/v41.74.73...v41.74.74
 
 [41.74.73]: https://github.com/macielti/common-clj/compare/v41.73.73...v41.74.73
 

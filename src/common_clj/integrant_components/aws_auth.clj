@@ -1,7 +1,7 @@
 (ns common-clj.integrant-components.aws-auth
   (:require [amazonica.core :as aws]
-            [integrant.core :as ig]
-            [io.pedestal.log :as log]))
+            [clojure.tools.logging :as log]
+            [integrant.core :as ig]))
 
 (defmethod ig/init-key ::aws-auth
   [_ {:keys [components]}]
