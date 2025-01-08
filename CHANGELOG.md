@@ -5,9 +5,10 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
-## [41.74.74] - 2025-01-08
+## [42.74.74] - 2025-01-08
 
 ### Removed
+
 - Removed SQS Consumer and Producer components.
 - Removed AWS Auth component.
 
@@ -1141,7 +1142,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v41.74.74...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v42.74.74...HEAD
+
+[42.74.74]: https://github.com/macielti/common-clj/compare/v41.74.74...v42.74.74
 
 [41.74.74]: https://github.com/macielti/common-clj/compare/v41.74.73...v41.74.74
 
