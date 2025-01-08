@@ -5,6 +5,12 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [41.74.74] - 2025-01-08
+
+### Removed
+- Removed SQS Consumer and Producer components.
+- Removed AWS Auth component.
+
 ## [41.74.74] - 2024-11-26
 
 ### Fixed
