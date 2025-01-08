@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "41.74.74"
+(defproject net.clojars.macielti/common-clj "42.74.74"
 
   :description "Just common Clojure code that I use across projects"
 
@@ -22,9 +22,7 @@
                  [dev.weavejester/medley "1.8.1"]
                  [hara/io.scheduler "3.0.12"]
                  [integrant "0.13.1"]
-                 [amazonica "0.3.167"]
                  [diehard "0.11.12"]
-                 [overtone/at-at "1.4.65"]
                  [org.clojure/tools.logging "1.3.0"]
                  [danlentz/clj-uuid "0.2.0"]]
 
