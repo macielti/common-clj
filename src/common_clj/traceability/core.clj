@@ -3,36 +3,59 @@
             [io.pedestal.interceptor :as pedestal.interceptor]
             [schema.core :as s]))
 
-(def ^:dynamic *correlation-id* nil)
+(def DEFAULT_CORRELATION_ID "DEFAULT")
 
-(s/defn correlation-id-appended :- s/Str
+(def ^:dynamic *correlation-id* (atom nil))
+
+(defn reset-correlation-id! [] (reset! *correlation-id* nil))
+
+(s/defn set-correlation-id! :- s/Str
   [correlation-id :- s/Str]
-  {:pre [(not-empty correlation-id)]}
-  (-> (str correlation-id "." (-> (random-uuid) str (str/split #"-") last))
-      clojure.string/upper-case))
+  (reset! *correlation-id* (clojure.string/upper-case correlation-id)))
 
-(s/defn current-correlation-id :- s/Str
+(s/defn current-correlation-id! :- s/Str
+  [] (or @*correlation-id* (reset! *correlation-id* DEFAULT_CORRELATION_ID)))
+
+(s/defn correlation-id-appended! :- s/Str
   []
-  (or *correlation-id* (correlation-id-appended "DEFAULT")))
+  (swap! *correlation-id* #(-> (or % DEFAULT_CORRELATION_ID)
+                               (str "." (-> (random-uuid) str (str/split #"-") last))
+                               clojure.string/upper-case)))
 
-(s/defn current-correlation-id-from-request-context :- (s/maybe s/Str)
+(s/defn correlation-id-from-request-context :- (s/maybe s/Str)
   [request-context]
   (-> (:headers request-context)
-      (get "x-correlation-id" (current-correlation-id))
+      (get "x-correlation-id" DEFAULT_CORRELATION_ID)
       clojure.string/upper-case))
 
-(def with-correlation-id-interceptor
+(def with-correlation-id-http-interceptor
   (pedestal.interceptor/interceptor
-   {:name  ::with-correlation-id-interceptor
+   {:name  ::with-correlation-id-http-interceptor
     :enter (fn [{:keys [request] :as context}]
-             (update context :bindings assoc #'*correlation-id* (-> (current-correlation-id-from-request-context request)
-                                                                    correlation-id-appended)))
+             (update context :bindings assoc #'*correlation-id* (atom (or (some-> request
+                                                                                  correlation-id-from-request-context
+                                                                                  set-correlation-id!)
+                                                                          (set-correlation-id! DEFAULT_CORRELATION_ID)))))
     :leave (fn [context]
              (update context :bindings dissoc #'*correlation-id*))}))
 
-(s/defn job-with-correlation-id
-  [job-handler-fn
-   job-id :- s/Str]
-  (s/fn [as-of params instance]
-    (binding [*correlation-id* (correlation-id-appended job-id)]
-      (job-handler-fn as-of params instance))))
+(def with-correlation-id-rabbitmq-interceptor
+  (pedestal.interceptor/interceptor
+   {:name  ::with-correlation-id-rabbitmq-interceptor
+    :enter (fn [{:keys [payload] :as context}]
+             (update context :bindings assoc #'*correlation-id* (atom (or (some-> payload
+                                                                                  :meta
+                                                                                  :correlation-id
+                                                                                  set-correlation-id!)
+                                                                          (set-correlation-id! DEFAULT_CORRELATION_ID)))))
+    :leave (fn [context]
+             (update context :bindings dissoc #'*correlation-id*))}))
+
+(s/defn with-correlation-id-job-interceptor
+  [job-id :- s/Str]
+  (pedestal.interceptor/interceptor
+   {:name  ::with-correlation-id-job-interceptor
+    :enter (fn [context]
+             (update context :bindings assoc #'*correlation-id* (atom (set-correlation-id! job-id))))
+    :leave (fn [context]
+             (update context :bindings dissoc #'*correlation-id*))}))

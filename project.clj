@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "42.74.74"
+(defproject net.clojars.macielti/common-clj "43.74.74"
 
   :description "Just common Clojure code that I use across projects"
 
@@ -24,19 +24,20 @@
                  [integrant "0.13.1"]
                  [diehard "0.11.12"]
                  [org.clojure/tools.logging "1.3.0"]
-                 [danlentz/clj-uuid "0.2.0"]]
+                 [danlentz/clj-uuid "0.2.0"]
+                 [commons-io/commons-io "2.18.0"]]
 
   :profiles {:dev {:resource-paths ^:replace ["test/resources"]
 
                    :test-paths     ^:replace ["test/unit" "test/integration" "test/helpers"]
 
                    :plugins        [[lein-cloverage "1.2.4"]
-                                    [com.github.clojure-lsp/lein-clojure-lsp "1.4.15"]
+                                    [com.github.clojure-lsp/lein-clojure-lsp "1.4.16"]
                                     [com.github.liquidz/antq "RELEASE"]]
 
-                   :dependencies   [[net.clojars.macielti/common-test-clj "3.2.3"]
+                   :dependencies   [[net.clojars.macielti/common-test-clj "5.2.3"]
                                     [org.slf4j/slf4j-api "2.0.16"]
-                                    [ch.qos.logback/logback-classic "1.5.12"]
+                                    [ch.qos.logback/logback-classic "1.5.16"]
                                     [net.clojars.macielti/service-component "2.4.2"]
                                     [nubank/matcher-combinators "3.9.1"]
                                     [clj-http-fake "1.0.4"]
