@@ -5,6 +5,13 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [43.74.74] - 2025-01-25
+
+### Changed
+
+- Refactored `common-clj.traceability.core` to be more flexible allowing more options to manipulate the
+  `correlation-id`.
+
 ## [42.74.74] - 2025-01-08
 
 ### Removed
@@ -1142,7 +1149,9 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 - Add `loose-schema` function.
 
-[Unreleased]: https://github.com/macielti/common-clj/compare/v42.74.74...HEAD
+[Unreleased]: https://github.com/macielti/common-clj/compare/v43.74.74...HEAD
+
+[43.74.74]: https://github.com/macielti/common-clj/compare/v42.74.74...v43.74.74
 
 [42.74.74]: https://github.com/macielti/common-clj/compare/v41.74.74...v42.74.74
 
