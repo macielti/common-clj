@@ -9,10 +9,10 @@
             [schema.test :as s]
             [service-component.core :as component.service]))
 
-(def routes [["/test" :get [traceability/with-correlation-id-interceptor
-                            (fn [_]
+(def routes [["/test" :get [traceability/with-correlation-id-http-interceptor
+                            (fn [_context]
                               {:status 200
-                               :body   {:cid traceability/*correlation-id*}})]
+                               :body   {:cid (traceability/current-correlation-id!)}})]
               :route-name :test]])
 
 (def system-components
@@ -29,11 +29,11 @@
     (testing "That we can fetch the test endpoint and access correlation-id"
       (is (str/includes? (-> (test/response-for service-fn :get "/test")
                              :body)
-                         "{\"cid\":\"DEFAULT.")))
+                         "{\"cid\":\"DEFAULT")))
 
     (testing "That we can fetch the test endpoint and compose the current correlation-id based on the header"
       (is (str/includes? (-> (test/response-for service-fn :get "/test" :headers {"x-correlation-id" "DEFAULT.29A296ED8418.CB66A52273E6"})
                              :body)
-                         "DEFAULT.29A296ED8418.CB66A52273E6.")))
+                         "DEFAULT.29A296ED8418.CB66A52273E6")))
 
     (ig/halt! system)))
