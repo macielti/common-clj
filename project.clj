@@ -24,7 +24,8 @@
                  [integrant "0.13.1"]
                  [diehard "0.11.12"]
                  [org.clojure/tools.logging "1.3.0"]
-                 [danlentz/clj-uuid "0.2.0"]]
+                 [danlentz/clj-uuid "0.2.0"]
+                 [commons-io/commons-io "2.18.0"]]
 
   :profiles {:dev {:resource-paths ^:replace ["test/resources"]
 
