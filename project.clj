@@ -38,10 +38,11 @@
                    :dependencies   [[net.clojars.macielti/common-test-clj "5.2.4"]
                                     [org.slf4j/slf4j-api "2.0.17"]
                                     [ch.qos.logback/logback-classic "1.5.23"]
-                                    [net.clojars.macielti/service-component "5.4.2"]
+                                    [net.clojars.macielti/service-component "5.4.2-2"]
                                     [nubank/matcher-combinators "3.9.2"]
                                     [clj-http-fake "1.0.4"]
                                     [nubank/mockfn "0.7.0"]
+                                    [ring "1.12.2"]
                                     [hashp "0.2.2"]]
 
                    :injections     [(require 'hashp.core)]
