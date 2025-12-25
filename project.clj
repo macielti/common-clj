@@ -35,7 +35,7 @@
                                     [com.github.clojure-lsp/lein-clojure-lsp "2.0.13"]
                                     [com.github.liquidz/antq "RELEASE"]]
 
-                   :dependencies   [[net.clojars.macielti/common-test-clj "5.2.4 "]
+                   :dependencies   [[net.clojars.macielti/common-test-clj "5.2.4"]
                                     [org.slf4j/slf4j-api "2.0.17"]
                                     [ch.qos.logback/logback-classic "1.5.23"]
                                     [net.clojars.macielti/service-component "5.4.2"]
