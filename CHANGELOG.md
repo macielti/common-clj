@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
+## [43.74.77] - 2025-12-26
+
+### Changed
+
+- Replaced `ring` dependency with `ring/ring-codec` version `1.3.0` to resolve a dependency conflict.
+
 ## [43.74.76] - 2025-12-25
 
 ### Changed
