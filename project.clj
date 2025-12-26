@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "43.74.76"
+(defproject net.clojars.macielti/common-clj "43.74.77"
 
   :description "Just common Clojure code that I use across projects"
 
@@ -42,7 +42,7 @@
                                     [nubank/matcher-combinators "3.9.2"]
                                     [clj-http-fake "1.0.4"]
                                     [nubank/mockfn "0.7.0"]
-                                    [ring "1.12.2"]
+                                    [ring/ring-codec "1.3.0"]
                                     [hashp "0.2.2"]]
 
                    :injections     [(require 'hashp.core)]
