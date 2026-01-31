@@ -1,6 +1,11 @@
 (ns common-clj.schema.extensions
   (:require [clj-uuid]
+            [java-time.api :as jt]
             [schema.core :as s]))
+
+(s/defn custom-formated-wire-instant
+  [format :- s/Str]
+  (s/constrained s/Str #(jt/instant format %)))
 
 (s/defschema LocalDateWire
   "Example: '2024-09-07'"

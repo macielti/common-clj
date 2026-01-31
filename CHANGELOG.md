@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
+## [44.1.0] - 2026-01-31
+
+### Added
+
+- Added function to generate custom format schemas representing stringfied Instants: `custom-formated-wire-instant`
+
 ## [43.74.77] - 2025-12-26
 
 ### Changed
