@@ -3,26 +3,32 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
-## [44.1.0] - 2026-01-31
+## 44.2.0 - 2026-02-02
+
+### Added
+
+- Added function to generate custom format schemas representing string patterns: `custom-string-pattern`
+
+## 44.1.0 - 2026-01-31
 
 ### Added
 
 - Added function to generate custom format schemas representing stringfied Instants: `custom-formated-wire-instant`
 
-## [43.74.77] - 2025-12-26
+## 43.74.77 - 2025-12-26
 
 ### Changed
 
 - Replaced `ring` dependency with `ring/ring-codec` version `1.3.0` to resolve a dependency conflict.
 
-## [43.74.76] - 2025-12-25
+## 43.74.76 - 2025-12-25
 
 ### Changed
 
 - Updated project dependencies to their latest versions.
 - Refactored integration tests for improved compatibility and to align with updated Pedestal test patterns.
 
-## [43.74.75] - 2025-01-25
+## 43.74.75 - 2025-01-25
 
 ### Changed
 
