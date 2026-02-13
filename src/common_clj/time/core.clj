@@ -1,7 +1,7 @@
 (ns common-clj.time.core
   (:require [java-time.api :as jt]
             [schema.core :as s])
-  (:import (java.time LocalDate LocalDateTime ZoneOffset)
+  (:import (java.time Instant LocalDate LocalDateTime ZoneOffset)
            (java.util Date TimeZone)))
 
 (s/defn ^:deprecated local-datetime? :- s/Bool
@@ -29,6 +29,6 @@
   (-> (.toInstant value ZoneOffset/UTC)
       Date/from))
 
-(s/defn instant-now :- Date
+(s/defn instant-now :- Instant
   []
   (jt/instant))
