@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
+## 45.0.0 - 2026-02-13
+
+### Changed/Added
+
+- Set the standard way to deal with time representation.
+
 ## 44.2.0 - 2026-02-02
 
 ### Added
