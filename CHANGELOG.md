@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
+## 45.1.1 - 2026-02-13
+
+### Added
+
+- Added function to convert from `java.util.Date` to `java.time.Instant`:
+  `common-clj.time.parser.core/legacy-date->instant`.
+
 ## 45.0.1 - 2026-02-13
 
 ### Fixed
