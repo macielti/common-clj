@@ -37,3 +37,7 @@
 (s/defn instant->legacy-date :- Date
   [instant :- Instant]
   (jt/java-date instant))
+
+(s/defn legacy-date->instant :- Instant
+  [legacy-date :- Date]
+  (.toInstant ^Date legacy-date))
