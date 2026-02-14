@@ -1,6 +1,5 @@
 (ns common-clj.schema.extensions
-  (:require [clj-uuid.core]
-            [schema.core :as s])
+  (:require [schema.core :as s])
   (:import (java.util.regex Pattern)))
 
 (s/defn custom-string-pattern
@@ -16,9 +15,14 @@
   (s/constrained s/Str #(or (re-matches #"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6,9}$" %)
                             (re-matches #"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$" %))))
 
+(def uuid-regex #"[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}")
+(defn uuid-string? [str]
+  (and (string? str)
+       (some? (re-matches uuid-regex str))))
+
 (s/defschema UuidWire
   "Example: '9c97de3b-ac65-44b2-ba4f-b65f8778e514'"
-  (s/constrained s/Str clj-uuid.core/uuid-string?))
+  (s/constrained s/Str uuid-string?))
 
 (s/defschema CalendarDateWire
   "Example: '2024-09-07'"
