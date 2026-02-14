@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
+## 46.0.1 - 2026-02-14
+
+### Changed
+
+- Removed `danlentz/clj-uuid` dependency, due to incompatibility with graalvm native image generation process.
+
 ## 46.0.0 - 2026-02-14
 
 ### Changed

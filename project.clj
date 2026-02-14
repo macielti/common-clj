@@ -1,4 +1,4 @@
-(defproject net.clojars.macielti/common-clj "46.0.0"
+(defproject net.clojars.macielti/common-clj "46.0.1"
 
   :description "Just common Clojure code that I use across projects"
 
@@ -24,7 +24,6 @@
                  [integrant "1.0.1"]
                  [diehard "0.12.0"]
                  [org.clojure/tools.logging "1.3.1"]
-                 [danlentz/clj-uuid "0.2.5"]
                  [commons-io/commons-io "2.21.0"]]
 
   :profiles {:dev {:resource-paths ^:replace ["test/resources"]
