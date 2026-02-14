@@ -29,4 +29,5 @@
   (s/constrained s/Str #(re-matches #"^\d{4}-\d{2}-\d{2}$" %)))
 
 (s/defschema InstantWire
-  (s/constrained s/Str #(re-matches #"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+Z$" %)))
+  (s/constrained s/Str #(or (re-matches #"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+Z$" %)
+                            (re-matches #"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$" %))))
