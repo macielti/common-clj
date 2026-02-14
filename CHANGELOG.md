@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
+## 46.1.1 - 2026-02-14
+
+### Added
+
+- Added regex variation for WireInstant schema.
+
 ## 46.0.1 - 2026-02-14
 
 ### Changed
