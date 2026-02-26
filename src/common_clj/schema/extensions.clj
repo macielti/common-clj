@@ -31,3 +31,12 @@
 (s/defschema InstantWire
   (s/constrained s/Str #(or (re-matches #"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+Z$" %)
                             (re-matches #"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$" %))))
+
+(s/defschema PositiveInt
+  "An integer greater than 0. Don't accept BigInt"
+  (s/constrained s/Int pos-int?))
+
+(s/defschema NonNegativeInt
+  "An integer greater than or equal to 0. Don't accept BigInt"
+  (s/constrained s/Int #(or (= 0 %) (pos-int? %))))
+

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
+## 46.1.2 - 2026-02-25
+
+### Added
+
+- Added `PositiveInt` schema for validating positive integers (greater than 0). But not accepting BigInt values.
+- Added `NonNegativeInt` schema for validating non-negative integers (greater than or equal to 0). But not accepting BigInt values.
+
 ## 46.1.1 - 2026-02-14
 
 ### Added
