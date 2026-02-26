@@ -44,4 +44,3 @@
     (is (thrown? ExceptionInfo (s/validate extensions/NonNegativeInt 5.5)))
     (is (thrown? ExceptionInfo (s/validate extensions/NonNegativeInt :zero)))
     (is (thrown? ExceptionInfo (s/validate extensions/NonNegativeInt nil)))))
-
