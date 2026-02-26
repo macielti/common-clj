@@ -39,4 +39,3 @@
 (s/defschema NonNegativeInt
   "An integer greater than or equal to 0. Don't accept BigInt"
   (s/constrained s/Int #(or (= 0 %) (pos-int? %))))
-

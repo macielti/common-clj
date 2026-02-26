@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
+## 46.1.3 - 2026-02-25
+
+### Changed
+
+- Bumped dev tooling dependencies: logback-classic 1.5.32, lein-clojure-lsp 2.0.14,
+  common-test-clj 7.0.2, service-component 7.4.4.
+
 ## 46.1.2 - 2026-02-25
 
 ### Added
