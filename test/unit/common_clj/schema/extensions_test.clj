@@ -27,7 +27,6 @@
     (is (thrown? ExceptionInfo (s/validate extensions/PositiveInt nil)))))
 
 (schema.test/deftest non-negative-int-test
-
   (testing "Should accept zero and positive integers"
     (is (= 0 (s/validate extensions/NonNegativeInt 0)))
     (is (= 1 (s/validate extensions/NonNegativeInt 1)))
