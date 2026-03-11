@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
+## 46.1.5 - 2026-03-10
+
+### Fixed
+
+- Fixed bug in `loose-schema` function when handling nested schemas that are already loose.
+
 ## 46.1.4 - 2026-02-27
 
 ### Changed
