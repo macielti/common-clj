@@ -12,3 +12,8 @@
   [x :- s/Keyword]
   (-> (name x)
       keyword))
+
+(s/defn namespaced :- s/Keyword
+  [x :- s/Keyword
+   ns :- s/Str]
+  (keyword ns (name x)))

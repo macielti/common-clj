@@ -10,3 +10,12 @@
               (if (keyword? x)
                 (common-keyword/un-namespaced x)
                 x)) schema))
+
+(defn- namespace-keys [m ns]
+  (into {} (map (fn [[k v]] [(common-keyword/namespaced k ns) v])) m))
+
+(s/defn namespaced :- (s/pred map?)
+  "Recursively namespace map keys with the given namespace string"
+  [m :- (s/pred map?)
+   ns :- s/Str]
+  (postwalk #(cond-> % (map? %) (namespace-keys ns)) m))

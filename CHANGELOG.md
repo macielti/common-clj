@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. This change log follows the conventions
 of [keepachangelog.com](http://keepachangelog.com/).
 
+## 46.2.0 - 2026-03-14
+
+### Added
+
+- Added `common-clj.misc.core/un-namespaced` function to recursively un-namespace map keys.
+- Added `common-clj.misc.core/namespaced` function to recursively namespace map keys with a given namespace string.
+
 ## 46.1.5 - 2026-03-10
 
 ### Fixed
@@ -284,7 +291,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Changed
 
-- Instead of logging (at INFO level) each number of consumers threads up  `AWS SQS Consumer component (Integrant)`
+- Instead of logging (at INFO level) each number of consumers threads up `AWS SQS Consumer component (Integrant)`
   validation, now we are logging that info at DEBUG level.
 
 ## [30.63.69] - 2024-09-20
@@ -389,7 +396,7 @@ of [keepachangelog.com](http://keepachangelog.com/).
 
 ### Added
 
-- Added `common-clj.integrant-components.datomic/transact-and-lookup-entity!` function to make easier to transact and
+- Added `common-clj.integrant-components.datomic/transact-and-lookup-entity!` function to make it easier to transact and
   lookup entities in the database.
 - Added full automatic test (unit) coverage for `common-clj.integrant-components.datomic` namespace.
 - Added full automatic test (unit, integration) coverage for `common-clj.integrant-components.routes` namespace.

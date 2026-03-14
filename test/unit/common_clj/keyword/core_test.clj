@@ -14,3 +14,10 @@
            (keyword.core/un-namespaced :test/ok)))
     (is (= :deeper
            (keyword.core/un-namespaced :test.ok/deeper)))))
+
+(s/deftest namespaced-test
+  (testing "GIVEN an un-namespaced keyword WHEN we namespace it THEN it should be namespaced"
+    (is (= :test/ok
+           (keyword.core/namespaced :ok "test")))
+    (is (= :test/deeper
+           (keyword.core/namespaced :deeper "test")))))
